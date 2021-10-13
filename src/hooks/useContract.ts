@@ -1,8 +1,6 @@
 import { useMemo } from 'react'
 import { Contract } from '@ethersproject/contracts'
-
 import { getContract } from '../utils'
-
 import { useActiveWeb3React } from './web3'
 import ENS_ABI from '../abis/ens-registrar.json'
 import ENS_PUBLIC_RESOLVER_ABI from '../abis/ens-public-resolver.json'

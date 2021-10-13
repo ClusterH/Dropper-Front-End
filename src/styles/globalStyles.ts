@@ -21,6 +21,7 @@ export const PageWrapper = styled.div<{ image?: string }>`
   background-position: center;
   width: 100%;
   margin: 0 auto;
+  padding: 50px 24px;
   min-height: calc(100vh - 72px);
   display: flex;
   flex-direction: column;
@@ -77,8 +78,8 @@ export const ContainerColumn = styled.div<{
 }>`
   display: flex;
   flex-direction: 'column';
-  justify-content: ${({ justifyContent }) => (justifyContent ? justifyContent : 'flex-start')};
-  align-items: ${({ alignItems }) => (alignItems ? alignItems : 'flex-start')};
+  justify-content: ${({ justifyContent }) => (justifyContent ? justifyContent : 'center')};
+  align-items: ${({ alignItems }) => (alignItems ? alignItems : 'center')};
   background-color: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'none')};
   width: 100%;
   background-image: ${({ image }) => (image ? `url(${image})` : 'none')};
@@ -107,8 +108,15 @@ export const TextTitle = styled.span`
 `
 export const TextSubTitle = styled.span`
   color: var(--primary-text);
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 700;
+  line-height: 1.6;
+  margin: 1rem 0;
+`
+export const TextMain = styled.span`
+  color: var(--primary-text);
+  font-size: 1.25rem;
+  font-weight: 600;
   line-height: 1.6;
   margin: 1rem 0;
 `
@@ -117,11 +125,11 @@ export const TextDescription = styled.span`
   font-size: 14px;
   line-height: 1.6;
 `
-export const TextCustom = styled.span<{ color: string; fontSize?: string; fontWeight?: string }>`
+export const TextCustom = styled.p<{ color: string; fontSize?: string; fontWeight?: string; lineHeight?: number }>`
   color: ${({ color }) => color};
   font-size: ${({ fontSize }) => (fontSize ? fontSize : '18px')};
   font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 500)};
-  line-height: 1.6;
+  line-height: ${({ lineHeight }) => (lineHeight ? lineHeight : 1.6)};
 `
 
 export const StyledClickable = styled.div`

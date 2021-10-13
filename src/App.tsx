@@ -9,9 +9,6 @@ const Header = lazy(() => import('./components/Header'))
 const Home = lazy(() => import('./pages/Home'))
 const Login = lazy(() => import('./pages/Login'))
 const Creators = lazy(() => import('./pages/Creators'))
-// const BankVaults = lazy(() => import('./pages/BankVaults'));
-// const Plains = lazy(() => import('./pages/Plains'));
-// const Marketplace = lazy(() => import('./pages/Marketplace'));
 
 const App = () => {
   return (

@@ -37,3 +37,13 @@ export const MainButton = styled.button<{
   background: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'var(--secondary)')};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '0px')};
 `
+
+export const TransparentBtn = styled(MainButton)`
+  background: transparent;
+  color: var(--primary-text);
+  border: 2px solid var(--secondary);
+  &:hover {
+    background: transparent;
+    color: var(--secondary) !important;
+  }
+`

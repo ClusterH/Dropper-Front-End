@@ -12,7 +12,6 @@ const InfoCard = styled.button<{ active?: boolean }>`
   &:focus {
     box-shadow: 0 0 0 1px var(--secondary);
   }
-  /* border-color: ${({ active }) => (active ? 'transparent' : 'var(--secondary-opacity)')}; */
 `
 
 const OptionCard = styled(InfoCard as any)`

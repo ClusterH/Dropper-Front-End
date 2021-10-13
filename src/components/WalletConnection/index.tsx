@@ -13,12 +13,7 @@ const WalletConnectorContainer = styled(ContainerRow)`
 `
 
 const WalletConnector: React.FC = () => {
-  return (
-    <Web3Status />
-    // <WalletConnectorContainer justifyContent={'flex-end'} rowWidth={'fit-content'}>
-    //   Connect Wallet
-    // </WalletConnectorContainer>
-  )
+  return <Web3Status />
 }
 
 export default WalletConnector

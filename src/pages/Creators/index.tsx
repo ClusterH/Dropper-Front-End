@@ -45,12 +45,13 @@ const Creators: React.FC = () => {
   return (
     <PageWrapper>
       <SpacerLarge />
-      <TextTitle>
-        Meet Our&nbsp;
+      <ContainerRow justifyContent={'center'}>
+        <TextTitle>Meet Our&nbsp;</TextTitle>
         <TextCustom color={'var(--secondary)'} fontSize={'2.5rem'}>
           Creators
         </TextCustom>
-      </TextTitle>
+      </ContainerRow>
+
       <SpacerLarge />
       <CreatorContainer justifyContent={'center'}>
         {creatorList.map((item: TCreatorElement) => {
