@@ -45,13 +45,11 @@ const HeaderRow = styled.div`
   flex-flow: row nowrap;
   padding: 1rem 1rem;
   font-weight: 500;
-  color: ${(props) => (props.color === 'blue' ? '#2172E5' : 'inherit')};
+  color: ${(props) => (props.color === 'blue' ? 'var(--secondary)' : 'inherit')};
 `
 const ContentWrapper = styled.div`
-  background-color: #191b1f;
+  background-color: var(--primary);
   padding: 0 1rem 1rem 1rem;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
 `
 const UpperSection = styled.div`
   position: relative;
@@ -152,7 +150,7 @@ export default function WalletModal({ ENSName }: { ENSName?: string }) {
     connector &&
       activate(connector, undefined, true).catch((error) => {
         if (error instanceof UnsupportedChainIdError) {
-          activate(connector) // a little janky...can't use setError because the connector isn't set
+          activate(connector)
         } else {
           setPendingError(true)
         }

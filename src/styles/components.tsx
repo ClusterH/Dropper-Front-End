@@ -5,7 +5,7 @@ import styled, { keyframes } from 'styled-components'
 const StyledLink = styled.a`
   text-decoration: none;
   cursor: pointer;
-  color: #2172e5;
+  color: var(--secondary);
   font-weight: 500;
 
   :hover {
@@ -54,7 +54,7 @@ export const LinkStyledButton = styled.button<{ disabled?: boolean }>`
   background: none;
 
   cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
-  color: ${({ disabled }) => (disabled ? '#C3C5CB' : '#2172E5')};
+  color: ${({ disabled }) => (disabled ? '#C3C5CB' : 'var(--secondary)')};
   font-weight: 500;
 
   :hover {

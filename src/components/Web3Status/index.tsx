@@ -26,24 +26,23 @@ const IconWrapper = styled.div<{ size?: number }>`
   }
 `
 const Web3StatusGeneric = styled.div`
-  height: 35px;
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-left: 12px;
-  text-decoration: none;
-  font-size: 12px;
   display: inline-block;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fdbe08;
-  border-radius: 20px;
-  background-color: #3d4140;
+  background-color: var(--secondary);
+  padding: 0.5rem 1rem;
+  box-shadow: 0px 3px 10px var(--secondary-opacity);
+  border: solid;
+  border-color: var(--secondary);
+  border-width: 1px;
+  border-radius: 12px;
+  text-decoration: none;
   :hover {
-    color: #000000;
-    border-color: #fdae08;
-    background: linear-gradient(#fbb212, #f48f33);
+    color: var(--secondary);
+    border-color: transparent;
+    background: var(--primary-text);
   }
 `
 const Web3StatusError = styled(Web3StatusGeneric)`
@@ -58,18 +57,9 @@ const Web3StatusError = styled(Web3StatusGeneric)`
 `
 const Web3StatusConnect = styled(Web3StatusGeneric)``
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
-  background-color: ${({ pending }) => (pending ? '#0093fc' : '#2ec814')};
-  // border: 1px solid ${({ pending }) => (pending ? '#0093fc' : '#fdbe08')};
+  background-color: ${({ pending }) => (pending ? '#0093fc' : 'var(--secondary)')};
   color: #ffffff;
   font-weight: 500;
-  :hover,
-  :focus {
-    background-color: ${({ pending }) => (pending ? '#0093fc' : '#2ec814')};
-
-    :focus {
-      border: 1px solid ${({ pending }) => (pending ? '#0093fc' : '#fdbe08')};
-    }
-  }
 `
 const Text = styled.p`
   flex: 1 1 auto;
@@ -78,7 +68,7 @@ const Text = styled.p`
   white-space: nowrap;
   font-size: 1rem;
   width: fit-content;
-  font-weight: 500;
+  font-weight: 600;
 `
 const NetworkIcon = styled(FiActivity)`
   margin-left: 0.25rem;
@@ -87,52 +77,9 @@ const NetworkIcon = styled(FiActivity)`
   height: 16px;
 `
 
-// eslint-disable-next-line react/prop-types
-function StatusIcon({ connector }: { connector: AbstractConnector }) {
-  if (connector === injected) {
-    return <Identicon />
-  } else if (connector === walletconnect) {
-    return (
-      <IconWrapper size={16}>
-        <img src={WalletConnectIcon} alt={''} />
-      </IconWrapper>
-    )
-  } else if (connector === walletlink) {
-    return (
-      <IconWrapper size={16}>
-        <img src={CoinbaseWalletIcon} alt={''} />
-      </IconWrapper>
-    )
-  } else if (connector === fortmatic) {
-    return (
-      <IconWrapper size={16}>
-        <img src={FortmaticIcon} alt={''} />
-      </IconWrapper>
-    )
-  } else if (connector === portis) {
-    return (
-      <IconWrapper size={16}>
-        <img src={PortisIcon} alt={''} />
-      </IconWrapper>
-    )
-  }
-  return null
-}
-
 function Web3StatusInner() {
-  const { account, connector, error } = useWeb3React()
+  const { account, error } = useWeb3React()
   const { ENSName } = useENSName(account ?? undefined)
-  // const allTransactions = useAllTransactions()
-
-  // const sortedRecentTransactions = useMemo(() => {
-  //   const txs = Object.values(allTransactions)
-  //   return txs.filter(isTransactionRecent).sort(newTransactionsFirst)
-  // }, [allTransactions])
-
-  // const pending = sortedRecentTransactions.filter((tx: any) => !tx.receipt).map((tx: any) => tx.hash)
-
-  // const hasPendingTransactions = !!pending.length
-  // const hasSocks = useHasSocks()
   const toggleWalletModal = useWalletModalToggle()
 
   if (account) {
@@ -151,7 +98,7 @@ function Web3StatusInner() {
   } else {
     return (
       <Web3StatusConnect id="connect-wallet" onClick={toggleWalletModal}>
-        <Text>{'Connect to a wallet'}</Text>
+        <Text>{'Connect Wallet'}</Text>
       </Web3StatusConnect>
     )
   }

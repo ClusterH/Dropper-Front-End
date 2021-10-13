@@ -1,53 +1,44 @@
-![The Starter Project with React, Ethers.js, Hardhat, Typescript
-](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/fxq0yu3jd7qw35itdxii.jpg)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This codebase is updated version of the tutorial [The Complete Guide to Full Stack Ethereum Development](https://dev.to/dabit3/the-complete-guide-to-full-stack-ethereum-development-3j13) with Typescript and ESLint, Prettier
+## Available Scripts
 
-## Getting started
+In the project directory, you can run:
 
-Here's how to deploy this project
+### `yarn start`
 
-1. Clone the repo
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-```sh
-git clone https://github.com/ClusterH/React-Hardhat-Ethers-Starter
-```
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-2. Install the dependencies
+### `yarn test`
 
-```sh
-yarn
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-# or
+### `yarn build`
 
-npm install
-```
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-3. Start the local test node
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
 
-```sh
-npx hardhat node
-```
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-4. Deploy the contract
+### `yarn eject`
 
-```sh
-npx hardhat run scripts/deploy.js --network localhost
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-npx hardhat run scripts/deploy.ts --network rinkeby
-```
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-5. Verify on Etherscan
-   Using the [hardhat-etherscan plugin](https://hardhat.org/plugins/nomiclabs-hardhat-etherscan.html), add Etherscan API key to `hardhat.config.ts`, then run:
+Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-```sh
-npx hardhat verify --network rinkeby <DEPLOYED ADDRESS>
-```
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-6. Update **src/App.tsx** with the values of your contract addresses (`greeterAddress` and `tokenAddress`)
+## Learn More
 
-7. Run the app
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-```sh
-yarn start
-```
+To learn React, check out the [React documentation](https://reactjs.org/).

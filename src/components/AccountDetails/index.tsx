@@ -14,6 +14,7 @@ import { AppDispatch } from '../../state'
 import { ExternalLink } from '../../styles/components'
 import { shortenAddress } from '../../utils'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
+import { MainButton } from '../Buttons/MainButton'
 // import { ButtonSecondary } from '../Buttons/Button'
 import Identicon from '../Icons/Identicon'
 
@@ -22,7 +23,7 @@ const HeaderRow = styled.div`
   flex-flow: row nowrap;
   padding: 1rem 1rem;
   font-weight: 500;
-  color: ${(props) => (props.color === 'blue' ? '#2172E5' : 'inherit')};
+  color: ${(props) => (props.color === 'blue' ? 'var(--secondary)' : 'inherit')};
 `
 const UpperSection = styled.div`
   position: relative;
@@ -45,8 +46,8 @@ const UpperSection = styled.div`
 `
 const InfoCard = styled.div`
   padding: 1rem;
-  border: 1px solid #40444f;
-  border-radius: 20px;
+  border: 1px solid #ff0069;
+  border-radius: 4px;
   position: relative;
   display: grid;
   grid-row-gap: 12px;
@@ -169,13 +170,14 @@ const WalletAction = styled.button`
   margin-left: 8px;
   font-size: 0.825rem;
   padding: 4px 6px;
+  outline: none;
   :hover {
     cursor: pointer;
     text-decoration: underline;
   }
 `
 const MainWalletAction = styled(WalletAction)`
-  color: #2172e5;
+  color: var(--secondary);
 `
 
 interface AccountDetailsProps {
@@ -186,8 +188,6 @@ interface AccountDetailsProps {
 
 export default function AccountDetails({ toggleWalletModal, ENSName, openOptions }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
-  const theme = useContext(ThemeContext)
-  const dispatch = useDispatch<AppDispatch>()
 
   function formatConnectorName() {
     const { ethereum } = window
@@ -245,10 +245,6 @@ export default function AccountDetails({ toggleWalletModal, ENSName, openOptions
     return null
   }
 
-  // const clearAllTransactionsCallback = useCallback(() => {
-  //   if (chainId) dispatch(clearAllTransactions({ chainId }))
-  // }, [dispatch, chainId])
-
   return (
     <>
       <UpperSection>
@@ -272,14 +268,15 @@ export default function AccountDetails({ toggleWalletModal, ENSName, openOptions
                       Disconnect
                     </WalletAction>
                   )}
-                  <WalletAction
-                    style={{ fontSize: '.825rem', fontWeight: 400 }}
+                  <MainButton
+                    backgroundColor={'transparent'}
+                    borderRadius={'12px'}
                     onClick={() => {
                       openOptions()
                     }}
                   >
                     Change
-                  </WalletAction>
+                  </MainButton>
                 </div>
               </AccountGroupingRow>
               <AccountGroupingRow id="web3-account-identifier-row">

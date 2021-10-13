@@ -3,16 +3,16 @@ import styled from 'styled-components/macro'
 import { ExternalLink } from '../../styles/components'
 
 const InfoCard = styled.button<{ active?: boolean }>`
-  background-color: ${({ active }) => (active ? '#40444F' : '#2C2F36')};
+  background-color: ${({ active }) => (active ? '#40444f50' : '#0f0f0f')};
   padding: 1rem;
   outline: none;
   border: 1px solid;
   border-radius: 12px;
   width: 100% !important;
   &:focus {
-    box-shadow: 0 0 0 1px #2172e5;
+    box-shadow: 0 0 0 1px var(--secondary);
   }
-  border-color: ${({ active }) => (active ? 'transparent' : '#40444F')};
+  /* border-color: ${({ active }) => (active ? 'transparent' : 'var(--secondary-opacity)')}; */
 `
 
 const OptionCard = styled(InfoCard as any)`
@@ -35,7 +35,7 @@ const OptionCardClickable = styled(OptionCard as any)<{ clickable?: boolean }>`
   margin-top: 0;
   &:hover {
     cursor: ${({ clickable }) => (clickable ? 'pointer' : '')};
-    border: ${({ clickable }) => (clickable ? `1px solid #2172E5` : ``)};
+    border: ${({ clickable }) => (clickable ? `1px solid var(--secondary)` : ``)};
   }
   opacity: ${({ disabled }) => (disabled ? '0.5' : '1')};
 `
@@ -65,7 +65,7 @@ const CircleWrapper = styled.div`
 const HeaderText = styled.div`
   display: flex;
   flex-flow: row nowrap;
-  color: ${(props) => (props.color === 'blue' ? '#2172E5' : '#FFFFFF')};
+  color: ${(props) => (props.color === 'blue' ? 'var(--secondary)' : '#FFFFFF')};
   font-size: 1rem;
   font-weight: 500;
 `
