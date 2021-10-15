@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import CreatorCard from '../../components/CreatorCard'
+import CreatorCard from './CreatorCard'
 import { ContainerRow, PageWrapper, SpacerLarge, TextCustom, TextTitle } from '../../styles/globalStyles'
 import { TCreatorElement } from '../../types'
 

@@ -29,10 +29,10 @@ export const MainButton = styled.button<{
     cursor: default;
   }
 
-  color: ${({ color }) => (color ? color : 'var(--secondary)')};
+  color: ${({ color }) => (color ? color : 'var(--primary-text)')};
   padding: ${({ padding }) => (padding ? padding : '8px 16px')};
   margin: ${({ margin }) => (margin ? margin : '0')};
-  width: ${({ width }) => (width ? width : '100%')};
+  width: ${({ width }) => (width ? width : 'fit-content')};
   height: ${({ height }) => (height ? height : '32px')};
   background: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'var(--secondary)')};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '0px')};

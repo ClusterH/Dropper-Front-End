@@ -15,4 +15,33 @@ body {
   transition: background-color 300ms ease-in-out 0s, opacity 800ms ease-in-out 0s;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* For Chrome */
+/* width */
+::-webkit-scrollbar {
+  @media all and (min-width: 990px) {
+    width: 4px;
+    height: 2px;
+  }
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-opacity);
+  height: 48px;
+  width: 48px;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary);
 }

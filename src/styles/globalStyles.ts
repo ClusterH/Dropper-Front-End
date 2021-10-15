@@ -15,13 +15,14 @@ export const GlobalStyles = createGlobalStyle`
 
 // Used for wrapping a page component
 export const PageWrapper = styled.div<{ image?: string }>`
+  position: relative;
   background-color: var(--primary);
   background-image: ${({ image }) => (image ? `url(${image})` : 'none')};
   background-size: cover;
   background-position: center;
   width: 100%;
   margin: 0 auto;
-  padding: 50px 24px;
+  padding: 0;
   min-height: calc(100vh - 72px);
   display: flex;
   flex-direction: column;
@@ -51,7 +52,13 @@ export const SpacerLarge = styled.div`
   height: 32px;
   width: 32px;
 `
-
+export const ComponentWrapper = styled.div<{ padding?: string; margin?: string }>`
+  position: relative;
+  width: 100%;
+  max-width: 1140px;
+  padding: ${({ padding }) => (padding ? padding : '0')};
+  margin: ${({ margin }) => (margin ? margin : '0')};
+`
 // Used for providing a wrapper around a component
 export const ContainerRow = styled.div<{
   rowWidth?: string
@@ -59,9 +66,12 @@ export const ContainerRow = styled.div<{
   alignItems?: TFlexAlignItems
   backgroundColor?: string
   image?: string
+  padding?: string
+  margin?: string
+  width?: string
 }>`
   display: flex;
-  flex-direction: 'row';
+  flex-direction: row;
   justify-content: ${({ justifyContent }) => (justifyContent ? justifyContent : 'space-between')};
   align-items: ${({ alignItems }) => (alignItems ? alignItems : 'center')};
   background-color: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'none')};
@@ -69,30 +79,54 @@ export const ContainerRow = styled.div<{
   background-image: ${({ image }) => (image ? `url(${image})` : 'none')};
   background-size: cover;
   background-position: center;
+  padding: ${({ padding }) => (padding ? padding : '0')};
+  margin: ${({ margin }) => (margin ? margin : '0')};
+  width: ${({ width }) => (width ? width : '100%')};
+  gap: 12px;
 `
 export const ContainerColumn = styled.div<{
   justifyContent?: TFlexJustifyContents
   alignItems?: TFlexAlignItems
   backgroundColor?: string
   image?: string
+  padding?: string
+  margin?: string
+  width?: string
+  height?: string
 }>`
   display: flex;
-  flex-direction: 'column';
+  flex-direction: column;
   justify-content: ${({ justifyContent }) => (justifyContent ? justifyContent : 'center')};
   align-items: ${({ alignItems }) => (alignItems ? alignItems : 'center')};
   background-color: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'none')};
-  width: 100%;
   background-image: ${({ image }) => (image ? `url(${image})` : 'none')};
   background-size: cover;
   background-position: center;
+  padding: ${({ padding }) => (padding ? padding : '0')};
+  margin: ${({ margin }) => (margin ? margin : '0')};
+  width: ${({ width }) => (width ? width : '100%')};
+  height: ${({ height }) => (height ? height : '50vh')};
 `
-export const BoxCard = styled.div<{ boxWidth?: string; boxHeight?: string }>`
-  width: ${({ boxWidth }) => (boxWidth ? boxWidth : 'fit-content')};
-  height: ${({ boxHeight }) => (boxHeight ? boxHeight : '50vh')};
+export const BigBox = styled.div<{ padding?: string; width?: string }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  width: ${({ width }) => (width ? width : '100%')};
+  height: auto;
+  padding: ${({ padding }) => (padding ? padding : '24px')};
+  border-style: solid;
+  border-radius: 10px;
+  border-color: #ff0069;
+  background: black;
+  box-shadow: 3px 3px 12px 2px #ff0069;
+`
+export const BoxCard = styled.div<{ boxWidth?: string; boxHeight?: string }>`
+  width: ${({ boxWidth }) => (boxWidth ? boxWidth : 'fit-content')};
+  height: ${({ boxHeight }) => (boxHeight ? boxHeight : 'auto')};
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; */
   text-align: center;
   padding: 10px;
   margin: 12px;
@@ -119,21 +153,29 @@ export const TextMain = styled.span`
   font-weight: 600;
   line-height: 1.6;
   margin: 1rem 0;
+  text-align: center;
 `
 export const TextDescription = styled.span`
   color: var(--primary-text);
   font-size: 14px;
   line-height: 1.6;
 `
-export const TextCustom = styled.p<{ color: string; fontSize?: string; fontWeight?: string; lineHeight?: number }>`
-  color: ${({ color }) => color};
-  font-size: ${({ fontSize }) => (fontSize ? fontSize : '18px')};
-  font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 500)};
+export const TextCustom = styled.p<{
+  color?: string
+  fontSize?: string
+  fontWeight?: number
+  lineHeight?: number
+  textAlign?: string
+}>`
+  color: ${({ color }) => (color ? color : 'var(--primary-text)')};
+  font-size: ${({ fontSize }) => (fontSize ? fontSize : '1.25rem')};
+  font-weight: ${({ fontWeight }) => (fontWeight ? fontWeight : 600)};
   line-height: ${({ lineHeight }) => (lineHeight ? lineHeight : 1.6)};
+  text-align: ${({ textAlign }) => (textAlign ? textAlign : 'center')};
 `
-
-export const StyledClickable = styled.div`
-  :active {
-    opacity: 0.6;
-  }
+export const Divider = styled.div<{ width?: string; height?: string; margin?: string }>`
+  width: ${({ width }) => (width ? width : '50%')};
+  height: ${({ height }) => (height ? height : '4px')};
+  background-color: var(--secondary);
+  margin: ${({ margin }) => (margin ? margin : '2rem 0')};
 `

@@ -9,6 +9,7 @@ const Header = lazy(() => import('./components/Header'))
 const Home = lazy(() => import('./pages/Home'))
 const Login = lazy(() => import('./pages/Login'))
 const Creators = lazy(() => import('./pages/Creators'))
+const Collections = lazy(() => import('./pages/Collections'))
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/creators" component={Creators} />
+          <Route exact path="/collections" component={Collections} />
         </Router>
       </Web3ReactManager>
     </Suspense>
