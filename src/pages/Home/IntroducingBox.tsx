@@ -21,7 +21,12 @@ export const IntroducingBox: React.FC = () => {
           imgWidth={'350px'}
         />
         <SpacerMedium />
-        <TransparentBtn width={'fit-content'} borderRadius={'24px'} padding={'24px 24px'}>
+        <TransparentBtn
+          borderRadius={'24px'}
+          padding={'24px 24px'}
+          margin={'12px'}
+          onClick={() => (window.location.href = '/collections')}
+        >
           Buy My First Pack
         </TransparentBtn>
       </BigBox>

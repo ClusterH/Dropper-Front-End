@@ -3,7 +3,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Contract } from '@ethersproject/contracts'
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useActiveWeb3React } from '../../hooks/web3'
+import { useActiveWeb3React } from '../../hooks/useWeb3'
 import { useBlockNumber } from '../application/hook'
 import { AppDispatch, AppState } from '../index'
 import {
@@ -67,7 +67,6 @@ function useCallsData(calls: (Call | undefined)[], options?: ListenerOptions): C
     (state) => state.multicall.callResults
   )
 
-  console.log('multical callResults===>>>', callResults)
   const dispatch = useDispatch<AppDispatch>()
 
   const serializedCallKeys: string = useMemo(
@@ -169,12 +168,12 @@ export function useSingleContractMultipleData(
     () =>
       contract && fragment && callInputs?.length > 0 && callInputs.every((inputs) => isValidMethodArgs(inputs))
         ? callInputs.map<Call>((inputs) => {
-            return {
-              address: contract.address,
-              callData: contract.interface.encodeFunctionData(fragment, inputs),
-              ...(gasRequired ? { gasRequired } : {}),
-            }
-          })
+          return {
+            address: contract.address,
+            callData: contract.interface.encodeFunctionData(fragment, inputs),
+            ...(gasRequired ? { gasRequired } : {}),
+          }
+        })
         : [],
     [contract, fragment, callInputs, gasRequired]
   )
@@ -207,14 +206,14 @@ export function useMultipleContractSingleData(
     () =>
       fragment && addresses && addresses.length > 0 && callData
         ? addresses.map<Call | undefined>((address) => {
-            return address && callData
-              ? {
-                  address,
-                  callData,
-                  ...(gasRequired ? { gasRequired } : {}),
-                }
-              : undefined
-          })
+          return address && callData
+            ? {
+              address,
+              callData,
+              ...(gasRequired ? { gasRequired } : {}),
+            }
+            : undefined
+        })
         : [],
     [addresses, callData, fragment, gasRequired]
   )
@@ -240,12 +239,12 @@ export function useSingleCallResult(
   const calls = useMemo<Call[]>(() => {
     return contract && fragment && isValidMethodArgs(inputs)
       ? [
-          {
-            address: contract.address,
-            callData: contract.interface.encodeFunctionData(fragment, inputs),
-            ...(gasRequired ? { gasRequired } : {}),
-          },
-        ]
+        {
+          address: contract.address,
+          callData: contract.interface.encodeFunctionData(fragment, inputs),
+          ...(gasRequired ? { gasRequired } : {}),
+        },
+      ]
       : []
   }, [contract, fragment, inputs, gasRequired])
 

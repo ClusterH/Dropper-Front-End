@@ -27,7 +27,12 @@ export const ClixDropp: React.FC = () => {
           <OnlineImages url={'https://dropper.s3.ca-central-1.amazonaws.com/clix-pack-5.png'} imgWidth={'350px'} />
         </ContainerRow>
         <SpacerMedium />
-        <TransparentBtn width={'fit-content'} borderRadius={'24px'} padding={'24px 24px'}>
+        <TransparentBtn
+          width={'fit-content'}
+          borderRadius={'24px'}
+          padding={'24px 24px'}
+          onClick={() => (window.location.href = '/collections')}
+        >
           See Clix&apos;s First Dropp!
         </TransparentBtn>
       </ContainerColumn>

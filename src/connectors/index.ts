@@ -10,9 +10,9 @@ import { FortmaticConnector } from './Fortmatic'
 import { NetworkConnector } from './NetworkConnector'
 import DROPPER_LOGO_URL from '../assets/images/dropper-small-shaddow.png'
 
-const INFURA_KEY = 'e1038c9b69c146ffabb697554de8bbd4'
-const FORMATIC_KEY = 'pk_live_F937DF033A1666BF'
-const PORTIS_ID = 'c0e2bf01-4b08-4fd5-ac7b-8e26b58cd236'
+const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
+const FORTMATIC_KEY = process.env.REACT_APP_FORTMATIC_KEY
+const PORTIS_ID = process.env.REACT_APP_PORTIS_ID
 const WALLETCONNECT_BRIDGE_URL = 'https://uniswap.bridge.walletconnect.org'
 
 if (typeof INFURA_KEY === 'undefined') {
@@ -69,7 +69,7 @@ export const walletconnect = new WalletConnectConnector({
 
 // mainnet only
 export const fortmatic = new FortmaticConnector({
-  apiKey: FORMATIC_KEY ?? '',
+  apiKey: FORTMATIC_KEY ?? '',
   chainId: 1,
 })
 

@@ -18,14 +18,17 @@ export const MainButton = styled.button<{
   align-items: center;
   justify-content: center;
   position: relative;
+  font-weight: 600;
+  transition: 0.3s;
+  box-shadow: 0px 3px 10px var(--secondary-opacity);
   &:hover {
-    background: var(--primary-text);
+    background: var(--primary);
     color: var(--secondary);
+    /* border: 1px solid var(--secondary); */
   }
 
   &:disabled {
-    background: #606061;
-    color: #caced2;
+    color: var(--disabled);
     cursor: default;
   }
 
@@ -45,5 +48,8 @@ export const TransparentBtn = styled(MainButton)`
   &:hover {
     background: transparent;
     color: var(--secondary) !important;
+  }
+  &:disabled {
+    border: 2px solid var(--disabled);
   }
 `

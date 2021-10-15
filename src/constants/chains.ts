@@ -1,3 +1,8 @@
+// export enum SupportedChainId {
+//   MAINNET = 1,
+//   RINKEBY = 4,
+// }
+
 export enum SupportedChainId {
   MAINNET = 1,
   ROPSTEN = 3,

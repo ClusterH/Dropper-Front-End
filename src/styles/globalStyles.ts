@@ -10,6 +10,7 @@ export const GlobalStyles = createGlobalStyle`
     --secondary-text: #1a1a1a;
     --accent: #505050;
     --accent-text: #ffffff;
+    --disabled: #606061;
   }
 `
 
@@ -116,17 +117,13 @@ export const BigBox = styled.div<{ padding?: string; width?: string }>`
   padding: ${({ padding }) => (padding ? padding : '24px')};
   border-style: solid;
   border-radius: 10px;
-  border-color: #ff0069;
+  border-color: var(--secondary);
   background: black;
-  box-shadow: 3px 3px 12px 2px #ff0069;
+  box-shadow: 3px 3px 12px 2px var(--secondary);
 `
 export const BoxCard = styled.div<{ boxWidth?: string; boxHeight?: string }>`
   width: ${({ boxWidth }) => (boxWidth ? boxWidth : 'fit-content')};
   height: ${({ boxHeight }) => (boxHeight ? boxHeight : 'auto')};
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start; */
   text-align: center;
   padding: 10px;
   margin: 12px;
@@ -159,6 +156,7 @@ export const TextDescription = styled.span`
   color: var(--primary-text);
   font-size: 14px;
   line-height: 1.6;
+  text-align: center;
 `
 export const TextCustom = styled.p<{
   color?: string
@@ -178,4 +176,9 @@ export const Divider = styled.div<{ width?: string; height?: string; margin?: st
   height: ${({ height }) => (height ? height : '4px')};
   background-color: var(--secondary);
   margin: ${({ margin }) => (margin ? margin : '2rem 0')};
+`
+export const AvatarContainer = styled.img<{ width?: string }>`
+  border-radius: 50%;
+  width: ${({ width }) => (width ? width : '100%')};
+  max-width: 240px;
 `

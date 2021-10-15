@@ -19,9 +19,9 @@ const MenuItem = styled(NavLink)`
 const Menu: React.FC = () => {
   return (
     <MenuContainer justifyContent={'flex-start'} rowWidth={'fit-content'}>
-      <MenuItem to="/creators/">Creators</MenuItem>
-      <MenuItem to="/creators/">My Account</MenuItem>
-      <MenuItem to="/creators/">Rankings</MenuItem>
+      <MenuItem to="/creators">Creators</MenuItem>
+      <MenuItem to="/account">My Account</MenuItem>
+      <MenuItem to="/account">Rankings</MenuItem>
     </MenuContainer>
   )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components/macro'
-import { useActiveWeb3React } from '../../../hooks/web3'
+import { useActiveWeb3React } from '../../../hooks/useWeb3'
 import Jazzicon from '@metamask/jazzicon'
 
 const StyledIdenticonContainer = styled.div`

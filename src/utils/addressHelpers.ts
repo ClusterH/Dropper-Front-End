@@ -1,10 +1,9 @@
-import { CONTRACT_ADDRESSES } from '../constants/addresses'
-import { SupportedChainId } from '../constants/chains'
+import { DROPPER_CONTRACT_ADDRESSES, COLLECTION_CONTRACT_ADDRESSES } from '../constants/addresses'
 
-export const getDropperAddress = () => {
-  return CONTRACT_ADDRESSES.dropper[SupportedChainId.RINKEBY]
+export const getDropperAddress = (chainId: number) => {
+  return DROPPER_CONTRACT_ADDRESSES[chainId]
 }
 
-export const getCollectionAddress = () => {
-  return CONTRACT_ADDRESSES.collection[SupportedChainId.RINKEBY]
+export const getCollectionAddress = (chainId: number) => {
+  return COLLECTION_CONTRACT_ADDRESSES[chainId]
 }

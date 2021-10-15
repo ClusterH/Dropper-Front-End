@@ -1,20 +1,23 @@
 import React from 'react'
 import styled from 'styled-components'
 import { MainButton } from '../../components/Buttons/MainButton'
-import { BoxCard, ContainerColumn, TextDescription, TextSubTitle } from '../../styles/globalStyles'
+import { useCollectionContext } from '../../contexts/CollectionContext'
+import { AvatarContainer, BoxCard, ContainerColumn, TextDescription, TextSubTitle } from '../../styles/globalStyles'
 import { TCreatorElement } from '../../types'
-
-const AvatarContainer = styled.img`
-  border-radius: 50%;
-  width: 100%;
-  max-width: 240px;
-`
 
 interface ICreatorCardProps {
   item: TCreatorElement
 }
 
 const CreatorCard: React.FC<ICreatorCardProps> = ({ item }) => {
+  const { setCreatorId } = useCollectionContext()
+  const showCollections = React.useCallback(
+    (item: TCreatorElement) => {
+      setCreatorId(item.id)
+      window.location.href = `/collections`
+    },
+    [setCreatorId]
+  )
   return (
     <BoxCard boxWidth={'260px'}>
       <ContainerColumn justifyContent={'space-between'} height={'480px'}>
@@ -23,7 +26,7 @@ const CreatorCard: React.FC<ICreatorCardProps> = ({ item }) => {
           <TextSubTitle>{item.name}</TextSubTitle>
           <TextDescription>{item.description}</TextDescription>
         </ContainerColumn>
-        <MainButton borderRadius={'4px'} onClick={() => (window.location.href = `/collections/${item.id}`)}>
+        <MainButton borderRadius={'4px'} onClick={() => showCollections(item)}>
           View Collection
         </MainButton>
       </ContainerColumn>

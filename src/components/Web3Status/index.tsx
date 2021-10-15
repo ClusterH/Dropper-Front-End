@@ -1,18 +1,11 @@
-import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import React from 'react'
 import { FiActivity } from 'react-icons/fi'
 import styled from 'styled-components'
-import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
-import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
-import PortisIcon from '../../assets/images/portisIcon.png'
-import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { fortmatic, injected, portis, walletconnect, walletlink } from '../../connectors'
 import { NetworkContextName } from '../../constants/misc'
 import useENSName from '../../hooks/useENSName'
 import { useWalletModalToggle } from '../../state/application/hook'
 import { shortenAddress } from '../../utils'
-import Identicon from '../Icons/Identicon'
 import WalletModal from '../WalletModal'
 
 const IconWrapper = styled.div<{ size?: number }>`
@@ -39,10 +32,11 @@ const Web3StatusGeneric = styled.div`
   border-width: 1px;
   border-radius: 12px;
   text-decoration: none;
+  transition: 0.3s;
   :hover {
     color: var(--secondary);
     border-color: transparent;
-    background: var(--primary-text);
+    background: var(--primary);
   }
 `
 const Web3StatusError = styled(Web3StatusGeneric)`
@@ -77,7 +71,7 @@ const NetworkIcon = styled(FiActivity)`
   height: 16px;
 `
 
-function Web3StatusInner() {
+const Web3StatusInner = () => {
   const { account, error } = useWeb3React()
   const { ENSName } = useENSName(account ?? undefined)
   const toggleWalletModal = useWalletModalToggle()
@@ -104,7 +98,7 @@ function Web3StatusInner() {
   }
 }
 
-export default function Web3Status() {
+const Web3Status: React.FC = () => {
   const { active, account } = useWeb3React()
   const contextNetwork = useWeb3React(NetworkContextName)
   const { ENSName } = useENSName(account ?? undefined)
@@ -120,3 +114,5 @@ export default function Web3Status() {
     </>
   )
 }
+
+export default Web3Status
