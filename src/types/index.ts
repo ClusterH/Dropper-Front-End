@@ -29,10 +29,11 @@ export type TCreatorElement = {
   imgUrl: string
 }
 
-export type TParkItem = {
+export type TPackItem = {
   id: number
   level: 'Basic' | 'Plus' | 'Premium'
   count: number
   price: number
   uri: string
+  balance?: string
 }

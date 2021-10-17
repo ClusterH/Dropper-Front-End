@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import { TransparentBtn } from '../../components/Buttons/MainButton'
 import OnlineImages from '../../components/Icons/onlineImages'
-import useBuyPack from '../../hooks/useCollection'
+import { useBuyPack } from '../../hooks/useCollection'
 import { ContainerColumn, TextDescription, TextMain } from '../../styles/globalStyles'
-import { TParkItem } from '../../types'
-// import { ProcessingLoader } from './Processing'
+import { TPackItem } from '../../types'
+import { ProcessingLoader } from './Processing'
 
-export const AccParkItem: React.FC<{ park: TParkItem }> = ({ park }) => {
+export const PackItem: React.FC<{ pack: TPackItem }> = ({ pack }) => {
   const [pendingTx, setPendingTx] = useState<boolean>(false)
-  const { onBuyPark } = useBuyPack(park.id, 1)
+  const { onBuyPack } = useBuyPack(pack.id, 1)
 
   return (
     <ContainerColumn width={'32%'}>
-      <OnlineImages url={park.uri} imgWidth={'95%'} />
-      <TextMain>{park.level}</TextMain>
-      <TextDescription>{`${park.count} Moments @ $${park.price}`}</TextDescription>
+      <OnlineImages url={pack.uri} imgWidth={'95%'} />
+      <TextMain>{pack.level}</TextMain>
+      <TextDescription>{`${pack.count} Moments @ $${pack.price}`}</TextDescription>
       <TransparentBtn
         borderRadius={'24px'}
         padding={'24px 24px'}
@@ -23,7 +23,7 @@ export const AccParkItem: React.FC<{ park: TParkItem }> = ({ park }) => {
         onClick={async () => {
           setPendingTx(true)
           try {
-            await onBuyPark(park.id, 1)
+            await onBuyPack(pack.id, 1)
             setPendingTx(false)
             window.location.href = `/account`
           } catch (e) {
@@ -33,7 +33,7 @@ export const AccParkItem: React.FC<{ park: TParkItem }> = ({ park }) => {
       >
         {pendingTx ? 'Processing' : 'Buy Now!'}
       </TransparentBtn>
-      {/* {pendingTx && <ProcessingLoader />} */}
+      {pendingTx && <ProcessingLoader />}
     </ContainerColumn>
   )
 }

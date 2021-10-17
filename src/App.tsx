@@ -24,7 +24,7 @@ const App: React.FC = () => {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/creators" component={Creators} />
-          <Route exact path="/collections" component={Collections} />
+          <Route exact path="/clix" component={Collections} />
           <Route exact path="/account" component={Account} />
         </Switch>
       </Suspense>

@@ -1,10 +1,16 @@
-import { useMemo } from 'react'
 import { Contract } from '@ethersproject/contracts'
+import { useMemo } from 'react'
+import COLLECTION_ABI from '../abis/collection.json'
+import DROPPER_ABI from '../abis/dropper.json'
+import ENS_PUBLIC_RESOLVER_ABI from '../abis/ens-public-resolver.json'
+import ENS_ABI from '../abis/ens-registrar.json'
+import {
+  COLLECTION_CONTRACT_ADDRESSES,
+  DROPPER_CONTRACT_ADDRESSES,
+  ENS_REGISTRAR_ADDRESSES,
+} from '../constants/addresses'
 import { getContract } from '../utils'
 import { useActiveWeb3React } from './useWeb3'
-import ENS_ABI from '../abis/ens-registrar.json'
-import ENS_PUBLIC_RESOLVER_ABI from '../abis/ens-public-resolver.json'
-import { ENS_REGISTRAR_ADDRESSES } from '../constants/addresses'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -27,6 +33,14 @@ export function useContract<T extends Contract = Contract>(
       return null
     }
   }, [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]) as T
+}
+
+export const useGetDropperContract = () => {
+  return useContract(DROPPER_CONTRACT_ADDRESSES, DROPPER_ABI, true)
+}
+
+export const useGetCollectionContract = () => {
+  return useContract(COLLECTION_CONTRACT_ADDRESSES, COLLECTION_ABI, true)
 }
 
 export function useENSRegistrarContract(withSignerIfPossible?: boolean) {

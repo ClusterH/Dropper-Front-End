@@ -25,7 +25,7 @@ export const IntroducingBox: React.FC = () => {
           borderRadius={'24px'}
           padding={'24px 24px'}
           margin={'12px'}
-          onClick={() => (window.location.href = '/collections')}
+          onClick={() => (window.location.href = '/clix')}
         >
           Buy My First Pack
         </TransparentBtn>

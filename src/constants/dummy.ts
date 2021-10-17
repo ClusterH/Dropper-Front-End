@@ -1,8 +1,8 @@
 // This file is for dummy data used in this app
 
-import { TParkItem } from '../types'
+import { TPackItem } from '../types'
 
-export const parkList: TParkItem[] = [
+export const packList: TPackItem[] = [
   {
     id: 1,
     level: 'Basic',

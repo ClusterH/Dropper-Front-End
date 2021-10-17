@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import { TransparentBtn } from '../../components/Buttons/MainButton'
 import OnlineImages from '../../components/Icons/onlineImages'
-import useBuyPack from '../../hooks/useCollection'
+import { useOpenPackWithApprove } from '../../hooks/useCollection'
 import { ContainerColumn, TextDescription, TextMain } from '../../styles/globalStyles'
-import { TParkItem } from '../../types'
-import { ProcessingLoader } from './Processing'
+import { TPackItem } from '../../types'
+import { ProcessingLoader } from '../Collections/Processing'
 
-export const ParkItem: React.FC<{ park: TParkItem }> = ({ park }) => {
+export const AccPackItem: React.FC<{ pack: TPackItem }> = ({ pack }) => {
   const [pendingTx, setPendingTx] = useState<boolean>(false)
-  const { onBuyPark } = useBuyPack(park.id, 1)
+  const { onOpenPack } = useOpenPackWithApprove(pack.id, 1)
 
   return (
     <ContainerColumn width={'32%'}>
-      <OnlineImages url={park.uri} imgWidth={'95%'} />
-      <TextMain>{park.level}</TextMain>
-      <TextDescription>{`${park.count} Moments @ $${park.price}`}</TextDescription>
+      <OnlineImages url={pack.uri} imgWidth={'95%'} />
+      <TextMain>{`${pack.level} Packs (${pack.balance})`}</TextMain>
+      <TextDescription>{`@DropperNFT`}</TextDescription>
       <TransparentBtn
         borderRadius={'24px'}
         padding={'24px 24px'}
@@ -23,15 +23,18 @@ export const ParkItem: React.FC<{ park: TParkItem }> = ({ park }) => {
         onClick={async () => {
           setPendingTx(true)
           try {
-            await onBuyPark(park.id, 1)
+            const res = await onOpenPack(pack.id, 1)
+            console.log('opening Pack===>>>', res)
             setPendingTx(false)
-            window.location.href = `/account`
+
+            // window.location.href = `/account`
           } catch (e) {
+            console.log('openPack error', e)
             setPendingTx(false)
           }
         }}
       >
-        {pendingTx ? 'Processing' : 'Buy Now!'}
+        {pendingTx ? 'Processing' : 'Open Pack!'}
       </TransparentBtn>
       {pendingTx && <ProcessingLoader />}
     </ContainerColumn>

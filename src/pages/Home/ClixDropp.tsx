@@ -31,7 +31,7 @@ export const ClixDropp: React.FC = () => {
           width={'fit-content'}
           borderRadius={'24px'}
           padding={'24px 24px'}
-          onClick={() => (window.location.href = '/collections')}
+          onClick={() => (window.location.href = '/clix')}
         >
           See Clix&apos;s First Dropp!
         </TransparentBtn>

@@ -14,7 +14,7 @@ const CreatorCard: React.FC<ICreatorCardProps> = ({ item }) => {
   const showCollections = React.useCallback(
     (item: TCreatorElement) => {
       setCreatorId(item.id)
-      window.location.href = `/collections`
+      window.location.href = `/clix`
     },
     [setCreatorId]
   )

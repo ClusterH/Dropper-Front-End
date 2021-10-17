@@ -46,7 +46,7 @@ const UpperSection = styled.div`
 `
 const InfoCard = styled.div`
   padding: 1rem;
-  border: 1px solid #ff0069;
+  border: 1px solid var(--secondary);
   border-radius: 4px;
   position: relative;
   display: grid;
@@ -59,7 +59,7 @@ const AccountGroupingRow = styled.div`
   justify-content: space-between;
   align-items: center;
   font-weight: 400;
-  color: #ffffff;
+  color: var(--primary-text);
 
   div {
     display: flex;
