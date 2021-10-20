@@ -4,6 +4,7 @@ import { MainButton } from '../../components/Buttons/MainButton'
 import { useCollectionContext } from '../../contexts/CollectionContext'
 import { AvatarContainer, BoxCard, ContainerColumn, TextDescription, TextSubTitle } from '../../styles/globalStyles'
 import { TCreatorElement } from '../../types'
+import { isMobile, isDesktop } from 'react-device-detect'
 
 interface ICreatorCardProps {
   item: TCreatorElement
@@ -19,7 +20,7 @@ const CreatorCard: React.FC<ICreatorCardProps> = ({ item }) => {
     [setCreatorId]
   )
   return (
-    <BoxCard boxWidth={'260px'}>
+    <BoxCard boxWidth={isMobile ? '90%' : '260px'}>
       <ContainerColumn justifyContent={'space-between'} height={'480px'}>
         <ContainerColumn>
           <AvatarContainer src={item.imgUrl} />

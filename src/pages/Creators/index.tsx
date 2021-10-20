@@ -1,10 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
 import CreatorCard from './CreatorCard'
-import { ContainerRow, PageWrapper, SpacerLarge, TextCustom, TextTitle } from '../../styles/globalStyles'
+import {
+  ContainerColumn,
+  PageWrapper,
+  SpacerLarge,
+  TextCustom,
+  TextTitle,
+  device,
+  SpacerXSmall,
+  ResponsiveContainer,
+} from '../../styles/globalStyles'
 import { TCreatorElement } from '../../types'
-
-const CreatorContainer = styled(ContainerRow)``
 
 const Creators: React.FC = () => {
   const creatorList: TCreatorElement[] = [
@@ -45,19 +53,20 @@ const Creators: React.FC = () => {
   return (
     <PageWrapper>
       <SpacerLarge />
-      <ContainerRow justifyContent={'center'}>
-        <TextTitle>Meet Our&nbsp;</TextTitle>
+      <ResponsiveContainer justifyContent={'center'}>
+        <TextTitle>Meet Our</TextTitle>
+        {!isMobile && <SpacerXSmall />}
         <TextCustom color={'var(--secondary)'} fontSize={'2.5rem'}>
           Creators
         </TextCustom>
-      </ContainerRow>
+      </ResponsiveContainer>
 
       <SpacerLarge />
-      <CreatorContainer justifyContent={'center'}>
+      <ResponsiveContainer justifyContent={'center'}>
         {creatorList.map((item: TCreatorElement) => {
           return <CreatorCard key={item.id} item={item} />
         })}
-      </CreatorContainer>
+      </ResponsiveContainer>
     </PageWrapper>
   )
 }

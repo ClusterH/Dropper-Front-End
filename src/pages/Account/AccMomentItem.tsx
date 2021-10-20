@@ -1,13 +1,19 @@
 import React from 'react'
+import { isMobile } from 'react-device-detect'
+import styled from 'styled-components'
 import OnlineImages from '../../components/Icons/onlineImages'
 import { ContainerColumn, TextDescription, TextMain } from '../../styles/globalStyles'
 import { TMomentItem } from '../../types'
-import styled from 'styled-components'
+import { b64EncodeUnicode } from '../../utils/convertString'
 
 const MomentItemContainer = styled(ContainerColumn)`
-  width: 32%;
   height: auto;
   min-height: 240px;
+  box-shadow: 0px 3px 10px var(--secondary-opacity);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 0 0 32px 0;
+
   &:hover {
     cursor: pointer;
   }
@@ -15,20 +21,17 @@ const MomentItemContainer = styled(ContainerColumn)`
 
 export const AccMomentItem: React.FC<{ moment: TMomentItem }> = ({ moment }) => {
   const showMoment = () => {
+    const query = b64EncodeUnicode(JSON.stringify(moment))
     const params = new URLSearchParams()
-    params.append('uri', moment.uri!)
-    params.append('id', moment.id!)
-    params.append('rarity', moment.rarity!)
-    params.append('name', moment.name!)
-    params.append('img', moment.image!)
+    params.append('query', query)
     window.location.href = `/item?${params.toString()}`
   }
 
   return (
-    <MomentItemContainer onClick={() => showMoment()}>
-      <OnlineImages url={moment.image!} imgWidth={'95%'} />
+    <MomentItemContainer onClick={() => showMoment()} width={isMobile ? '90%' : '32%'}>
+      <OnlineImages url={moment.imageUrl!} imgWidth={'95%'} />
       <TextMain>{moment.name}</TextMain>
-      <TextDescription>{`@clixHimself`}</TextDescription>
+      <TextDescription>{moment.description}</TextDescription>
     </MomentItemContainer>
   )
 }

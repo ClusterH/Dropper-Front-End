@@ -2,7 +2,7 @@ import React from 'react'
 import PropagateLoader from 'react-spinners/PropagateLoader'
 import styled from 'styled-components'
 import { VideoContainer } from '../../components/VideoContainer'
-import { ContainerRow, TextSubTitle } from '../../styles/globalStyles'
+import { ContainerRow, TextCustom, TextSubTitle } from '../../styles/globalStyles'
 import { TPackItem } from '../../types'
 
 const LoaderWrapper = styled.div`
@@ -27,7 +27,7 @@ export const ProcessingLoader: React.FC<{ animationUrl?: string }> = ({ animatio
         posterUrl={'https://dropper.s3.ca-central-1.amazonaws.com/clix-pack2.png'}
       ></VideoContainer>
       <ContainerRow justifyContent={'center'}>
-        <TextSubTitle>Processing your transaction... This can take a few minutes</TextSubTitle>
+        <TextCustom>Processing your transaction... This can take a few minutes</TextCustom>
       </ContainerRow>
       <ContainerRow justifyContent={'center'}>
         <PropagateLoader color={'#ff0069'} size={'32px'} />

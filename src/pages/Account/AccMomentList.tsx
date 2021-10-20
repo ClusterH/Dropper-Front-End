@@ -1,7 +1,7 @@
 import React from 'react'
 import { useMomentContext } from '../../contexts/MomentContext'
 import { useGetMomentList } from '../../hooks/useDropper'
-import { ContainerRow, TextSubTitle } from '../../styles/globalStyles'
+import { ResponsiveContainer, TextSubTitle } from '../../styles/globalStyles'
 import { AccMomentItem } from './AccMomentItem'
 
 export const AccMomentList: React.FC = () => {
@@ -10,7 +10,7 @@ export const AccMomentList: React.FC = () => {
   useGetMomentList()
 
   return (
-    <ContainerRow margin={'12px 0 0'} flexWrap={'wrap'}>
+    <ResponsiveContainer margin={'12px 0 0'} justifyContent={'space-between'}>
       {moments.length > 0 ? (
         moments.map((moment) => {
           return <AccMomentItem key={moment.id} moment={moment} />
@@ -18,6 +18,6 @@ export const AccMomentList: React.FC = () => {
       ) : (
         <TextSubTitle>You don&apos;t own any Moments yet</TextSubTitle>
       )}
-    </ContainerRow>
+    </ResponsiveContainer>
   )
 }

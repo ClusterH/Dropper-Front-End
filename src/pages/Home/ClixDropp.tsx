@@ -1,31 +1,35 @@
 import React from 'react'
-import styled from 'styled-components'
-import { MainButton, TransparentBtn } from '../../components/Buttons/MainButton'
+import { isMobile } from 'react-device-detect'
+import { TransparentBtn } from '../../components/Buttons/MainButton'
 import OnlineImages from '../../components/Icons/onlineImages'
 import {
   ComponentWrapper,
   ContainerColumn,
-  ContainerRow,
-  PageWrapper,
   SpacerMedium,
   TextCustom,
   TextMain,
-  TextSubTitle,
+  device,
+  ResponsiveContainer,
 } from '../../styles/globalStyles'
 
 export const ClixDropp: React.FC = () => {
   return (
-    <ComponentWrapper margin={'100px 0'}>
+    <ComponentWrapper margin={'100px 0'} padding={'24px'}>
       <ContainerColumn>
-        <ContainerRow>
+        <ResponsiveContainer>
           <ContainerColumn padding={'0 24px 0 0'}>
-            <TextCustom color={'var(--primary-text)'} fontSize={'3.5rem'} fontWeight={300} lineHeight={1.2}>
+            <TextCustom
+              color={'var(--primary-text)'}
+              fontSize={isMobile ? '2.5rem' : '3.5rem'}
+              fontWeight={300}
+              lineHeight={1.2}
+            >
               Compete to be Clix&apos;s #1 Fan!
             </TextCustom>
             <TextMain>Collect his full collection starting October 15th!</TextMain>
           </ContainerColumn>
           <OnlineImages url={'https://dropper.s3.ca-central-1.amazonaws.com/clix-pack-5.png'} imgWidth={'350px'} />
-        </ContainerRow>
+        </ResponsiveContainer>
         <SpacerMedium />
         <TransparentBtn
           width={'fit-content'}

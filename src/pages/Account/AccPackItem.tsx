@@ -1,11 +1,20 @@
 import React, { useState } from 'react'
+import styled from 'styled-components'
 import { TransparentBtn } from '../../components/Buttons/MainButton'
 import OnlineImages from '../../components/Icons/onlineImages'
 import { useOpenPackWithApprove } from '../../hooks/useCollection'
 import { ContainerColumn, TextDescription, TextMain } from '../../styles/globalStyles'
 import { TPackItem } from '../../types'
 import { ProcessingLoader } from '../Collections/Processing'
+import { isMobile } from 'react-device-detect'
 
+const PackItemWrapper = styled(ContainerColumn)`
+  box-shadow: 0px 3px 10px var(--secondary-opacity);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 0 0 32px 0;
+  height: auto;
+`
 export const AccPackItem: React.FC<{ pack: TPackItem; setActivatedTab: (tab: 'pack' | 'moment') => void }> = ({
   pack,
   setActivatedTab,
@@ -14,8 +23,8 @@ export const AccPackItem: React.FC<{ pack: TPackItem; setActivatedTab: (tab: 'pa
   const { onOpenPack } = useOpenPackWithApprove(pack.id, 1)
 
   return (
-    <ContainerColumn width={'32%'} height={'auto'}>
-      <OnlineImages url={pack.uri} imgWidth={'95%'} />
+    <PackItemWrapper width={isMobile ? '90%' : '32%'}>
+      <OnlineImages url={pack.uri} imgWidth={'100%'} />
       <TextMain>{`${pack.level} Packs (${pack.balance})`}</TextMain>
       <TextDescription>{`@DropperNFT`}</TextDescription>
       <TransparentBtn
@@ -38,6 +47,6 @@ export const AccPackItem: React.FC<{ pack: TPackItem; setActivatedTab: (tab: 'pa
         {pendingTx ? 'Processing' : 'Open Pack!'}
       </TransparentBtn>
       {pendingTx && <ProcessingLoader animationUrl={pack.animationUrl} />}
-    </ContainerColumn>
+    </PackItemWrapper>
   )
 }

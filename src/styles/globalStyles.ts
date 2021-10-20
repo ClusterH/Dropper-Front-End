@@ -13,7 +13,26 @@ export const GlobalStyles = createGlobalStyle`
     --disabled: #606061;
   }
 `
+const size = {
+  mobileS: '320px',
+  mobileM: '375px',
+  mobileL: '425px',
+  tablet: '768px',
+  laptop: '1024px',
+  laptopL: '1440px',
+  desktop: '2560px',
+}
 
+export const device = {
+  mobileS: `(min-width: ${size.mobileS})`,
+  mobileM: `(min-width: ${size.mobileM})`,
+  mobileL: `(min-width: ${size.mobileL})`,
+  tablet: `(min-width: ${size.tablet})`,
+  laptop: `(min-width: ${size.laptop})`,
+  laptopL: `(min-width: ${size.laptopL})`,
+  desktop: `(min-width: ${size.desktop})`,
+  desktopL: `(min-width: ${size.desktop})`,
+}
 // Used for wrapping a page component
 export const PageWrapper = styled.div<{ image?: string }>`
   position: relative;
@@ -108,15 +127,22 @@ export const ContainerColumn = styled.div<{
   padding: ${({ padding }) => (padding ? padding : '0')};
   margin: ${({ margin }) => (margin ? margin : '0')};
   width: ${({ width }) => (width ? width : '100%')};
-  height: ${({ height }) => (height ? height : '50vh')};
+  height: ${({ height }) => (height ? height : 'auto')};
 `
-export const BigBox = styled.div<{ padding?: string; width?: string }>`
+export const ResponsiveContainer = styled(ContainerColumn)`
+  @media ${device.laptop} {
+    flex-direction: row;
+    gap: 12px;
+  }
+`
+export const BigBox = styled.div<{ padding?: string; margin?: string; width?: string }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: ${({ width }) => (width ? width : '100%')};
   height: auto;
   padding: ${({ padding }) => (padding ? padding : '24px')};
+  margin: ${({ margin }) => (margin ? margin : '0')};
   border-style: solid;
   border-radius: 10px;
   border-color: var(--secondary);

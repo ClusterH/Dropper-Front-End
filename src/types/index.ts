@@ -37,13 +37,18 @@ export type TPackItem = {
   uri: string
   balance?: string
   animationUrl: string
+  packURI?: string
 }
 
-export type TMomentItem = {
-  id?: string
-  uri?: string
-  rarity?: string
-  name?: string
-  image?: string
-}
 export type TRarity = 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Mythic'
+
+export type TMomentItem = {
+  id: string
+  name: string
+  description: string
+  imageUrl: string
+  animationUrl: string
+  rarity: string
+  awsImageUrl: string
+  awsAnimationUrl: string
+}

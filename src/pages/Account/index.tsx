@@ -1,9 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import OnlineImages from '../../components/Icons/onlineImages'
-import { BoxCard, ContainerRow, Divider, PageWrapper } from '../../styles/globalStyles'
+import {
+  BoxCard,
+  ContainerRow,
+  ContainerColumn,
+  device,
+  Divider,
+  PageWrapper,
+  ResponsiveContainer,
+} from '../../styles/globalStyles'
 import { AccCollections } from './AccCollections'
 import { AccountInfo } from './AccInfo'
+import { isMobile } from 'react-device-detect'
 
 const AccImgWrapper = styled(BoxCard)`
   padding: 0;
@@ -26,10 +35,10 @@ const Account: React.FC = () => {
           <OnlineImages url={'https://dropper.s3.ca-central-1.amazonaws.com/discord-logo.png?fit=fill'}></OnlineImages>
         </AccImgWrapper>
       </ContainerRow>
-      <ContainerRow width={'80%'} alignItems={'flex-start'} margin={'50px 0 0'}>
+      <ResponsiveContainer width={'80%'} alignItems={'flex-start'} margin={'50px 0 0'}>
         <AccountInfo />
         <AccCollections />
-      </ContainerRow>
+      </ResponsiveContainer>
     </PageWrapper>
   )
 }

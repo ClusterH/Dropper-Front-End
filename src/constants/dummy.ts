@@ -10,6 +10,7 @@ export const packList: TPackItem[] = [
     price: 39.99,
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
     animationUrl: 'https://dropper.s3.ca-central-1.amazonaws.com/basic-reveal.mp4',
+    packURI: 'QmcABjG7aSbnssspjnDwWhvge9BF8oAUeVUXsSUXuGWfQS',
   },
   {
     id: 2,
@@ -18,6 +19,7 @@ export const packList: TPackItem[] = [
     price: 74.99,
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clix-pack-5.png',
     animationUrl: 'https://dropper.s3.ca-central-1.amazonaws.com/plus-reveal.mp4',
+    packURI: 'QmcXUUrWPU9AzQxZeXN6K9sxyvoQS3Wmc6ZdAtgTam3syp',
   },
   {
     id: 3,
@@ -26,9 +28,6 @@ export const packList: TPackItem[] = [
     price: 99.99,
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-7.png',
     animationUrl: 'https://dropper.s3.ca-central-1.amazonaws.com/premium-reveal.mp4',
+    packURI: 'QmcmsLTqpuftofE36KELxuX5zFXUChdjg3k7dkkbzzR5te',
   },
 ]
-// 0x040000000000000000000000000000000d
-// 0x030000000000000000000000000000003b
-// 0x00000000d = 13
-// 0x04

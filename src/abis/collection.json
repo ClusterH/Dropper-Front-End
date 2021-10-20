@@ -1,8 +1,8 @@
 [
   {
     "inputs": [
-      { "internalType": "uint256", "name": "_lockDate", "type": "uint256" },
-      { "internalType": "address", "name": "_dropper", "type": "address" }
+      { "internalType": "address", "name": "_dropper", "type": "address" },
+      { "internalType": "string", "name": "_contractMetadata", "type": "string" }
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -15,16 +15,6 @@
     ],
     "name": "OwnershipTransferred",
     "type": "event"
-  },
-  {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" },
-      { "internalType": "uint256", "name": "_tokenId", "type": "uint256" }
-    ],
-    "name": "_balanceOf",
-    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "stateMutability": "view",
-    "type": "function"
   },
   {
     "inputs": [
@@ -81,7 +71,7 @@
       { "internalType": "uint256", "name": "_packQuantity", "type": "uint256" }
     ],
     "name": "openPacks",
-    "outputs": [{ "internalType": "uint256[]", "name": "", "type": "uint256[]" }],
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -110,6 +100,13 @@
   {
     "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
     "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "newURI", "type": "string" }],
+    "name": "updateURI",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

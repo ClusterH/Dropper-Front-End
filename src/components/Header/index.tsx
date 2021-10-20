@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ContainerRow } from '../../styles/globalStyles'
+import Hamburger from '../Icons/hamburgerIcon'
 import Logo from '../Icons/logo'
 import Menu from '../Menu'
 import WalletConnector from '../WalletConnection'
@@ -21,6 +22,7 @@ const Header: React.FC = () => {
         <Menu />
       </ContainerRow>
       <WalletConnector />
+      <Hamburger />
     </HeaderContainer>
   )
 }

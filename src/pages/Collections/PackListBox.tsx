@@ -1,17 +1,17 @@
 import React from 'react'
 import { packList } from '../../constants/dummy'
-import { BigBox, ContainerRow } from '../../styles/globalStyles'
+import { BigBox, ContainerRow, ResponsiveContainer } from '../../styles/globalStyles'
 import { PackItem } from './PackItem'
 
 export const PackListBox: React.FC = () => {
   return (
-    <BigBox padding={'0'}>
-      <ContainerRow>
+    <BigBox>
+      <ResponsiveContainer>
         {packList &&
           packList.map((pack) => {
             return <PackItem key={pack.id} pack={pack} />
           })}
-      </ContainerRow>
+      </ResponsiveContainer>
     </BigBox>
   )
 }

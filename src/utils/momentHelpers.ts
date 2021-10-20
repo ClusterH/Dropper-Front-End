@@ -1,21 +1,28 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { fetchJson } from '@ethersproject/web'
 import { utils } from 'ethers'
 import { TMomentItem } from '../types'
+import { IPFS_BASE_URI, AWS_BASE_URI } from '../constants/momentsURIs'
 
 export const momentGenerator = (momentIDs: BigNumber[], momentURIs: string[]) => {
-  const moments: TMomentItem[] = momentURIs.map((uri, index) => {
-    const testId = utils.hexlify(momentIDs[index])
-    const length = utils.hexDataLength(testId)
-    const prefix = utils.hexDataSlice(testId, 0, 1)
-    const sufix = utils.hexDataSlice(testId, length / 2)
-    const id = parseInt(sufix).toString()
-    const updateURI = uri.replaceAll('+', ' ')
-    const tempSplit = uri.split('.com/')[1].split('/')
-    const rarity = tempSplit[0]
-    const name = tempSplit[1].replaceAll('+', ' ').replace('.mp4', '')
-    const image = updateURI.replace('.mp4', '.png')
+  console.log(momentIDs, momentURIs)
+  const moments = momentURIs.map(async (uri, index) => {
+    const metadata = await (await fetch(uri)).json()
 
-    return { uri: updateURI, id, rarity, name, image }
+    const hexString = utils.hexlify(momentIDs[index])
+    const length = utils.hexDataLength(hexString)
+    const sufix = utils.hexDataSlice(hexString, length / 2)
+
+    const id = parseInt(sufix).toString()
+    const name = metadata.name
+    const description = metadata.description
+    const imageUrl = metadata.image
+    const animationUrl = metadata.animation_url
+    const rarity = imageUrl.replace(IPFS_BASE_URI, '').split('/')[1]
+    const awsImageUrl = `${AWS_BASE_URI}${rarity}/${name}.png`
+    const awsAnimationUrl = `${AWS_BASE_URI}${rarity}/${name}.mp4`
+
+    return { id, name, description, imageUrl, animationUrl, rarity, awsImageUrl, awsAnimationUrl }
   })
 
   return moments

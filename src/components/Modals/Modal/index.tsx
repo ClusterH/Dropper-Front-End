@@ -36,11 +36,11 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
     // box-shadow: 2px 3px 15px var(--secondary-opacity);
     box-shadow: 3px 3px 12px 2px var(--secondary);
     padding: 0px;
-    width: 50vw;
+    width: ${({ mobile }) => (mobile ? '90%' : '50vw')};
     overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
     overflow-x: hidden;
 
-    align-self: ${({ mobile }) => (mobile ? 'flex-end' : 'center')};
+    align-self: ${({ mobile }) => (mobile ? 'center' : 'center')};
 
     max-width: 420px;
     ${({ maxHeight }) =>

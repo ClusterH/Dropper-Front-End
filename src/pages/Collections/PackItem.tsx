@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { isMobile } from 'react-device-detect'
+
 import { TransparentBtn } from '../../components/Buttons/MainButton'
 import OnlineImages from '../../components/Icons/onlineImages'
 import { useBuyPack } from '../../hooks/useCollection'
@@ -13,8 +15,8 @@ export const PackItem: React.FC<{ pack: TPackItem }> = ({ pack }) => {
   const { account } = useActiveWeb3React()
 
   return (
-    <ContainerColumn width={'32%'}>
-      <OnlineImages url={pack.uri} imgWidth={'95%'} />
+    <ContainerColumn width={isMobile ? '100%' : '32%'} height={'auto'} padding={isMobile ? '0 0 70px' : '0'}>
+      <OnlineImages url={pack.uri} imgWidth={isMobile ? '90%' : '90%'} />
       <TextMain>{pack.level}</TextMain>
       <TextDescription>{`${pack.count} Moments @ $${pack.price}`}</TextDescription>
       <TransparentBtn

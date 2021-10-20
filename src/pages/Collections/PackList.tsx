@@ -5,8 +5,8 @@ import { PackListBox } from './PackListBox'
 
 export const PackList: React.FC = () => {
   return (
-    <ComponentWrapper margin={'120px 0'}>
-      <ContainerRow justifyContent={'center'} margin={'32px'}>
+    <ComponentWrapper margin={'120px 0'} padding={'24px'}>
+      <ContainerRow justifyContent={'center'} padding={'32px'}>
         <TextTitle>The&nbsp;</TextTitle>
         <TextCustom color={'var(--secondary)'} fontSize={'2.5rem'}>
           Packs

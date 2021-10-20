@@ -45,27 +45,3 @@ export const useOpenPackWithApprove = (packId: number, quantity = 1) => {
   )
   return { onOpenPack: handleOpenPack }
 }
-
-export const useGetPackList = () => {
-  const collectionContract = useGetCollectionContract()
-  const { account } = useActiveWeb3React()
-
-  const packListWithBalance = useMemo(async () => {
-    if (!account || collectionContract === null) return []
-    //handle multi calls at once as manually if in case transactions are not so much
-    const _calls = packList.map((_p) => {
-      return getPackBalance(collectionContract, account, _p.id)
-    })
-
-    const response = await Promise.all(_calls).then((value) => {
-      return value
-    })
-
-    return packList.map((pack, index) => ({
-      ...pack,
-      balance: response[index].toString(),
-    }))
-  }, [account, collectionContract])
-
-  return packListWithBalance
-}

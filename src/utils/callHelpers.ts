@@ -26,7 +26,7 @@ export const buyPacks = async (contract: Contract, packId: number, quantity = 1)
 }
 
 export const getPackBalance = async (contract: Contract, account: string, packId: number) => {
-  const txHash = await contract._balanceOf(account, packId)
+  const txHash = await contract.balanceOf(account, packId)
   return txHash
 }
 

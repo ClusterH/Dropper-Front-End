@@ -1,20 +1,30 @@
 import React from 'react'
-import { ComponentWrapper, ContainerColumn, ContainerRow, SpacerLarge, TextCustom } from '../../styles/globalStyles'
+import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
 
+import { ComponentWrapper, ContainerColumn, SpacerLarge, TextCustom, device } from '../../styles/globalStyles'
+
+const ResponsiveWrapper = styled(ContainerColumn)`
+  align-items: center;
+  @media ${device.laptop} {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+`
 export const Advantage: React.FC = () => {
   return (
     <ComponentWrapper margin={'0 0 50px'}>
-      <ContainerRow justifyContent={'center'}>
-        <TextCustom color={'var(--primary-text)'} fontSize={'3.5rem'} fontWeight={700}>
+      <ResponsiveWrapper justifyContent={'center'}>
+        <TextCustom color={'var(--primary-text)'} fontSize={isMobile ? '2.5rem' : '3.5rem'} fontWeight={700}>
           Connecting Fans and&nbsp;
         </TextCustom>
-        <TextCustom color={'var(--secondary)'} fontSize={'3.5rem'} fontWeight={700}>
+        <TextCustom color={'var(--secondary)'} fontSize={isMobile ? '2.5rem' : '3.5rem'} fontWeight={700}>
           Creators
         </TextCustom>
-      </ContainerRow>
+      </ResponsiveWrapper>
       <SpacerLarge />
-      <ContainerRow alignItems={'flex-start'}>
-        <ContainerColumn width={'48%'} height={'auto'}>
+      <ResponsiveWrapper>
+        <ContainerColumn width={isMobile ? '80%' : '48%'} height={'auto'} margin={isMobile ? '12px 0' : '0 12px'}>
           <TextCustom textAlign={'start'} fontWeight={300}>
             Dropper lets creators memorialize their best moments. Anything fans want can be made into an NFT at the
             creator&apos;s discretion.
@@ -25,7 +35,7 @@ export const Advantage: React.FC = () => {
             crypto live here, building the dropper name, and your NFTS every day.
           </TextCustom>
         </ContainerColumn>
-        <ContainerColumn width={'48%'} height={'auto'}>
+        <ContainerColumn width={isMobile ? '80%' : '48%'} height={'auto'} margin={isMobile ? '12px 0' : '0 12px'}>
           <TextCustom textAlign={'start'} fontWeight={300}>
             It has never been easier to feel like a part of the community. Dropper is constantly working to bring on the
             biggest names and the best content.
@@ -36,7 +46,7 @@ export const Advantage: React.FC = () => {
             your friends.
           </TextCustom>
         </ContainerColumn>
-      </ContainerRow>
+      </ResponsiveWrapper>
     </ComponentWrapper>
   )
 }
