@@ -36,4 +36,14 @@ export type TPackItem = {
   price: number
   uri: string
   balance?: string
+  animationUrl: string
 }
+
+export type TMomentItem = {
+  id?: string
+  uri?: string
+  rarity?: string
+  name?: string
+  image?: string
+}
+export type TRarity = 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Mythic'

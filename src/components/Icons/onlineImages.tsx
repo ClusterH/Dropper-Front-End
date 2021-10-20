@@ -4,10 +4,9 @@ import styled from 'styled-components'
 import LOGO_IMG from '../../assets/images/dropper-small-shaddow.png'
 
 const ImgContainer = styled.img<{ imgWidth?: string; imgHeight?: string }>`
-  background-size: cover;
-  background-position: center center;
   width: ${({ imgWidth }) => (imgWidth ? imgWidth : '100%')};
   height: ${({ imgHeight }) => (imgHeight ? imgHeight : 'auto')};
+  object-fit: cover;
 `
 
 const OnlineImages: React.FC<{ url: string; imgWidth?: string; imgHeight?: string }> = ({

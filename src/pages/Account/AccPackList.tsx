@@ -1,25 +1,23 @@
 import React, { useState } from 'react'
-import { MainButton } from '../../components/Buttons/MainButton'
-import { useGetPackBalance } from '../../hooks/useCollection'
-import { ComponentWrapper, ContainerColumn, ContainerRow, Divider } from '../../styles/globalStyles'
+import { useGetPackList } from '../../hooks/useCollection'
+import { ContainerRow, TextSubTitle } from '../../styles/globalStyles'
 import { TPackItem } from '../../types'
-// import { packList } from '../../constants/dummy'
 import { AccPackItem } from './AccPackItem'
 
-export const AccPackList: React.FC = () => {
+export const AccPackList: React.FC<{ setActivatedTab: (tab: 'pack' | 'moment') => void }> = ({ setActivatedTab }) => {
   const [packList, setPackList] = useState<TPackItem[]>([])
-  useGetPackBalance().then((packs) => setPackList(packs))
+
+  useGetPackList().then((packs) => setPackList(packs))
 
   return (
-    <ContainerColumn justifyContent={'flex-start'} alignItems={'flex-start'}>
-      <MainButton borderRadius={'4px 4px 0 0'}>Your Moments</MainButton>
-      <Divider width={'100%'} height={'1px'} margin={'0'} />
-      <ContainerRow margin={'12px 0 0'}>
-        {packList.length > 0 &&
-          packList.map((pack) => {
-            return <AccPackItem key={pack.id} pack={pack} />
-          })}
-      </ContainerRow>
-    </ContainerColumn>
+    <ContainerRow margin={'12px 0 0'}>
+      {packList.length > 0 ? (
+        packList.map((pack) => {
+          return <AccPackItem key={pack.id} pack={pack} setActivatedTab={setActivatedTab} />
+        })
+      ) : (
+        <TextSubTitle>You don&apos;t own any Packs yet</TextSubTitle>
+      )}
+    </ContainerRow>
   )
 }

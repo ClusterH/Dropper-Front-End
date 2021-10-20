@@ -7,7 +7,6 @@ import { PackList } from './PackList'
 
 const Collections: React.FC = () => {
   const { creatorId } = useCollectionContext()
-  console.log('creatorId==>>>', creatorId)
 
   return (
     <PageWrapper>

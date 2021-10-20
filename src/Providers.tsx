@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import Web3ReactManager from './components/Web3ReactManager'
 import { NetworkContextName } from './constants/misc'
 import { CollectionContextProvider } from './contexts/CollectionContext'
+import { MomentContextProvider } from './contexts/MomentContext'
 import store from './state'
 import getLibrary from './utils/getLibrary'
 
@@ -14,7 +15,9 @@ export const Providers: React.FC = ({ children }) => {
       <Web3ReactProvider getLibrary={getLibrary}>
         <Web3ProviderNetwork getLibrary={getLibrary}>
           <Web3ReactManager>
-            <CollectionContextProvider>{children}</CollectionContextProvider>
+            <CollectionContextProvider>
+              <MomentContextProvider>{children} </MomentContextProvider>
+            </CollectionContextProvider>
           </Web3ReactManager>
         </Web3ProviderNetwork>
       </Web3ReactProvider>

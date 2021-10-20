@@ -30,6 +30,7 @@ export const MainButton = styled.button<{
   &:disabled {
     color: var(--disabled);
     cursor: default;
+    pointer-events: none;
   }
 
   color: ${({ color }) => (color ? color : 'var(--primary-text)')};
@@ -47,7 +48,7 @@ export const TransparentBtn = styled(MainButton)`
   border: 2px solid var(--secondary);
   &:hover {
     background: transparent;
-    color: var(--secondary) !important;
+    color: var(--secondary);
   }
   &:disabled {
     border: 2px solid var(--disabled);

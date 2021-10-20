@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { packList } from '../constants/dummy'
-import { buyPacks, openPacks, getPackBalance, approve, isApprovedForAll } from '../utils/callHelpers'
+import { approve, buyPacks, getPackBalance, isApprovedForAll, openPacks } from '../utils/callHelpers'
 import { useGetCollectionContract, useGetDropperContract } from './useContract'
 import { useActiveWeb3React } from './useWeb3'
 
@@ -17,11 +17,40 @@ export const useBuyPack = (packId: number, quantity = 1) => {
   return { onBuyPack: handleBuyPack }
 }
 
-export const useGetPackBalance = () => {
+export const useOpenPackWithApprove = (packId: number, quantity = 1) => {
+  const { account } = useActiveWeb3React()
+  const collectionContract = useGetCollectionContract()
+  const dropperContract = useGetDropperContract()
+
+  const handleOpenPack = useCallback(
+    async (packId: number, quantity: number) => {
+      if (!account || dropperContract === null || collectionContract === null) return undefined
+      const isApproved = await isApprovedForAll(dropperContract, collectionContract, account)
+      if (!isApproved) {
+        const status = await approve(dropperContract, collectionContract, account)
+        if (status) {
+          try {
+            const res = await openPacks(collectionContract, packId, quantity, account)
+            return res
+          } catch (e) {
+            console.info(e)
+          }
+        }
+      } else {
+        const res = await openPacks(collectionContract, packId, quantity, account)
+        return res
+      }
+    },
+    [account, collectionContract, dropperContract]
+  )
+  return { onOpenPack: handleOpenPack }
+}
+
+export const useGetPackList = () => {
   const collectionContract = useGetCollectionContract()
   const { account } = useActiveWeb3React()
 
-  const packBalances = useMemo(async () => {
+  const packListWithBalance = useMemo(async () => {
     if (!account || collectionContract === null) return []
     //handle multi calls at once as manually if in case transactions are not so much
     const _calls = packList.map((_p) => {
@@ -38,35 +67,5 @@ export const useGetPackBalance = () => {
     }))
   }, [account, collectionContract])
 
-  return packBalances
-}
-
-export const useOpenPackWithApprove = (packId: number, quantity = 1) => {
-  const collectionContract = useGetCollectionContract()
-  const { account } = useActiveWeb3React()
-  const dropperContract = useGetDropperContract()
-
-  const handleOpenPack = useCallback(
-    async (packId: number, quantity: number) => {
-      if (!account || dropperContract === null || collectionContract === null) return undefined
-      const isApproved = await isApprovedForAll(dropperContract, collectionContract, account)
-      console.log('handle Approve==>>', isApproved)
-      if (!isApproved) {
-        const status = await approve(dropperContract, collectionContract, account)
-        if (status) {
-          try {
-            const res = await openPacks(collectionContract, packId, quantity, account)
-            console.info(res)
-          } catch (e) {
-            console.info(e)
-          }
-        }
-      } else {
-        const txHash = await openPacks(collectionContract, packId, quantity, account)
-        console.info(txHash)
-      }
-    },
-    [account, collectionContract, dropperContract]
-  )
-  return { onOpenPack: handleOpenPack }
+  return packListWithBalance
 }

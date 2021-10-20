@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { TransparentBtn } from '../../components/Buttons/MainButton'
 import OnlineImages from '../../components/Icons/onlineImages'
 import { useBuyPack } from '../../hooks/useCollection'
+import { useActiveWeb3React } from '../../hooks/useWeb3'
 import { ContainerColumn, TextDescription, TextMain } from '../../styles/globalStyles'
 import { TPackItem } from '../../types'
 import { ProcessingLoader } from './Processing'
@@ -9,6 +10,7 @@ import { ProcessingLoader } from './Processing'
 export const PackItem: React.FC<{ pack: TPackItem }> = ({ pack }) => {
   const [pendingTx, setPendingTx] = useState<boolean>(false)
   const { onBuyPack } = useBuyPack(pack.id, 1)
+  const { account } = useActiveWeb3React()
 
   return (
     <ContainerColumn width={'32%'}>
@@ -19,7 +21,7 @@ export const PackItem: React.FC<{ pack: TPackItem }> = ({ pack }) => {
         borderRadius={'24px'}
         padding={'24px 24px'}
         margin={'24px 0 0'}
-        disabled={pendingTx}
+        disabled={pendingTx || account === null || account === undefined}
         onClick={async () => {
           setPendingTx(true)
           try {

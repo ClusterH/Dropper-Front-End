@@ -1,8 +1,8 @@
 import React from 'react'
+import styled from 'styled-components'
 import OnlineImages from '../../components/Icons/onlineImages'
 import { BoxCard, ContainerRow, Divider, PageWrapper } from '../../styles/globalStyles'
-import styled from 'styled-components'
-import { AccPackList } from './AccPackList'
+import { AccCollections } from './AccCollections'
 import { AccountInfo } from './AccInfo'
 
 const AccImgWrapper = styled(BoxCard)`
@@ -28,7 +28,7 @@ const Account: React.FC = () => {
       </ContainerRow>
       <ContainerRow width={'80%'} alignItems={'flex-start'} margin={'50px 0 0'}>
         <AccountInfo />
-        <AccPackList />
+        <AccCollections />
       </ContainerRow>
     </PageWrapper>
   )

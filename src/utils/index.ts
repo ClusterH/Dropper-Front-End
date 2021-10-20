@@ -1,7 +1,8 @@
-import { Contract } from '@ethersproject/contracts'
+import { Contract, ContractFactory } from '@ethersproject/contracts'
 import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
-import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
+import { JsonRpcSigner, Web3Provider, Provider } from '@ethersproject/providers'
+import { NETWORK_URLS } from '../connectors'
 // import { ChainId } from '@uniswap/sdk-core'
 
 // returns the checksummed address if the address is valid, otherwise returns false

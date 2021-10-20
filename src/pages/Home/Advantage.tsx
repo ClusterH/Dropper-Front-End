@@ -14,7 +14,7 @@ export const Advantage: React.FC = () => {
       </ContainerRow>
       <SpacerLarge />
       <ContainerRow alignItems={'flex-start'}>
-        <ContainerColumn width={'48%'}>
+        <ContainerColumn width={'48%'} height={'auto'}>
           <TextCustom textAlign={'start'} fontWeight={300}>
             Dropper lets creators memorialize their best moments. Anything fans want can be made into an NFT at the
             creator&apos;s discretion.
@@ -25,7 +25,7 @@ export const Advantage: React.FC = () => {
             crypto live here, building the dropper name, and your NFTS every day.
           </TextCustom>
         </ContainerColumn>
-        <ContainerColumn width={'48%'}>
+        <ContainerColumn width={'48%'} height={'auto'}>
           <TextCustom textAlign={'start'} fontWeight={300}>
             It has never been easier to feel like a part of the community. Dropper is constantly working to bring on the
             biggest names and the best content.

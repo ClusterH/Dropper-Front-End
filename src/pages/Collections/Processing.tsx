@@ -3,6 +3,7 @@ import PropagateLoader from 'react-spinners/PropagateLoader'
 import styled from 'styled-components'
 import { VideoContainer } from '../../components/VideoContainer'
 import { ContainerRow, TextSubTitle } from '../../styles/globalStyles'
+import { TPackItem } from '../../types'
 
 const LoaderWrapper = styled.div`
   position: fixed;
@@ -17,12 +18,12 @@ const LoaderWrapper = styled.div`
   background-color: rgba(0, 0, 0, 1);
   z-index: 1;
 `
-export const ProcessingLoader: React.FC = () => {
+export const ProcessingLoader: React.FC<{ animationUrl?: string }> = ({ animationUrl }) => {
   return (
     <LoaderWrapper>
       <VideoContainer
         width={'60%'}
-        url={'https://dropper.s3.ca-central-1.amazonaws.com/processing.mp4'}
+        url={animationUrl ? animationUrl : 'https://dropper.s3.ca-central-1.amazonaws.com/processing.mp4'}
         posterUrl={'https://dropper.s3.ca-central-1.amazonaws.com/clix-pack2.png'}
       ></VideoContainer>
       <ContainerRow justifyContent={'center'}>

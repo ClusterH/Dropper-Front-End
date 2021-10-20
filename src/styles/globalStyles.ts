@@ -70,9 +70,11 @@ export const ContainerRow = styled.div<{
   padding?: string
   margin?: string
   width?: string
+  flexWrap?: string
 }>`
   display: flex;
   flex-direction: row;
+  flex-wrap: ${({ flexWrap }) => (flexWrap ? flexWrap : 'no-wrap')};
   justify-content: ${({ justifyContent }) => (justifyContent ? justifyContent : 'space-between')};
   align-items: ${({ alignItems }) => (alignItems ? alignItems : 'center')};
   background-color: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'none')};

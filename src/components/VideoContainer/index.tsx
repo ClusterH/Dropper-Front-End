@@ -11,7 +11,7 @@ interface IVideoContainerProps {
 }
 export const VideoContainer: React.FC<IVideoContainerProps> = ({ url, width, posterUrl }) => {
   return (
-    <VideoWrapper loop muted autoPlay playsInline poster={posterUrl} width={width}>
+    <VideoWrapper loop autoPlay playsInline poster={posterUrl} width={width}>
       <source src={url} type="video/mp4" />
     </VideoWrapper>
   )
