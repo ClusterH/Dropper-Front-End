@@ -37,7 +37,7 @@ const payableAmount = (packId: number) => {
 }
 
 export const buyPacks = async (contract: Contract, packId: number, quantity = 1) => {
-  const txHash = await contract.buyPacks(packId, quantity, { value: payableAmount(packId) })
+  const txHash = await contract.buyPacks(packId, quantity)
   const receipt = await txHash.wait()
 
   return receipt.status
