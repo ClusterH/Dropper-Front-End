@@ -210,4 +210,5 @@ export const AvatarContainer = styled.img<{ width?: string }>`
   border-radius: 50%;
   width: ${({ width }) => (width ? width : '100%')};
   max-width: 240px;
+  cursor: pointer;
 `

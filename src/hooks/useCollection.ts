@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import BigNumber from 'bignumber.js'
 import { approve, buyPacks, isApprovedForAll, openPacks, allowance, approveUSDC } from '../utils/callHelpers'
 import { useGetCollectionContract, useGetDropperContract, useGetUSDCTokenContract } from './useContract'
 import { useActiveWeb3React } from './useWeb3'
@@ -10,14 +11,27 @@ export const useBuyPack = (packId: number, quantity = 1) => {
 
   const handleBuyPack = useCallback(
     async (packId: number, quantity: number) => {
-      const status = await approveUSDC(usdcTokenContract!, collectionContract!, account!)
-      if (status) {
+      const allowanceAmount = await allowance(usdcTokenContract!, collectionContract!, account!)
+      if (new BigNumber(allowanceAmount).isZero()) {
+        const status = await approveUSDC(usdcTokenContract!, collectionContract!, account!)
+        if (status) {
+          try {
+            const res = await buyPacks(collectionContract!, packId, quantity)
+            console.info(res)
+            return res
+          } catch (e) {
+            console.info(e)
+            return false
+          }
+        } else return false
+      } else {
         try {
           const res = await buyPacks(collectionContract!, packId, quantity)
           console.info(res)
           return res
         } catch (e) {
           console.info(e)
+          return false
         }
       }
     },

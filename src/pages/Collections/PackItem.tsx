@@ -27,9 +27,9 @@ export const PackItem: React.FC<{ pack: TPackItem }> = ({ pack }) => {
         onClick={async () => {
           setPendingTx(true)
           try {
-            await onBuyPack(pack.id, 1)
+            const res = await onBuyPack(pack.id, 1)
             setPendingTx(false)
-            window.location.href = `/account`
+            if (res) window.location.href = `/account`
           } catch (e) {
             setPendingTx(false)
           }
