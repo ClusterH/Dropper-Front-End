@@ -28,9 +28,12 @@ export const AccMomentItem: React.FC<{ moment: TMomentItem }> = ({ moment }) => 
   }
 
   return (
-    <MomentItemContainer onClick={() => showMoment()} width={isMobile ? '90%' : '32%'}>
+    <MomentItemContainer onClick={() => showMoment()} width={isMobile ? '90%' : '100%'}>
       <OnlineImages url={moment.imageUrl!} imgWidth={'95%'} />
-      <TextMain>{moment.name}</TextMain>
+      <TextMain>
+        {moment.name}
+        {' #' + moment.id}
+      </TextMain>
       <TextDescription>{moment.description}</TextDescription>
     </MomentItemContainer>
   )
