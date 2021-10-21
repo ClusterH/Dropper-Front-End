@@ -6,9 +6,7 @@ const USDCIconContainer = styled.img`
   border-radius: 50%;
   width: 24px;
   margin-left: 12px;
-}
 `
-
 const USDCIcon: React.FC = () => {
   return <USDCIconContainer src={USDC_IMG} />
 }

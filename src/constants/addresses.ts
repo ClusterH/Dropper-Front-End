@@ -5,14 +5,14 @@ type AddressMap = { [chainId: number]: string }
 export const DROPPER_CONTRACT_ADDRESSES: AddressMap = {
   [SupportedChainId.MAINNET]: '0xB1f350CFb31B79E64020B399484e73890EbE8543',
   [SupportedChainId.RINKEBY]: '0x89CC86f41FdFd57a7F37C0931d3e248ef03482DD',
-  [SupportedChainId.MATIC]: '',
+  [SupportedChainId.MATIC]: '0x4a9CC9d0D5503A402329f00F75cFFC62feB570A2',
   [SupportedChainId.MATIC_TESTNET]: '0x9aB84Aece7b5bF65Bb0FCA22f56b7C875c739D93',
 }
 
 export const COLLECTION_CONTRACT_ADDRESSES: AddressMap = {
   [SupportedChainId.MAINNET]: '0x0c6F25c8935427086C9670F550F95e8d6Df68bbA',
   [SupportedChainId.RINKEBY]: '0x556c483C922D7CE7b91fEEBbd16A170CbA06FF62',
-  [SupportedChainId.MATIC]: '',
+  [SupportedChainId.MATIC]: '0x6778F6dD63f7A355BD8D6AA933934FaE214aA615',
   [SupportedChainId.MATIC_TESTNET]: '0xF0588f87670d59D60f9eD31CAB49dccA21BbaA56',
 }
 
