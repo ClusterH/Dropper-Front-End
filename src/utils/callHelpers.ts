@@ -39,7 +39,7 @@ export const getPackBalance = async (contract: Contract, account: string, packId
 }
 
 export const openPacks = async (contract: Contract, packId: number, quantity = 1, account: string) => {
-  const txHash = await contract.openPacks(packId, quantity, { from: account })
+  const txHash = await contract.openPacks(packId, quantity, { from: account, gasLimit: 500000 })
   const receipt = await txHash.wait()
 
   return receipt.status
