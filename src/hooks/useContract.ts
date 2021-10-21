@@ -2,7 +2,8 @@ import { Contract } from '@ethersproject/contracts'
 import { useMemo } from 'react'
 import COLLECTION_ABI from '../abis/collection.json'
 import DROPPER_ABI from '../abis/dropper.json'
-import { COLLECTION_CONTRACT_ADDRESSES, DROPPER_CONTRACT_ADDRESSES } from '../constants/addresses'
+import ERC20_ABI from '../abis/erc20.json'
+import { COLLECTION_CONTRACT_ADDRESSES, DROPPER_CONTRACT_ADDRESSES, USDC_TOKEN_ADDRESSES } from '../constants/addresses'
 import { getContract } from '../utils'
 import { useActiveWeb3React } from './useWeb3'
 
@@ -35,4 +36,8 @@ export const useGetDropperContract = () => {
 
 export const useGetCollectionContract = () => {
   return useContract(COLLECTION_CONTRACT_ADDRESSES, COLLECTION_ABI, true)
+}
+
+export const useGetUSDCTokenContract = () => {
+  return useContract(USDC_TOKEN_ADDRESSES, ERC20_ABI, true)
 }

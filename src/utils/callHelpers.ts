@@ -1,4 +1,3 @@
-// import { Contract } from '@ethersproject/contracts'
 import { AddressZero } from '@ethersproject/constants'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract, ethers } from 'ethers'
@@ -6,7 +5,6 @@ import { SupportedChainId } from '../constants/chains'
 import { getDropperAddress } from './addressHelpers'
 import DROPPER_ABI from '../abis/dropper.json'
 import { NETWORK_URLS } from '../connectors'
-import { ZERO_ADDRESS } from '../constants/misc'
 
 export const isApprovedForAll = async (dropperContract: Contract, collectionContract: Contract, account: string) => {
   return dropperContract.isApprovedForAll(account, collectionContract.address)
@@ -14,6 +12,18 @@ export const isApprovedForAll = async (dropperContract: Contract, collectionCont
 
 export const approve = async (dropperContract: Contract, collectionContract: Contract, account: string) => {
   const txHash = await dropperContract.setApprovalForAll(collectionContract.address, true)
+  const receipt = await txHash.wait()
+  return receipt.status
+}
+
+export const allowance = async (usdcTokenContract: Contract, collectionContract: Contract, account: string) => {
+  const res = await usdcTokenContract.allowance(account, collectionContract.address)
+  return res
+}
+
+export const approveUSDC = async (usdcTokenContract: Contract, collectionContract: Contract, account: string) => {
+  const txHash = await usdcTokenContract.approve(collectionContract.address, ethers.constants.MaxUint256)
+
   const receipt = await txHash.wait()
   return receipt.status
 }
@@ -33,8 +43,13 @@ export const buyPacks = async (contract: Contract, packId: number, quantity = 1)
   return receipt.status
 }
 
-export const getPackBalance = async (contract: Contract, account: string, packId: number) => {
+export const getPackUserBalance = async (contract: Contract, account: string, packId: number) => {
   const txHash = await contract.balanceOf(account, packId)
+  return txHash
+}
+
+export const getPack = async (contract: Contract, packId: number) => {
+  const txHash = await contract.getPack(packId)
   return txHash
 }
 
@@ -62,4 +77,9 @@ export const getMomentIds = async (account: string, chainId: SupportedChainId) =
 export const getTokenURI = async (contract: Contract, momentId: string) => {
   const tokenURI = await contract.uri(momentId)
   return tokenURI.toString()
+}
+
+export const getTotalMinted = async (contract: Contract, momentId: string) => {
+  const res = await contract.getMoment(momentId)
+  return res
 }

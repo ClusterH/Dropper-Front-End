@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { packList } from '../constants/dummy'
 import { useMomentContext } from '../contexts/MomentContext'
 import { usePackContext } from '../contexts/PackContext'
-import { getMomentIds, getTokenURI, getPackBalance } from '../utils/callHelpers'
+import { getMomentIds, getTokenURI, getPackUserBalance } from '../utils/callHelpers'
 import { momentGenerator } from '../utils/momentHelpers'
 import { useGetDropperContract } from './useContract'
 import { useActiveWeb3React } from './useWeb3'
@@ -15,8 +15,8 @@ export const useGetPackList = () => {
   useMemo(async () => {
     if (!account || dropperContract === null) return []
     //handle multi calls at once as manually if in case transactions are not so much
-    const _calls = packList.map((_p) => {
-      return getPackBalance(dropperContract, account, _p.id)
+    const _calls = packList.map(async (_p) => {
+      return await getPackUserBalance(dropperContract, account, _p.id)
     })
 
     const response = await Promise.all(_calls).then((value) => {
@@ -45,7 +45,7 @@ export const useGetMomentList = () => {
     const momentURIs = await Promise.all(_calls).then((value) => {
       return value
     })
-    const moments = await Promise.all(momentGenerator(momentIDs, momentURIs))
+    const moments = await Promise.all(momentGenerator(dropperContract!, momentIDs, momentURIs))
     setMoments(moments)
   }, [account, chainId, dropperContract, setMoments])
 }

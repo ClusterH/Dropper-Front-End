@@ -35,6 +35,7 @@ const ItemDetail: React.FC<{ moment: TMomentItem }> = ({ moment }) => {
       <ItemText label={'Name'} text={moment.name} />
       <ItemText label={'Class'} text={moment.rarity} />
       <ItemText label={'Moment Id'} text={moment.id} />
+      <ItemText label={'Total Minted'} text={moment.totalMintedMoments} />
     </ContainerColumn>
   )
 }

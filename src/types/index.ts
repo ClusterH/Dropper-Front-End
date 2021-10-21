@@ -44,6 +44,7 @@ export type TRarity = 'Common' | 'Uncommon' | 'Rare' | 'Epic' | 'Mythic'
 
 export type TMomentItem = {
   id: string
+  momentId: string
   name: string
   description: string
   imageUrl: string
@@ -51,4 +52,5 @@ export type TMomentItem = {
   rarity: string
   awsImageUrl: string
   awsAnimationUrl: string
+  totalMintedMoments: string
 }
