@@ -26,7 +26,7 @@ export const ClixDropp: React.FC = () => {
             >
               Compete to be Clix&apos;s #1 Fan!
             </TextCustom>
-            <TextMain>Collect his full collection starting October 15th!</TextMain>
+            <TextMain>Collect his full collection starting October 21st!</TextMain>
           </ContainerColumn>
           <OnlineImages url={'https://dropper.s3.ca-central-1.amazonaws.com/clix-pack-5.png'} imgWidth={'350px'} />
         </ResponsiveContainer>
