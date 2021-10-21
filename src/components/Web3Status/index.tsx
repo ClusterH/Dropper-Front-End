@@ -3,21 +3,10 @@ import React from 'react'
 import { FiActivity } from 'react-icons/fi'
 import styled from 'styled-components'
 import { NetworkContextName } from '../../constants/misc'
-import useENSName from '../../hooks/useENSName'
 import { useWalletModalToggle } from '../../state/application/hook'
 import { shortenAddress } from '../../utils'
 import WalletModal from '../WalletModal'
 
-const IconWrapper = styled.div<{ size?: number }>`
-  display: flex;
-  flex-flow: column nowrap;
-  align-items: center;
-  justify-content: center;
-  & > * {
-    height: ${({ size }) => (size ? size + 'px' : '32px')};
-    width: ${({ size }) => (size ? size + 'px' : '32px')};
-  }
-`
 const Web3StatusGeneric = styled.div`
   display: inline-block;
   cursor: pointer;
@@ -73,13 +62,12 @@ const NetworkIcon = styled(FiActivity)`
 
 const Web3StatusInner = () => {
   const { account, error } = useWeb3React()
-  const { ENSName } = useENSName(account ?? undefined)
   const toggleWalletModal = useWalletModalToggle()
 
   if (account) {
     return (
       <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal}>
-        <Text>{ENSName || shortenAddress(account)}</Text>
+        <Text>{shortenAddress(account)}</Text>
       </Web3StatusConnected>
     )
   } else if (error) {
@@ -101,7 +89,6 @@ const Web3StatusInner = () => {
 const Web3Status: React.FC = () => {
   const { active, account } = useWeb3React()
   const contextNetwork = useWeb3React(NetworkContextName)
-  const { ENSName } = useENSName(account ?? undefined)
 
   if (!contextNetwork.active && !active) {
     return null
@@ -110,7 +97,7 @@ const Web3Status: React.FC = () => {
   return (
     <>
       <Web3StatusInner />
-      <WalletModal ENSName={ENSName ?? undefined} />
+      <WalletModal />
     </>
   )
 }

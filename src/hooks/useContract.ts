@@ -2,13 +2,7 @@ import { Contract } from '@ethersproject/contracts'
 import { useMemo } from 'react'
 import COLLECTION_ABI from '../abis/collection.json'
 import DROPPER_ABI from '../abis/dropper.json'
-import ENS_PUBLIC_RESOLVER_ABI from '../abis/ens-public-resolver.json'
-import ENS_ABI from '../abis/ens-registrar.json'
-import {
-  COLLECTION_CONTRACT_ADDRESSES,
-  DROPPER_CONTRACT_ADDRESSES,
-  ENS_REGISTRAR_ADDRESSES,
-} from '../constants/addresses'
+import { COLLECTION_CONTRACT_ADDRESSES, DROPPER_CONTRACT_ADDRESSES } from '../constants/addresses'
 import { getContract } from '../utils'
 import { useActiveWeb3React } from './useWeb3'
 
@@ -32,7 +26,7 @@ export function useContract<T extends Contract = Contract>(
       console.error('Failed to get contract', error)
       return null
     }
-  }, [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]) as T
+  }, [addressOrAddressMap, ABI, library, chainId]) as T
 }
 
 export const useGetDropperContract = () => {
@@ -41,12 +35,4 @@ export const useGetDropperContract = () => {
 
 export const useGetCollectionContract = () => {
   return useContract(COLLECTION_CONTRACT_ADDRESSES, COLLECTION_ABI, true)
-}
-
-export function useENSRegistrarContract(withSignerIfPossible?: boolean) {
-  return useContract(ENS_REGISTRAR_ADDRESSES, ENS_ABI, withSignerIfPossible)
-}
-
-export function useENSResolverContract(address: string | undefined, withSignerIfPossible?: boolean): Contract | null {
-  return useContract(address, ENS_PUBLIC_RESOLVER_ABI, withSignerIfPossible)
 }

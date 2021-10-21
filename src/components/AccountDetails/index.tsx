@@ -1,7 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { FiExternalLink as LinkIcon } from 'react-icons/fi'
-import { useDispatch } from 'react-redux'
-import styled, { ThemeContext } from 'styled-components'
+import styled from 'styled-components'
 import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 import PortisIcon from '../../assets/images/portisIcon.png'
@@ -10,12 +9,10 @@ import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { fortmatic, injected, portis, walletconnect, walletlink } from '../../connectors'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import { useActiveWeb3React } from '../../hooks/useWeb3'
-import { AppDispatch } from '../../state'
 import { ExternalLink } from '../../styles/components'
 import { shortenAddress } from '../../utils'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { MainButton } from '../Buttons/MainButton'
-// import { ButtonSecondary } from '../Buttons/Button'
 import Identicon from '../Icons/Identicon'
 
 const HeaderRow = styled.div`
@@ -81,22 +78,6 @@ const YourAccount = styled.div`
     font-weight: 500;
   }
 `
-const LowerSection = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-  padding: 1.5rem;
-  flex-grow: 1;
-  overflow: auto;
-  background-color: #2c2f36;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-
-  h5 {
-    margin: 0;
-    font-weight: 400;
-    color: #8f96ac;
-  }
-`
 const AccountControl = styled.div`
   display: flex;
   justify-content: space-between;
@@ -118,7 +99,7 @@ const AccountControl = styled.div`
     white-space: nowrap;
   }
 `
-const AddressLink = styled(ExternalLink)<{ hasENS: boolean; isENS: boolean }>`
+const AddressLink = styled(ExternalLink)`
   font-size: 0.825rem;
   color: #8f96ac;
   margin-left: 1rem;
@@ -147,6 +128,7 @@ const WalletName = styled.div`
   font-size: 0.825rem;
   font-weight: 500;
   color: #8f96ac;
+  text-align: center;
 `
 const IconWrapper = styled.div<{ size?: number }>`
   display: flex;
@@ -159,10 +141,6 @@ const IconWrapper = styled.div<{ size?: number }>`
     height: ${({ size }) => (size ? size + 'px' : '32px')};
     width: ${({ size }) => (size ? size + 'px' : '32px')};
   }
-`
-const TransactionListWrapper = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
 `
 const WalletAction = styled.button`
   width: fit-content;
@@ -182,11 +160,10 @@ const MainWalletAction = styled(WalletAction)`
 
 interface AccountDetailsProps {
   toggleWalletModal: () => void
-  ENSName?: string
   openOptions: () => void
 }
 
-export default function AccountDetails({ toggleWalletModal, ENSName, openOptions }: AccountDetailsProps) {
+export default function AccountDetails({ toggleWalletModal, openOptions }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
 
   function formatConnectorName() {
@@ -259,14 +236,15 @@ export default function AccountDetails({ toggleWalletModal, ENSName, openOptions
                 {formatConnectorName()}
                 <div>
                   {connector !== injected && connector !== walletlink && (
-                    <WalletAction
-                      style={{ fontSize: '.825rem', fontWeight: 400, marginRight: '8px' }}
+                    <MainButton
+                      backgroundColor={'transparent'}
+                      borderRadius={'12px'}
                       onClick={() => {
                         ;(connector as any).close()
                       }}
                     >
                       Disconnect
-                    </WalletAction>
+                    </MainButton>
                   )}
                   <MainButton
                     backgroundColor={'transparent'}
@@ -281,69 +259,28 @@ export default function AccountDetails({ toggleWalletModal, ENSName, openOptions
               </AccountGroupingRow>
               <AccountGroupingRow id="web3-account-identifier-row">
                 <AccountControl>
-                  {ENSName ? (
-                    <>
-                      <div>
-                        {getStatusIcon()}
-                        <p> {ENSName}</p>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div>
-                        {getStatusIcon()}
-                        <p> {account && shortenAddress(account)}</p>
-                      </div>
-                    </>
-                  )}
+                  <div>
+                    {getStatusIcon()}
+                    <p> {account && shortenAddress(account)}</p>
+                  </div>
                 </AccountControl>
               </AccountGroupingRow>
               <AccountGroupingRow>
-                {ENSName ? (
-                  <>
-                    <AccountControl>
-                      <div>
-                        {/* {account && (
-                          // <Copy toCopy={account}>
-                          //   <span style={{ marginLeft: '4px' }}>Copy Address</span>
-                          // </Copy>
-                        )} */}
-                        {chainId && account && (
-                          <AddressLink
-                            hasENS={!!ENSName}
-                            isENS={true}
-                            href={getExplorerLink(chainId, ENSName, ExplorerDataType.ADDRESS)}
-                          >
-                            <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>View on Etherscan</span>
-                          </AddressLink>
-                        )}
-                      </div>
-                    </AccountControl>
-                  </>
-                ) : (
-                  <>
-                    <AccountControl>
-                      <div>
-                        {/* {account && (
-                          <Copy toCopy={account}>
-                            <span style={{ marginLeft: '4px' }}>Copy Address</span>
-                          </Copy>
-                        )} */}
-                        {chainId && account && (
-                          <AddressLink
-                            hasENS={!!ENSName}
-                            isENS={false}
-                            href={getExplorerLink(chainId, account, ExplorerDataType.ADDRESS)}
-                          >
-                            <LinkIcon size={16} />
-                            <span style={{ marginLeft: '4px' }}>View on Etherscan</span>
-                          </AddressLink>
-                        )}
-                      </div>
-                    </AccountControl>
-                  </>
-                )}
+                <AccountControl>
+                  <div>
+                    {/* {account && (
+                      <Copy toCopy={account}>
+                        <span style={{ marginLeft: '4px' }}>Copy Address</span>
+                      </Copy>
+                    )} */}
+                    {chainId && account && (
+                      <AddressLink href={getExplorerLink(chainId, account, ExplorerDataType.ADDRESS)}>
+                        <LinkIcon size={16} />
+                        <span style={{ marginLeft: '4px' }}>View on Etherscan</span>
+                      </AddressLink>
+                    )}
+                  </div>
+                </AccountControl>
               </AccountGroupingRow>
             </InfoCard>
           </YourAccount>

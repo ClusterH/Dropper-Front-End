@@ -1,11 +1,8 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { fetchJson } from '@ethersproject/web'
 import { utils } from 'ethers'
-import { TMomentItem } from '../types'
 import { IPFS_BASE_URI, AWS_BASE_URI } from '../constants/momentsURIs'
 
 export const momentGenerator = (momentIDs: BigNumber[], momentURIs: string[]) => {
-  console.log(momentIDs, momentURIs)
   const moments = momentURIs.map(async (uri, index) => {
     const metadata = await (await fetch(uri)).json()
 
