@@ -13,9 +13,11 @@ export const approve = async (dropperContract: Contract, collectionContract: Con
 }
 // It is hard coded to get Pack price
 const payableAmount = (packId: number) => {
-  if (packId === 1) return '0x16345785D8A0000'
-  else if (packId === 2) return '0x2C68AF0BB140000'
-  else if (packId === 3) return '0x429D069189E0000'
+  if (packId === 1) return '0x989680'
+  //0x16345785D8A0000
+  else if (packId === 2) return '0x1312D00'
+  //0x2C68AF0BB140000
+  else if (packId === 3) return '0x1C9C380' //0x429D069189E0000
 }
 
 export const buyPacks = async (contract: Contract, packId: number, quantity = 1) => {

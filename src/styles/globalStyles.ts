@@ -11,6 +11,7 @@ export const GlobalStyles = createGlobalStyle`
     --accent: #505050;
     --accent-text: #ffffff;
     --disabled: #606061;
+    scroll-behavior: smooth;
   }
 `
 const size = {

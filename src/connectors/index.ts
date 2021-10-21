@@ -29,8 +29,8 @@ export const NETWORK_URLS: {
   [SupportedChainId.KOVAN]: `https://kovan.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.ARBITRUM_TESTNET]: `https://kovan5.arbitrum.io/rpc`,
   [SupportedChainId.ARBITRUM]: `https://arb1.arbitrum.io/rpc`,
-  [SupportedChainId.MATIC]: 'https://polygon-rpc.com/',
-  [SupportedChainId.MATIC_TESTNET]: 'https://rpc-mumbai.matic.today',
+  [SupportedChainId.MATIC]: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
+  [SupportedChainId.MATIC_TESTNET]: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
 }
 
 const SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
