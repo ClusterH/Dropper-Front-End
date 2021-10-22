@@ -38,7 +38,7 @@ export const useGetMomentList = () => {
   const { setMoments } = useMomentContext()
 
   useMemo(async () => {
-    if (!account || isSupportedNetwork(chainId) === false) return
+    if (!account || isSupportedNetwork(chainId) === false) return []
     const momentIDs = await getMomentIds(account!, chainId!)
     const _calls = momentIDs.map((_id) => {
       return getTokenURI(dropperContract!, _id.toString())

@@ -1,18 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import OnlineImages from '../../components/Icons/onlineImages'
-import {
-  BoxCard,
-  ContainerRow,
-  ContainerColumn,
-  device,
-  Divider,
-  PageWrapper,
-  ResponsiveContainer,
-} from '../../styles/globalStyles'
+import { BoxCard, ContainerRow, Divider, PageWrapper, ResponsiveContainer } from '../../styles/globalStyles'
 import { AccCollections } from './AccCollections'
 import { AccountInfo } from './AccInfo'
-import { isMobile } from 'react-device-detect'
 
 const AccImgWrapper = styled(BoxCard)`
   padding: 0;
