@@ -40,19 +40,19 @@ export const TRANSFER_BATCH_FILTER = {
     },
   },
   [SupportedChainId.MATIC]: {
-    fromBlock: 20465396,
+    fromBlock: 20501900,
     toBlock: 'latest',
     eventFilter: {
       address: getDropperAddress(SupportedChainId.MATIC),
       topics: [
         '0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb',
-        '0x0000000000000000000000006778f6dd63f7a355bd8d6aa933934fae214aa615',
+        '0x0000000000000000000000009dd1dc7d8d85864bfb313cf4b35afc556d02baf2',
         '0x0000000000000000000000000000000000000000000000000000000000000000',
       ],
     },
   },
   [SupportedChainId.MATIC_TESTNET]: {
-    fromBlock: 20468373,
+    fromBlock: 20510039,
     toBlock: 'latest',
     eventFilter: {
       address: getDropperAddress(SupportedChainId.MATIC_TESTNET),
