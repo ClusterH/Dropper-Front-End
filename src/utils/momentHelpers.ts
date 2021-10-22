@@ -6,7 +6,7 @@ import { getTotalMinted } from './callHelpers'
 
 export const momentGenerator = (contract: Contract, momentIDs: BigNumber[], momentURIs: string[]) => {
   const moments = momentURIs.map(async (uri, index) => {
-    const metadata = await (await fetch(uri)).json()
+    const metadata = await (await fetch(`${IPFS_BASE_URI}${uri.replace('ipfs://', '')}`)).json()
     const hexString = utils.hexlify(momentIDs[index])
     const length = utils.hexDataLength(hexString)
     const prefix = utils.hexDataSlice(hexString, 0, length / 2 + 1)

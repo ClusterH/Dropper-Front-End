@@ -52,7 +52,8 @@ export const useOpenPackWithApprove = (packId: number, quantity = 1) => {
 
   const handleOpenPack = useCallback(
     async (packId: number, quantity: number) => {
-      if (!account || isSupportedNetwork(chainId) === false || dropperContract === null || collectionContract === null) return undefined
+      if (!account || isSupportedNetwork(chainId) === false || dropperContract === null || collectionContract === null)
+        return undefined
       const isApproved = await isApprovedForAll(dropperContract, collectionContract, account)
       if (!isApproved) {
         const status = await approve(dropperContract, collectionContract, account)

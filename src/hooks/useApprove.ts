@@ -12,7 +12,8 @@ export const useDropperApprove = () => {
 
   const handleApprove = useCallback(async () => {
     try {
-      if (!account || isSupportedNetwork(chainId) === false || dropperContract === null || collectionContract === null) return undefined
+      if (!account || isSupportedNetwork(chainId) === false || dropperContract === null || collectionContract === null)
+        return undefined
       const isApproved = await isApprovedForAll(dropperContract, collectionContract, account)
 
       if (isApproved) return true
