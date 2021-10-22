@@ -102,13 +102,10 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "_tokenContract", "type": "address" },
-      { "internalType": "uint256", "name": "_amount", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_tokenContract", "type": "address" }],
     "name": "withdrawToken",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]
