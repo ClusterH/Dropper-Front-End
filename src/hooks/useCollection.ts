@@ -12,7 +12,7 @@ export const useBuyPack = (packId: number, quantity = 1) => {
   const handleBuyPack = useCallback(
     async (packId: number, quantity: number) => {
       const allowanceAmount = await allowance(usdcTokenContract!, collectionContract!, account!)
-      if (new BigNumber(allowanceAmount).isZero()) {
+      if (Number(allowanceAmount.toString()) === 0) {
         const status = await approveUSDC(usdcTokenContract!, collectionContract!, account!)
         if (status) {
           try {
