@@ -10,9 +10,8 @@ const MomentListWrap = styled(ResponsiveContainer)`
 `
 
 export const AccMomentList: React.FC = () => {
-  const { moments } = useMomentContext()
-
   useGetMomentList()
+  const { moments } = useMomentContext()
 
   return (
     <MomentListWrap margin={'12px 0 0'} justifyContent={'space-between'}>

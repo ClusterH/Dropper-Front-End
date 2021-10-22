@@ -3,6 +3,7 @@ import { isMobile } from 'react-device-detect'
 
 import { TransparentBtn } from '../../components/Buttons/MainButton'
 import OnlineImages from '../../components/Icons/onlineImages'
+import USDCIcon from '../../components/Icons/usdcIcon'
 import { useBuyPack } from '../../hooks/useCollection'
 import { useActiveWeb3React } from '../../hooks/useWeb3'
 import { ContainerColumn, TextDescription, TextMain } from '../../styles/globalStyles'
@@ -27,15 +28,16 @@ export const PackItem: React.FC<{ pack: TPackItem }> = ({ pack }) => {
         onClick={async () => {
           setPendingTx(true)
           try {
-            await onBuyPack(pack.id, 1)
+            const res = await onBuyPack(pack.id, 1)
             setPendingTx(false)
-            window.location.href = `/account`
+            if (res) window.location.href = `/account`
           } catch (e) {
             setPendingTx(false)
           }
         }}
       >
         {pendingTx ? 'Processing' : 'Buy Now!'}
+        <USDCIcon />
       </TransparentBtn>
       {pendingTx && <ProcessingLoader />}
     </ContainerColumn>

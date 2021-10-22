@@ -13,6 +13,7 @@ import DROPPER_LOGO_URL from '../assets/images/dropper-small-shaddow.png'
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
 const FORTMATIC_KEY = process.env.REACT_APP_FORTMATIC_KEY
 const PORTIS_ID = process.env.REACT_APP_PORTIS_ID
+const MORALIS_KEY = process.env.REACT_APP_MORALIS_KEY
 const WALLETCONNECT_BRIDGE_URL = 'https://uniswap.bridge.walletconnect.org'
 
 if (typeof INFURA_KEY === 'undefined') {
@@ -27,10 +28,10 @@ export const NETWORK_URLS: {
   [SupportedChainId.ROPSTEN]: `https://ropsten.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.GOERLI]: `https://goerli.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.KOVAN]: `https://kovan.infura.io/v3/${INFURA_KEY}`,
-  [SupportedChainId.ARBITRUM_TESTNET]: `https://kovan5.arbitrum.io/rpc`,
-  [SupportedChainId.ARBITRUM]: `https://arb1.arbitrum.io/rpc`,
-  [SupportedChainId.MATIC]: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
-  [SupportedChainId.MATIC_TESTNET]: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
+  [SupportedChainId.ARBITRUM_TESTNET]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/arbitrum/testnet`,
+  [SupportedChainId.ARBITRUM]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/arbitrum/mainnet`,
+  [SupportedChainId.MATIC]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/polygon/mainnet`,
+  [SupportedChainId.MATIC_TESTNET]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/polygon/mumbai`,
 }
 
 const SUPPORTED_CHAIN_IDS: SupportedChainId[] = [

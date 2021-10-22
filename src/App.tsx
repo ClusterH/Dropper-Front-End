@@ -9,7 +9,7 @@ import { GlobalStyles } from './styles/globalStyles'
 const Header = lazy(() => import('./components/Header'))
 const Home = lazy(() => import('./pages/Home'))
 const Login = lazy(() => import('./pages/Login'))
-const Creators = lazy(() => import('./pages/Creators'))
+// const Creators = lazy(() => import('./pages/Creators'))
 const Collections = lazy(() => import('./pages/Collections'))
 const Account = lazy(() => import('./pages/Account'))
 const Item = lazy(() => import('./pages/Item'))
@@ -24,7 +24,7 @@ const App: React.FC = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/creators" component={Creators} />
+          {/* <Route exact path="/creators" component={Creators} /> */}
           <Route exact path="/clix" component={Collections} />
           <Route exact path="/account" component={Account} />
           <Route exact path="/item/" component={Item} />

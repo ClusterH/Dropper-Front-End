@@ -1,6 +1,10 @@
-import { Contract } from '@ethersproject/contracts'
 import { AddressZero } from '@ethersproject/constants'
 import { BigNumber } from '@ethersproject/bignumber'
+import { Contract, ethers } from 'ethers'
+import { SupportedChainId } from '../constants/chains'
+import { getDropperAddress } from './addressHelpers'
+import DROPPER_ABI from '../abis/dropper.json'
+import { NETWORK_URLS } from '../connectors'
 
 export const isApprovedForAll = async (dropperContract: Contract, collectionContract: Contract, account: string) => {
   return dropperContract.isApprovedForAll(account, collectionContract.address)
@@ -8,6 +12,18 @@ export const isApprovedForAll = async (dropperContract: Contract, collectionCont
 
 export const approve = async (dropperContract: Contract, collectionContract: Contract, account: string) => {
   const txHash = await dropperContract.setApprovalForAll(collectionContract.address, true)
+  const receipt = await txHash.wait()
+  return receipt.status
+}
+
+export const allowance = async (usdcTokenContract: Contract, collectionContract: Contract, account: string) => {
+  const res = await usdcTokenContract.allowance(account, collectionContract.address)
+  return res
+}
+
+export const approveUSDC = async (usdcTokenContract: Contract, collectionContract: Contract, account: string) => {
+  const txHash = await usdcTokenContract.approve(collectionContract.address, ethers.constants.MaxUint256)
+
   const receipt = await txHash.wait()
   return receipt.status
 }
@@ -21,36 +37,49 @@ const payableAmount = (packId: number) => {
 }
 
 export const buyPacks = async (contract: Contract, packId: number, quantity = 1) => {
-  const txHash = await contract.buyPacks(packId, quantity, { value: payableAmount(packId) })
+  const txHash = await contract.buyPacks(packId, quantity)
   const receipt = await txHash.wait()
 
   return receipt.status
 }
 
-export const getPackBalance = async (contract: Contract, account: string, packId: number) => {
+export const getPackUserBalance = async (contract: Contract, account: string, packId: number) => {
   const txHash = await contract.balanceOf(account, packId)
   return txHash
 }
 
+export const getPack = async (contract: Contract, packId: number) => {
+  const txHash = await contract.getPack(packId)
+  return txHash
+}
+
 export const openPacks = async (contract: Contract, packId: number, quantity = 1, account: string) => {
-  const txHash = await contract.openPacks(packId, quantity, { from: account })
+  const txHash = await contract.openPacks(packId, quantity, { from: account, gasLimit: 500000 })
   const receipt = await txHash.wait()
 
   return receipt.status
 }
 
-export const getMomentIds = async (contract: Contract, account: string) => {
-  const events = await contract.queryFilter({ address: '' }, 0, 'latest')
+export const getMomentIds = async (account: string, chainId: SupportedChainId) => {
+  const provider = new ethers.providers.JsonRpcProvider(NETWORK_URLS[chainId])
+  const ens = new ethers.Contract(getDropperAddress(chainId), DROPPER_ABI, provider)
+
+  const events = await ens.queryFilter({ address: getDropperAddress(chainId) }, 0, 'latest')
   const filteredEvents = events.filter(
-    (item) => item.event === 'TransferBatch' && item.args?.from === AddressZero && item.args?.to === account
+    (item: any) => item.event === 'TransferBatch' && item.args?.from === AddressZero && item.args?.to === account
   )
   const ids: Array<BigNumber> = []
-  filteredEvents.map((item) => ids.push(...item.args?.ids))
+  filteredEvents.map((item: any) => ids.push(...item.args?.ids))
 
   return ids
 }
 
 export const getTokenURI = async (contract: Contract, momentId: string) => {
-  const tokenURI = await contract.tokenURI(momentId)
+  const tokenURI = await contract.uri(momentId)
   return tokenURI.toString()
+}
+
+export const getTotalMinted = async (contract: Contract, momentId: string) => {
+  const res = await contract.getMoment(momentId)
+  return res
 }
