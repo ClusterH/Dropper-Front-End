@@ -1,10 +1,10 @@
-import { AddressZero } from '@ethersproject/constants'
 import { BigNumber } from '@ethersproject/bignumber'
 import { Contract, ethers } from 'ethers'
-import { SupportedChainId } from '../constants/chains'
-import { getDropperAddress } from './addressHelpers'
 import DROPPER_ABI from '../abis/dropper.json'
 import { NETWORK_URLS } from '../connectors'
+import { TRANSFER_BATCH_FILTER } from '../constants/blockNumber'
+import { SupportedChainId } from '../constants/chains'
+import { getDropperAddress } from './addressHelpers'
 
 export const isApprovedForAll = async (dropperContract: Contract, collectionContract: Contract, account: string) => {
   return dropperContract.isApprovedForAll(account, collectionContract.address)
@@ -59,17 +59,20 @@ export const openPacks = async (contract: Contract, packId: number, quantity = 1
 
   return receipt.status
 }
-
 export const getMomentIds = async (account: string, chainId: SupportedChainId) => {
   const provider = new ethers.providers.JsonRpcProvider(NETWORK_URLS[chainId])
   const ens = new ethers.Contract(getDropperAddress(chainId), DROPPER_ABI, provider)
-
-  const events = await ens.queryFilter({ address: getDropperAddress(chainId) }, 0, 'latest')
-  const filteredEvents = events.filter(
-    (item: any) => item.event === 'TransferBatch' && item.args?.from === AddressZero && item.args?.to === account
-  )
+  const filterOption = { ...TRANSFER_BATCH_FILTER[chainId] }
+  const eventFilter = {
+    ...filterOption.eventFilter,
+    topics: [...filterOption.eventFilter.topics, ethers.utils.hexZeroPad(account, 32)],
+  }
+  const filter = { ...filterOption, eventFilter }
+  const events = await ens.queryFilter(filter.eventFilter, filter.fromBlock, filter.toBlock)
+  console.log(events)
   const ids: Array<BigNumber> = []
-  filteredEvents.map((item: any) => ids.push(...item.args?.ids))
+
+  events.map((item: any) => ids.push(...item.args?.ids))
 
   return ids
 }

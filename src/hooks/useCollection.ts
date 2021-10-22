@@ -1,5 +1,4 @@
 import { useCallback } from 'react'
-import BigNumber from 'bignumber.js'
 import { approve, buyPacks, isApprovedForAll, openPacks, allowance, approveUSDC } from '../utils/callHelpers'
 import { useGetCollectionContract, useGetDropperContract, useGetUSDCTokenContract } from './useContract'
 import { useActiveWeb3React } from './useWeb3'
