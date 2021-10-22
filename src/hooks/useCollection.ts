@@ -11,28 +11,32 @@ export const useBuyPack = (packId: number, quantity = 1) => {
 
   const handleBuyPack = useCallback(
     async (packId: number, quantity: number) => {
-      const allowanceAmount = await allowance(usdcTokenContract!, collectionContract!, account!)
-      if (Number(allowanceAmount.toString()) === 0) {
-        const status = await approveUSDC(usdcTokenContract!, collectionContract!, account!)
-        if (status) {
+      try {
+        const allowanceAmount = await allowance(usdcTokenContract!, collectionContract!, account!)
+        if (Number(allowanceAmount.toString()) === 0) {
+          const status = await approveUSDC(usdcTokenContract!, collectionContract!, account!)
+          if (status) {
+            try {
+              const res = await buyPacks(collectionContract!, packId, quantity)
+              console.info(res)
+              return res
+            } catch (e) {
+              console.info(e)
+              return false
+            }
+          } else return false
+        } else {
           try {
             const res = await buyPacks(collectionContract!, packId, quantity)
-            console.info(res)
             return res
           } catch (e) {
             console.info(e)
             return false
           }
-        } else return false
-      } else {
-        try {
-          const res = await buyPacks(collectionContract!, packId, quantity)
-          console.info(res)
-          return res
-        } catch (e) {
-          console.info(e)
-          return false
         }
+      } catch (e: any) {
+        console.log(e.message)
+        throw new Error(e.message)
       }
     },
     [account, collectionContract, usdcTokenContract]

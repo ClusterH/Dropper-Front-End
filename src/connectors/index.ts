@@ -25,13 +25,15 @@ export const NETWORK_URLS: {
 } = {
   [SupportedChainId.MAINNET]: `https://mainnet.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.RINKEBY]: `https://rinkeby.infura.io/v3/${INFURA_KEY}`,
+  [SupportedChainId.MATIC]: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
+  [SupportedChainId.MATIC_TESTNET]: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.ROPSTEN]: `https://ropsten.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.GOERLI]: `https://goerli.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.KOVAN]: `https://kovan.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.ARBITRUM_TESTNET]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/arbitrum/testnet`,
   [SupportedChainId.ARBITRUM]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/arbitrum/mainnet`,
-  [SupportedChainId.MATIC]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/polygon/mainnet`,
-  [SupportedChainId.MATIC_TESTNET]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/polygon/mumbai`,
+  // [SupportedChainId.MATIC]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/polygon/mainnet`,
+  // [SupportedChainId.MATIC_TESTNET]: `https://speedy-nodes-nyc.moralis.io/${MORALIS_KEY}/polygon/mumbai`,
 }
 
 const SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
