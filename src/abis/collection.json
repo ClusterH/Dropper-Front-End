@@ -1,9 +1,6 @@
 [
   {
-    "inputs": [
-      { "internalType": "address", "name": "_dropper", "type": "address" },
-      { "internalType": "string", "name": "_contractMetadata", "type": "string" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_dropper", "type": "address" }],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -24,13 +21,6 @@
     "name": "buyPacks",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "contractURI",
-    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -105,13 +95,6 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "string", "name": "newURI", "type": "string" }],
-    "name": "updateURI",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [{ "internalType": "uint256", "name": "_tokenId", "type": "uint256" }],
     "name": "uri",
     "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
@@ -119,14 +102,10 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address payable", "name": "recipient", "type": "address" },
-      { "internalType": "address", "name": "_tokenContract", "type": "address" },
-      { "internalType": "uint256", "name": "_amount", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_tokenContract", "type": "address" }],
     "name": "withdrawToken",
     "outputs": [],
-    "stateMutability": "payable",
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

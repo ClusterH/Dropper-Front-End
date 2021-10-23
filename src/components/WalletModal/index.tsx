@@ -13,6 +13,7 @@ import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import usePrevious from '../../hooks/usePrevious'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useWalletModalToggle } from '../../state/application/hook'
+import { setupNetwork } from '../../utils/wallet'
 import AccountDetails from '../AccountDetails'
 import Modal from '../Modals/Modal'
 
@@ -148,9 +149,12 @@ export default function WalletModal() {
     }
 
     connector &&
-      activate(connector, undefined, true).catch((error) => {
+      activate(connector, undefined, true).catch(async (error) => {
         if (error instanceof UnsupportedChainIdError) {
-          activate(connector)
+          const hasSetup = await setupNetwork()
+          if (hasSetup) {
+            activate(connector)
+          }
         } else {
           setPendingError(true)
         }

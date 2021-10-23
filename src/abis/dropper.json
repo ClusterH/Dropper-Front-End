@@ -275,6 +275,13 @@
     "type": "function"
   },
   {
+    "inputs": [{ "internalType": "string", "name": "newGateway", "type": "string" }],
+    "name": "setGateway",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       { "internalType": "string", "name": "_momentURI", "type": "string" },
       { "internalType": "uint256", "name": "_totalMinted", "type": "uint256" },

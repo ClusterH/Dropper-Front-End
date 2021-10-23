@@ -8,7 +8,6 @@ const CollectionVideoWrapper = styled(ComponentWrapper)`
   display: flex;
   justify-content: center;
   margin-top: -20%;
-  /* text-align: center; */
 `
 export const CollectionVideo: React.FC = () => {
   return (

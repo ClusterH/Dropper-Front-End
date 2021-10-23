@@ -1,11 +1,7 @@
-import { Contract, ContractFactory } from '@ethersproject/contracts'
 import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
-import { JsonRpcSigner, Web3Provider, InfuraProvider } from '@ethersproject/providers'
-import { NETWORK_URLS } from '../connectors'
-import { ethers } from 'ethers'
-import { SupportedChainId } from '../constants/chains'
-// import { ChainId } from '@uniswap/sdk-core'
+import { Contract } from '@ethersproject/contracts'
+import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
