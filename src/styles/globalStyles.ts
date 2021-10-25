@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
+import { ToastContainer } from 'react-toastify'
 import { TFlexAlignItems, TFlexDirections, TFlexJustifyContents } from '../types'
 
 export const GlobalStyles = createGlobalStyle`
@@ -8,9 +9,17 @@ export const GlobalStyles = createGlobalStyle`
     --secondary: #ff0069;
     --secondary-opacity: #ff006970;
     --secondary-text: #1a1a1a;
-    --accent: #505050;
-    --accent-text: #ffffff;
     --disabled: #606061;
+    --success: #31D0AA;
+    --failure: #ED4B9E;
+    --info: #7645D9;
+    --warning: #FFB237;
+    --toastify-color-dark: #121212;
+    --toastify-color-info: #3498db;
+    --toastify-color-success: #07bc0c;
+    --toastify-color-warning: #f1c40f;
+    --toastify-color-error: #e74c3c;
+    --toastify-color-transparent: rgba(255, 255, 255, 0.7);
     scroll-behavior: smooth;
   }
 `
@@ -136,6 +145,13 @@ export const ResponsiveContainer = styled(ContainerColumn)`
     gap: 12px;
   }
 `
+export const ToastWrapper = styled(ToastContainer).attrs({
+  className: 'toast-container',
+  toastClassName: 'toast',
+  bodyClassName: 'body',
+  progressClassName: 'progress',
+})``
+
 export const BigBox = styled.div<{ padding?: string; margin?: string; width?: string }>`
   display: flex;
   flex-direction: column;

@@ -1,10 +1,9 @@
-import React, { Suspense, lazy } from 'react'
-import { ToastContainer } from 'react-toastify'
+import React, { lazy, Suspense } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.scss'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Loader from './components/Loader'
-import { GlobalStyles } from './styles/globalStyles'
+import { GlobalStyles, ToastWrapper } from './styles/globalStyles'
 
 const Header = lazy(() => import('./components/Header'))
 const Home = lazy(() => import('./pages/Home'))
@@ -18,7 +17,18 @@ const App: React.FC = () => {
   return (
     <Router>
       <GlobalStyles />
-      <ToastContainer />
+      <ToastWrapper
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme={'colored'}
+      />
       <Suspense fallback={<Loader />}>
         <Header />
         <Switch>

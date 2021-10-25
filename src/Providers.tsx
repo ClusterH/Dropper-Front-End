@@ -18,7 +18,7 @@ export const Providers: React.FC = ({ children }) => {
           <Web3ReactManager>
             <CollectionContextProvider>
               <PackContextProvider>
-                <MomentContextProvider>{children} </MomentContextProvider>
+                <MomentContextProvider>{children}</MomentContextProvider>
               </PackContextProvider>
             </CollectionContextProvider>
           </Web3ReactManager>

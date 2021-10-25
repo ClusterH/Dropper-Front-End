@@ -27,6 +27,7 @@ export const approveUSDC = async (usdcTokenContract: Contract, collectionContrac
   const receipt = await txHash.wait()
   return receipt.status
 }
+
 // It is hard coded to get Pack price
 const payableAmount = (packId: number) => {
   if (packId === 1) return '0x989680'

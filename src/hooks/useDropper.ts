@@ -29,7 +29,7 @@ export const useGetPackList = () => {
       balance: response[index].toString(),
     }))
     setPacks(packListWithBalance)
-  }, [account, dropperContract, setPacks])
+  }, [account, chainId, dropperContract, setPacks])
 }
 
 export const useGetMomentList = () => {

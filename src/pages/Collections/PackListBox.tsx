@@ -1,6 +1,6 @@
 import React from 'react'
 import { packList } from '../../constants/dummy'
-import { BigBox, ContainerRow, ResponsiveContainer } from '../../styles/globalStyles'
+import { BigBox, ResponsiveContainer } from '../../styles/globalStyles'
 import { PackItem } from './PackItem'
 
 export const PackListBox: React.FC = () => {

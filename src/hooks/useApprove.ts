@@ -22,7 +22,7 @@ export const useDropperApprove = () => {
     } catch (e) {
       return false
     }
-  }, [account, collectionContract, dropperContract])
+  }, [account, chainId, collectionContract, dropperContract])
 
   return { onApprove: handleApprove }
 }
