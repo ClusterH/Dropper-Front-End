@@ -6,7 +6,9 @@ import { getTotalMinted } from './callHelpers'
 
 export const momentGenerator = (contract: Contract, momentIDs: BigNumber[], momentURIs: string[]) => {
   const moments = momentURIs.map(async (uri, index) => {
-    const metadata = await (await fetch(`${IPFS_BASE_URI}${uri.replace('ipfs://', '')}`)).json()
+    console.log(uri)
+    // const metadata = await (await fetch(`${IPFS_BASE_URI}${uri.replace('ipfs://', '')}`)).json()
+    const metadata = await (await fetch(`${uri}`)).json()
     const hexString = utils.hexlify(momentIDs[index])
     const length = utils.hexDataLength(hexString)
     const prefix = utils.hexDataSlice(hexString, 0, length / 2 + 1)
@@ -17,8 +19,8 @@ export const momentGenerator = (contract: Contract, momentIDs: BigNumber[], mome
     const totalMintedMoments = res[1].toString()
     const name = metadata.name
     const description = metadata.description
-    const imageUrl = `${IPFS_BASE_URI}${metadata.image.replace('ipfs://', '')}`
-    const animationUrl = `${IPFS_BASE_URI}${metadata.animation_url.replace('ipfs://', '')}`
+    const imageUrl = `${metadata.image}`
+    const animationUrl = `${metadata.animation_url}`
     const rarity = imageUrl.replace(IPFS_BASE_URI, '').split('/')[1]
     const awsImageUrl = `${AWS_BASE_URI}${rarity}/${name}.png`
     const awsAnimationUrl = `${AWS_BASE_URI}${rarity}/${name}.mp4`

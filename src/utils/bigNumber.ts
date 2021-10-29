@@ -7,3 +7,8 @@ export const ethersToSerializedBigNumber = (ethersBn: ethers.BigNumber): Seriali
   ethersToBigNumber(ethersBn).toJSON()
 
 export const ethersToBigNumber = (ethersBn: ethers.BigNumber): BigNumber => new BigNumber(ethersBn.toString())
+
+export const getBalanceNumber = (balance: BigNumber, decimals = 18) => {
+  const displayBalance = new BigNumber(balance).dividedBy(new BigNumber(10).pow(decimals))
+  return displayBalance.toNumber()
+}

@@ -1,4 +1,5 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { JsonRpcSigner, Web3Provider, JsonRpcProvider } from '@ethersproject/providers'
 import { Contract, ethers } from 'ethers'
 import DROPPER_ABI from '../abis/dropper.json'
 import { NETWORK_URLS } from '../connectors'
@@ -28,6 +29,21 @@ export const approveUSDC = async (usdcTokenContract: Contract, collectionContrac
   return receipt.status
 }
 
+export const getMaticBalanace = async (provider: JsonRpcProvider, account: string) => {
+  const maticBalance = await provider.getBalance(account)
+  return ethers.utils.formatEther(maticBalance)
+}
+
+export const getUSDCBalance = async (usdcTokenContract: Contract, account: string) => {
+  const balance = await usdcTokenContract.balanceOf(account)
+  return balance
+}
+
+export const getGasPrice = async (provider: Web3Provider | JsonRpcSigner) => {
+  const feeData = await provider.getFeeData()
+  return ethers.utils.formatUnits(feeData.gasPrice!)
+}
+
 // It is hard coded to get Pack price
 const payableAmount = (packId: number) => {
   if (packId === 1) return '0x989680'
@@ -38,7 +54,7 @@ const payableAmount = (packId: number) => {
 }
 
 export const buyPacks = async (contract: Contract, packId: number, quantity = 1) => {
-  const txHash = await contract.buyPacks(packId, quantity)
+  const txHash = await contract.buyPacks(packId, quantity, { gasLimit: 600000 })
   const receipt = await txHash.wait()
 
   return receipt.status
@@ -54,12 +70,19 @@ export const getPack = async (contract: Contract, packId: number) => {
   return txHash
 }
 
-export const openPacks = async (contract: Contract, packId: number, quantity = 1, account: string) => {
-  const txHash = await contract.openPacks(packId, quantity, { from: account, gasLimit: 500000 })
+export const openPacks = async (
+  contract: Contract,
+  packId: number,
+  quantity = 1,
+  account: string,
+  gasPrice: BigNumber
+) => {
+  const txHash = await contract.openPacks(packId, quantity, { from: account, gasLimit: gasPrice })
   const receipt = await txHash.wait()
 
   return receipt.status
 }
+
 export const getMomentIds = async (account: string, chainId: SupportedChainId) => {
   const provider = new ethers.providers.JsonRpcProvider(NETWORK_URLS[chainId])
   const ens = new ethers.Contract(getDropperAddress(chainId), DROPPER_ABI, provider)
@@ -78,7 +101,7 @@ export const getMomentIds = async (account: string, chainId: SupportedChainId) =
   return ids
 }
 
-export const getTokenURI = async (contract: Contract, momentId: string) => {
+export const getTokenURI = async (contract: Contract, momentId: BigNumber) => {
   const tokenURI = await contract.uri(momentId)
   return tokenURI.toString()
 }

@@ -1,9 +1,23 @@
 import BigNumber from 'bignumber.js'
 import { useCallback, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
+import { packList } from '../constants/dummy'
 import { useCollectionContext } from '../contexts/CollectionContext'
-import { BIG_ZERO } from '../utils/bigNumber'
-import { approve, buyPacks, isApprovedForAll, openPacks, allowance, approveUSDC } from '../utils/callHelpers'
+import { getProviderOrSigner } from '../utils'
+import { BIG_ZERO, getBalanceNumber } from '../utils/bigNumber'
+import {
+  approve,
+  buyPacks,
+  isApprovedForAll,
+  openPacks,
+  allowance,
+  approveUSDC,
+  getUSDCBalance,
+  getMaticBalanace,
+  getGasPrice,
+} from '../utils/callHelpers'
+import { estimateGas } from '../utils/estimateGas'
+import { getSimpleRPCProvider } from '../utils/simpleRPCProvider'
 import { isSupportedNetwork } from '../utils/validateChainID'
 import { useGetCollectionContract, useGetDropperContract, useGetUSDCTokenContract } from './useContract'
 import { useActiveWeb3React } from './useWeb3'
@@ -12,8 +26,6 @@ export const useAllowanceUSDC = async () => {
   const { account, chainId } = useActiveWeb3React()
   const collectionContract = useGetCollectionContract()
   const usdcTokenContract = useGetUSDCTokenContract()
-
-  // const [allowanceAmount, setAllowanceAmount] = useState<BigNumber | undefined>(BIG_ZERO)
 
   const allowanceAmount = await useMemo(async () => {
     if (!account || isSupportedNetwork(chainId) === false || !collectionContract || !usdcTokenContract) {
@@ -36,18 +48,22 @@ export const useIsApproved = async () => {
   const { setIsUSDCApproved } = useCollectionContext()
 
   const allowanceAmount = await useAllowanceUSDC()
+  console.log(allowanceAmount)
   if (allowanceAmount === undefined) {
     toast.error('Please check your Wallet Connection First!', { toastId: 'Not Connected' })
     setIsUSDCApproved(false)
+    return
   } else if (allowanceAmount.lte(0)) {
     toast.info('Please Approve USDC From Your Wallet First!', { toastId: 'UnApprove Warning' })
     setIsUSDCApproved(false)
+    return
   } else {
     setIsUSDCApproved(true)
   }
+  return
 }
 
-export const useBuyPack = (packId: number, quantity = 1) => {
+export const useApproveUSDC = () => {
   const { account, chainId } = useActiveWeb3React()
   const { setIsUSDCApproved } = useCollectionContext()
 
@@ -65,16 +81,28 @@ export const useBuyPack = (packId: number, quantity = 1) => {
       const status = await approveUSDC(usdcTokenContract, collectionContract, account)
       if (status) {
         toast.success('Successfully Approved, You can buy the Pack now')
+        setIsUSDCApproved(true)
         return true
       } else {
         toast.warn('Approve Failed!')
+        setIsUSDCApproved(false)
         return false
       }
     } catch (e: any) {
       toast.error(`Approve Failed! ${e.message}`)
+      setIsUSDCApproved(false)
       return false
     }
   }, [account, chainId, collectionContract, setIsUSDCApproved, usdcTokenContract])
+
+  return { onApprove: handleApprove }
+}
+
+export const useBuyPack = (packId: number, quantity = 1) => {
+  const { account, chainId } = useActiveWeb3React()
+
+  const collectionContract = useGetCollectionContract()
+  const usdcTokenContract = useGetUSDCTokenContract()
 
   const handleBuyPack = useCallback(
     async (packId: number, quantity: number) => {
@@ -82,7 +110,29 @@ export const useBuyPack = (packId: number, quantity = 1) => {
         toast.error('Please check your wallet Connection First!')
         return false
       }
+
       try {
+        const usdcBalance: BigNumber = await getUSDCBalance(usdcTokenContract, account)
+        if (getBalanceNumber(usdcBalance) < packList[packId - 1].price) {
+          toast.error('Insufficient USDC Balance to your wallet')
+          return false
+        }
+      } catch (e: any) {
+        toast.error(e.message)
+        return false
+      }
+
+      try {
+        // const simpleRPCProvider = getSimpleRPCProvider(chainId!)
+        // const maticBalance = await getMaticBalanace(simpleRPCProvider, account)
+        // const estimateGasPrice = await estimateGas(collectionContract, 'buyPacks', [packId, 1])
+        // console.log(estimateGasPrice)
+
+        // if (Number(maticBalance) < Number(estimateGasPrice.toString())) {
+        //   toast.error('Insufficient Matic Balance to make transaction')
+        //   return false
+        // }
+
         const res = await buyPacks(collectionContract!, packId, quantity)
         if (res) {
           toast.success('Successfully Bought the Pack')
@@ -91,15 +141,14 @@ export const useBuyPack = (packId: number, quantity = 1) => {
           toast.error('Buy Pack Failed')
           return false
         }
-      } catch (e) {
-        console.info(e)
-        toast.error('Buy Pack Failed')
+      } catch (e: any) {
+        toast.error(e.message)
         return false
       }
     },
     [account, chainId, collectionContract, usdcTokenContract]
   )
-  return { onBuyPack: handleBuyPack, onApprove: handleApprove }
+  return { onBuyPack: handleBuyPack }
 }
 
 export const useOpenPackWithApprove = (packId: number, quantity = 1) => {
@@ -111,19 +160,21 @@ export const useOpenPackWithApprove = (packId: number, quantity = 1) => {
     async (packId: number, quantity: number) => {
       if (!account || isSupportedNetwork(chainId) === false || dropperContract === null || collectionContract === null)
         return undefined
+      const estimateGasPrice = await estimateGas(collectionContract, 'openPacks', [packId, 1])
+
       const isApproved = await isApprovedForAll(dropperContract, collectionContract, account)
       if (!isApproved) {
         const status = await approve(dropperContract, collectionContract, account)
         if (status) {
           try {
-            const res = await openPacks(collectionContract, packId, quantity, account)
+            const res = await openPacks(collectionContract, packId, quantity, account, estimateGasPrice)
             return res
           } catch (e) {
             console.info(e)
           }
         }
       } else {
-        const res = await openPacks(collectionContract, packId, quantity, account)
+        const res = await openPacks(collectionContract, packId, quantity, account, estimateGasPrice)
         return res
       }
     },

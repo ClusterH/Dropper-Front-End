@@ -54,3 +54,8 @@ export type TMomentItem = {
   awsAnimationUrl: string
   totalMintedMoments: string
 }
+
+export interface DropperState {
+  userPackList: TPackItem[] | null
+  userMomentList: TMomentItem[] | null
+}

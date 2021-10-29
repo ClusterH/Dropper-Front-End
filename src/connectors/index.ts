@@ -18,7 +18,8 @@ export const NETWORK_URLS: {
   [chainId in SupportedChainId]: string
 } = {
   [SupportedChainId.MATIC]: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
-  [SupportedChainId.MATIC_TESTNET]: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
+  // [SupportedChainId.MATIC_TESTNET]: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
+  [SupportedChainId.MATIC_TESTNET]: `https://speedy-nodes-nyc.moralis.io/9640ff4c41285b3f8833ee7d/polygon/mumbai`,
 }
 
 const SUPPORTED_CHAIN_IDS: SupportedChainId[] = [SupportedChainId.MATIC, SupportedChainId.MATIC_TESTNET]

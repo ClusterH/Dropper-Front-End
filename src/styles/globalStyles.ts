@@ -6,6 +6,7 @@ export const GlobalStyles = createGlobalStyle`
   html {
     --primary: #000000;
     --primary-text: #ffffff;
+    --primary-opacity: #ffffff30;
     --secondary: #ff0069;
     --secondary-opacity: #ff006970;
     --secondary-text: #1a1a1a;
@@ -227,4 +228,15 @@ export const AvatarContainer = styled.img<{ width?: string }>`
   width: ${({ width }) => (width ? width : '100%')};
   max-width: 240px;
   cursor: pointer;
+`
+
+export const InputWrapper = styled.input<{ width?: string; height?: string }>`
+  width: ${({ width }) => (width ? width : '100%')};
+  height: ${({ height }) => (height ? height : '32px')};
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid var(--primary-opacity);
+  padding: 4px;
+  background-color: transparent;
+  color: var(--primary-text);
 `

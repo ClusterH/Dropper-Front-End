@@ -26,13 +26,13 @@ export const TRANSFER_BATCH_FILTER = {
     },
   },
   [SupportedChainId.MATIC_TESTNET]: {
-    fromBlock: 20510039,
-    toBlock: 'latest',
+    fromBlock: 20668896,
+    toBlock: 20671393,
     eventFilter: {
       address: getDropperAddress(SupportedChainId.MATIC_TESTNET),
       topics: [
         '0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb',
-        '0x000000000000000000000000f3e0524520a789e455d0b15814dce7e733e8e2bc',
+        '0x000000000000000000000000e38e636cb98470cc0ecb7dc2428719bf5423c868',
         '0x0000000000000000000000000000000000000000000000000000000000000000',
       ],
     },

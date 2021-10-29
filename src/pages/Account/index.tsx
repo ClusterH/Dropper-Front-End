@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import OnlineImages from '../../components/Icons/onlineImages'
+import { useGetMomentList, useGetPackList } from '../../hooks/useDropper'
 import { BoxCard, ContainerRow, Divider, PageWrapper, ResponsiveContainer } from '../../styles/globalStyles'
 import { AccCollections } from './AccCollections'
 import { AccountInfo } from './AccInfo'
@@ -14,6 +15,9 @@ const AccImgWrapper = styled(BoxCard)`
 `
 
 const Account: React.FC = () => {
+  useGetPackList()
+  useGetMomentList()
+
   return (
     <PageWrapper>
       <OnlineImages
