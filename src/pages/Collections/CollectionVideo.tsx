@@ -7,7 +7,7 @@ import { ComponentWrapper } from '../../styles/globalStyles'
 const CollectionVideoWrapper = styled(ComponentWrapper)`
   display: flex;
   justify-content: center;
-  margin-top: -20%;
+  margin: 5% 0;
 `
 export const CollectionVideo: React.FC = () => {
   return (

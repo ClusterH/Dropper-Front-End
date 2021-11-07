@@ -2,6 +2,9 @@
 declare module '@metamask/jazzicon' {
   export default function (diameter: number, seed: number): HTMLElement
 }
+
+declare module '@biconomy/mexa'
+
 interface Window {
   ethereum?: {
     isMetaMask?: true
@@ -10,6 +13,7 @@ interface Window {
     removeListener?: (...args: any[]) => void
   }
   web3?: Record<string, unknown>
+  Biconomy: any
 }
 
 type SerializedBigNumber = string

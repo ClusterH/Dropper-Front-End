@@ -1,18 +1,34 @@
 import React from 'react'
-import { Divider, PageWrapper } from '../../styles/globalStyles'
+import { PageWrapper } from '../../styles/globalStyles'
 import { Advantage } from './Advantage'
 import { ClixDropp } from './ClixDropp'
 import { DroppExplain } from './DroppExplain'
 import { IntroducingBox } from './IntroducingBox'
+import { RememberBox } from './RememberBox'
+import { ProductExplain } from './ProductExplain'
+import { RoadmapBox } from './RoadmapBox'
+import { DroppTokenBox } from './DroppTokenBox'
+import { TeamCardBox } from './TeamCardBox'
+import { AdvisorsCardBox } from './AdvisorsCardBox'
+import { PartnersBox } from './PartnersBox'
+import { InvestorsBox } from './InvestorsBox'
+import { FAQBox } from './FAQBox'
 
 const Home: React.FC = () => {
   return (
     <PageWrapper>
       <IntroducingBox />
-      <ClixDropp />
+      <RememberBox />
+      <ProductExplain />
       <DroppExplain />
-      <Divider margin={'132px 0 100px'} />
       <Advantage />
+      <RoadmapBox />
+      <DroppTokenBox />
+      <TeamCardBox />
+      <AdvisorsCardBox />
+      <PartnersBox />
+      <InvestorsBox />
+      <FAQBox />
     </PageWrapper>
   )
 }

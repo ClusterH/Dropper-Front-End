@@ -3,7 +3,6 @@ import styled, { css } from 'styled-components'
 import { animated, useTransition, useSpring } from 'react-spring'
 import { DialogOverlay, DialogContent } from '@reach/dialog'
 import { isMobile } from 'react-device-detect'
-import { transparentize } from 'polished'
 import { useGesture } from 'react-use-gesture'
 
 const AnimatedDialogOverlay = animated(DialogOverlay)
@@ -23,26 +22,28 @@ const StyledDialogOverlay = styled(AnimatedDialogOverlay)`
 
 const AnimatedDialogContent = animated(DialogContent)
 // destructure to not pass custom props to Dialog DOM element
-const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...rest }) => (
-  <AnimatedDialogContent {...rest} />
-)).attrs({
+const StyledDialogContent = styled(
+  ({ width, border, borderRadius, boxShadow, backColor, minHeight, maxHeight, padding, mobile, isOpen, ...rest }) => (
+    <AnimatedDialogContent {...rest} />
+  )
+).attrs({
   'aria-label': 'dialog',
 })`
   overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
 
   &[data-reach-dialog-content] {
     margin: 0 0 2rem 0;
-    background-color: var(--primary);
+    background-color: ${({ backColor }) => (backColor ? backColor : 'var(--primary)')};
     // box-shadow: 2px 3px 15px var(--secondary-opacity);
-    box-shadow: 3px 3px 12px 2px var(--secondary);
-    padding: 0px;
-    width: ${({ mobile }) => (mobile ? '90%' : '50vw')};
+    box-shadow: ${({ boxShadow }) => (boxShadow ? boxShadow : '3px 3px 12px 2px var(--secondary)')};
+    padding: ${({ padding }) => (padding ? padding : '0px')};
+    width: ${({ mobile, width }) => (mobile ? '90%' : width ? width : '420px')};
     overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
     overflow-x: hidden;
 
     align-self: ${({ mobile }) => (mobile ? 'center' : 'center')};
 
-    max-width: 420px;
+    // max-width: 420px;
     ${({ maxHeight }) =>
       maxHeight &&
       css`
@@ -54,15 +55,22 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
         min-height: ${minHeight}vh;
       `}
     display: flex;
-    border-radius: 12px;
+    border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '12px')};
+    position: relative;
   }
 `
 
 interface ModalProps {
   isOpen: boolean
   onDismiss: () => void
+  width?: string
   minHeight?: number | false
   maxHeight?: number
+  padding?: string
+  border?: string
+  borderRadius?: string
+  backColor?: string
+  boxShadow?: string
   initialFocusRef?: React.RefObject<any>
   children?: React.ReactNode
 }
@@ -70,8 +78,14 @@ interface ModalProps {
 export default function Modal({
   isOpen,
   onDismiss,
+  width,
   minHeight = false,
   maxHeight = 90,
+  padding,
+  border,
+  borderRadius,
+  backColor,
+  boxShadow,
   initialFocusRef,
   children,
 }: ModalProps) {
@@ -114,8 +128,14 @@ export default function Modal({
                     }
                   : {})}
                 aria-label="dialog content"
+                width={width}
                 minHeight={minHeight}
                 maxHeight={maxHeight}
+                padding={padding}
+                border={border}
+                borderRadius={borderRadius}
+                backColor={backColor}
+                boxShadow={boxShadow}
                 mobile={isMobile}
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}

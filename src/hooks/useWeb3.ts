@@ -56,7 +56,6 @@ export function useInactiveListener(suppress = false) {
 
     if (ethereum && ethereum.on && !active && !error && !suppress) {
       const handleChainChanged = (chainId: number) => {
-        console.log(chainId)
         // if (oldNetwork) {
         window.location.reload()
         // }

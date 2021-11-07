@@ -3,16 +3,26 @@ import { SupportedChainId } from './chains'
 type AddressMap = { [chainId: number]: string }
 
 export const DROPPER_CONTRACT_ADDRESSES: AddressMap = {
-  [SupportedChainId.MATIC]: '0x1378EfffDF1D56566CD87c3367bF041faA841AeA',
-  [SupportedChainId.MATIC_TESTNET]: '0x44543506653b24f461CEC5e6D4eCEfF076b981a4',
+  [SupportedChainId.MATIC]: '0x9d35b676A80C44702c77A3e49F10E257Fc64B9eF',
+  [SupportedChainId.MATIC_TESTNET]: '0xed4157DB2FeD63058afc654169898741f2e43A9B',
 }
 
 export const COLLECTION_CONTRACT_ADDRESSES: AddressMap = {
-  [SupportedChainId.MATIC]: '0x9dD1dC7d8d85864Bfb313Cf4B35AFC556D02bAF2',
-  [SupportedChainId.MATIC_TESTNET]: '0xe38e636CB98470Cc0ECb7dc2428719bf5423C868',
+  [SupportedChainId.MATIC]: '0x6F24a254b7D303E9833bD25f0388Cd2b16b52a4E',
+  [SupportedChainId.MATIC_TESTNET]: '0x8C51D6227086affAd0E0a7D6f3442d461C5dA72A',
 }
 
 export const USDC_TOKEN_ADDRESSES: AddressMap = {
   [SupportedChainId.MATIC]: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
   [SupportedChainId.MATIC_TESTNET]: '0x2058A9D7613eEE744279e3856Ef0eAda5FCbaA7e',
 }
+
+export const MULTICALL_CONTRACT_ADDRESSES: AddressMap = {
+  [SupportedChainId.MATIC]: '0x11ce4B23bD875D7F5C6a31084f55fDe1e9A87507',
+  [SupportedChainId.MATIC_TESTNET]: '0x01Be6F002893b7bed5baE00b10EC2094AcfFC64c',
+}
+
+// Verifying Dropper
+// Pass - Verified: https://mumbai.polygonscan.com/address/0xed4157DB2FeD63058afc654169898741f2e43A9B#code
+// Verifying Collection
+// Pass - Verified: https://mumbai.polygonscan.com/address/0x8C51D6227086affAd0E0a7D6f3442d461C5dA72A#code

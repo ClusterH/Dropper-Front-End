@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { DropperState } from '../../types'
+import { IDropperState } from '../../types'
 
-const initialState: DropperState = {
+const initialState: IDropperState = {
   userPackList: [],
   userMomentList: [],
+  isUSDCApproved: false,
 }
 
 const dropperSlice = createSlice({
@@ -16,8 +17,11 @@ const dropperSlice = createSlice({
     setMomentList(state, action) {
       state.userMomentList = action.payload
     },
+    setIsUSDCApproved(state, action) {
+      state.isUSDCApproved = action.payload
+    },
   },
 })
 
-export const { setPackList, setMomentList } = dropperSlice.actions
+export const { setPackList, setMomentList, setIsUSDCApproved } = dropperSlice.actions
 export default dropperSlice.reducer

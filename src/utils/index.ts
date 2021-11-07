@@ -1,6 +1,7 @@
 import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
+import { Contract as MultiCallContract } from 'ethcall'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 
 // returns the checksummed address if the address is valid, otherwise returns false
@@ -37,4 +38,13 @@ export function getContract(address: string, ABI: any, library: Web3Provider, ac
   }
 
   return new Contract(address, ABI, getProviderOrSigner(library, account) as any)
+}
+
+//ethcall multi-call contract
+export function getMultiCallContract(address: string, ABI: any): MultiCallContract {
+  if (!isAddress(address) || address === AddressZero) {
+    throw Error(`Invalid 'address' parameter '${address}'.`)
+  }
+
+  return new MultiCallContract(address, ABI)
 }

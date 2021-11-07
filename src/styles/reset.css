@@ -127,6 +127,15 @@ table {
   font-family: "coder";
   src: local("coder"), url(font.woff) format("woff");
 }
+@font-face {
+  font-family: "rubik";
+  src: local("rubik"), url(rubik-font.ttf) format("truetype");
+}
+
+@font-face {
+  font-family: "RubikBold";
+  src: local("RubikBold"), url(Rubik-Bold.ttf) format("truetype");
+}
 
 body {
   margin: 0;

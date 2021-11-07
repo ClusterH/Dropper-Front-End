@@ -18,3 +18,7 @@ export function useToggleModal(modal: ApplicationModal): () => void {
 export function useWalletModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WALLET)
 }
+
+export function useWyreReservationModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.WYRE_RESERVATION_FORM)
+}
