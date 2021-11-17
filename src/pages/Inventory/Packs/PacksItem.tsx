@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
-import { TextCustom, ContainerRow, ImageContainer, BoxCard, ContainerColumn } from '../../../styles/globalStyles'
 import { isMobile } from 'react-device-detect'
-import { RoundedIconBox } from '../../../styles/globalStyles'
-import { FavoriteIcon, FacebookIcon, LinkedInIcon, RedditIcon, TelegramIcon } from '../../../components/Icons'
-import { TPackItem, TSelectedTab } from '../../../types'
-import { useOpenPackWithApprove } from '../../../hooks/useCollection'
 import { TransparentBtn } from '../../../components/Buttons/MainButton'
-import { ProcessingLoader } from '../../Collections/Processing'
 import { VideoContainer } from '../../../components/VideoContainer'
+import { useOpenPackMeta, useOpenPackWithApprove } from '../../../hooks/useCollection'
+import { BoxCard, ContainerColumn, TextCustom } from '../../../styles/globalStyles'
+import { TPackItem, TSelectedTab } from '../../../types'
+import { ProcessingLoader } from '../../Collections/Processing'
 
 interface IPackItem {
   width?: string
@@ -23,10 +21,11 @@ export const PacksItem: React.FC<{ pack: TPackItem; setSelectedTab: (tab: TSelec
 }) => {
   const [pendingTx, setPendingTx] = useState<boolean>(false)
   const { onOpenPack } = useOpenPackWithApprove()
+  const { onOpenPackMeta } = useOpenPackMeta()
 
   return (
     <BoxCard
-      boxWidth={'48%'}
+      boxWidth={isMobile ? '100%' : '48%'}
       border={'3px solid var(--navy-blue)'}
       borderHover={'5px solid var(--navy-blue)'}
       backgroundColor={'var(--light-navy-blue)'}
@@ -71,6 +70,27 @@ export const PacksItem: React.FC<{ pack: TPackItem; setSelectedTab: (tab: TSelec
           }}
         >
           {pendingTx ? 'Processing' : 'Open Pack!'}
+        </TransparentBtn>
+        <TransparentBtn
+          borderRadius={'24px'}
+          padding={'24px 24px'}
+          disabled={pendingTx || pack.balance === undefined || pack.balance === '0'}
+          onClick={async () => {
+            setPendingTx(true)
+            try {
+              const res = await onOpenPackMeta(pack.id)
+              if (res) {
+                setSelectedTab('moments')
+                window.location.href = '/inventory'
+              }
+              setPendingTx(false)
+            } catch (e) {
+              console.log('openPack error', e)
+              setPendingTx(false)
+            }
+          }}
+        >
+          {pendingTx ? 'Processing' : 'Open Pack - Mx!'}
         </TransparentBtn>
       </ContainerColumn>
 

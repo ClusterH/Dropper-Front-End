@@ -1,16 +1,21 @@
 import { useEffect } from 'react'
 import { packList } from '../constants/dummy'
 import { AppState } from '../state'
-import { setMomentList, setPackList } from '../state/dropper/reducer'
+import { setIsLoading, setPackList } from '../state/dropper/reducer'
 import { useAppDispatch, useAppSelector } from '../state/hooks'
-import { getDropperAddress } from '../utils/addressHelpers'
-import { getMomentIds, getMultiCall } from '../utils/callHelpers'
-import { getMomentId, momentGenerator } from '../utils/momentHelpers'
-import multicall from '../utils/multicall'
+import { getMultiCall } from '../utils/callHelpers'
+import { fetchMomentList } from '../utils/momentHelpers'
 import { isSupportedNetwork } from '../utils/validateChainID'
-import { useGetDropperContract, useGetDropperMultiCallContract, useGetMultiCallContract } from './useContract'
+import { useGetDropperMultiCallContract } from './useContract'
 import { useActiveWeb3React } from './useWeb3'
-import DROPPER_ABI from '../abis/dropper.json'
+
+export const useLatestBlockNumber = () => {
+  return useAppSelector((state: AppState) => state.dropper.latestBlockNumber)
+}
+
+export const useLoading = () => {
+  return useAppSelector((state: AppState) => state.dropper.isLoading)
+}
 
 export const usePackList = () => {
   return useAppSelector((state: AppState) => state.dropper.userPackList)
@@ -22,7 +27,6 @@ export const useMomentList = () => {
 
 export const useGetPackList = () => {
   const { account, chainId } = useActiveWeb3React()
-  const dropperContract = useGetDropperContract()
   const dropperMultiCallContract = useGetDropperMultiCallContract()
   const dispatch = useAppDispatch()
 
@@ -53,23 +57,23 @@ export const useGetPackList = () => {
 export const useGetMomentList = () => {
   const { account, chainId, library } = useActiveWeb3React()
   const dropperMultiCallContract = useGetDropperMultiCallContract()
-  const multicallContract = useGetMultiCallContract()
+  const momentList = useMomentList()
+  const latest = useLatestBlockNumber()
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const fetchMomentList = async () => {
+    const getMomentList = async () => {
       if (!account || dropperMultiCallContract === null || isSupportedNetwork(chainId) === false) return []
-      const momentIDs = await getMomentIds(account!, chainId!)
-      const _calls = momentIDs.map((item) => {
-        const { momentId } = getMomentId(item)
-        return dropperMultiCallContract.getMoment(momentId)
-      })
-      const response = await getMultiCall(_calls, chainId!)
-
-      const moments = await Promise.all(momentGenerator(response, momentIDs))
-      dispatch(setMomentList(moments))
+      if (!momentList || momentList.length === 0) dispatch(setIsLoading(true))
+      fetchMomentList(
+        account,
+        dropperMultiCallContract,
+        chainId!,
+        dispatch,
+        momentList && momentList.length > 0 ? latest : undefined
+      )
     }
-    fetchMomentList()
-  }, [account, chainId, dispatch, dropperMultiCallContract, library, multicallContract])
+    getMomentList()
+  }, [account, chainId, dispatch, dropperMultiCallContract, library])
 }

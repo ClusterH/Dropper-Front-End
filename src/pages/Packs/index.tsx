@@ -1,4 +1,8 @@
 import React, { useMemo, useState } from 'react'
+import PIN_ICON from '../../assets/images/pin-icon.svg'
+import Banner from '../../components/Banners'
+import { MainButton } from '../../components/Buttons/MainButton'
+import { SearchBox } from '../../components/SearchBox'
 import {
   ComponentWrapper,
   ContainerColumn,
@@ -7,12 +11,7 @@ import {
   PageWrapper,
   TextCustom,
 } from '../../styles/globalStyles'
-import { isMobile } from 'react-device-detect'
 import { PacksItem } from './PacksItem'
-import Banner from '../../components/Banners'
-import { SearchBox } from '../../components/SearchBox'
-import { MainButton } from '../../components/Buttons/MainButton'
-import PIN_ICON from '../../assets/images/pin-icon.svg'
 
 const PageSize = 6
 const packList = [

@@ -1,16 +1,15 @@
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import {
-  ComponentWrapper,
   BoxCard,
-  TextCustom,
+  ComponentWrapper,
   ContainerRow,
   ImageContainer,
-  SubText,
   ImageIconContainer,
+  ResponsiveContainer,
+  SubText,
+  TextCustom,
 } from '../../styles/globalStyles'
-import { isMobile } from 'react-device-detect'
-import BANNER_SECOND from '../../assets/images/banner-second.svg'
-import { title } from 'process'
 
 export const ProductExplainItem: React.FC<{
   src: string
@@ -20,17 +19,19 @@ export const ProductExplainItem: React.FC<{
 }> = ({ src, title, description, highlightText }) => {
   return (
     <BoxCard
-      boxWidth={'30%'}
-      boxHeight={'498px'}
+      boxWidth={isMobile ? '80%' : '30%'}
+      boxHeight={isMobile ? '320px' : '480px'}
       border={'10px solid var(--light-navy)'}
       backgroundColor={'var(--light-navy-blue)'}
       flexDirection={'column'}
-      justifyContent={'space-around'}
+      justifyContent={'flex-start'}
+      padding={'0 1.5%'}
+      margin={isMobile ? '10% 0' : '12px'}
     >
       <ImageIconContainer
         position={'relative'}
-        boxWidth={'251px'}
-        boxHeight={'251px'}
+        boxWidth={isMobile ? '200px' : '251px'}
+        boxHeight={isMobile ? '200px' : '251px'}
         border={'5px solid var(--light-navy)'}
         backgroundColor={'var(--purple)'}
         margin={'-20% 0 0 0'}
@@ -39,18 +40,18 @@ export const ProductExplainItem: React.FC<{
       </ImageIconContainer>
       <TextCustom
         color={'var(--secondary)'}
-        fontSize={isMobile ? '0.8rem' : '45px'}
+        fontSize={isMobile ? '1.2rem' : '35px'}
         fontWeight={300}
         fontFamily={'Rubik'}
         lineHeight={1.1}
         textAlign={'center'}
-        margin={'3% 0 0% 0'}
+        margin={'10% 0 0% 0'}
       >
         {title}
       </TextCustom>
       <TextCustom
         color={'var(--primary-text)'}
-        fontSize={isMobile ? '0.8rem' : '35px'}
+        fontSize={isMobile ? '.8rem' : '18px'}
         fontWeight={300}
         fontFamily={'Rubik'}
         lineHeight={1}
@@ -60,7 +61,7 @@ export const ProductExplainItem: React.FC<{
         {description[0]} &nbsp;
         <SubText
           color={'var(--secondary)'}
-          fontSize={isMobile ? '0.8rem' : '35px'}
+          fontSize={isMobile ? '.8rem' : '18px'}
           fontWeight={300}
           fontFamily={'Rubik'}
           textAlign={'center'}
@@ -77,24 +78,26 @@ export const ProductExplain: React.FC = () => {
   return (
     <ComponentWrapper margin={'50px 0 0'} padding={'24px'}>
       <ContainerRow>
-        <ProductExplainItem
-          src={'https://dropper.s3.ca-central-1.amazonaws.com/logos.png'}
-          title={'Verify'}
-          description={['Each celebrity is', ' on the Dropper Platform']}
-          highlightText={'verified'}
-        />
-        <ProductExplainItem
-          src={'https://dropper.s3.ca-central-1.amazonaws.com/solodropper1.png'}
-          title={'Experience'}
-          description={['They craft a digital', 'for their fans powered by NFTs and Tokenization']}
-          highlightText={'experience'}
-        />
-        <ProductExplainItem
-          src={'https://dropper.s3.ca-central-1.amazonaws.com/sidewayspack.png'}
-          title={'Access'}
-          description={['Fans buy NFTs to get', '']}
-          highlightText={'access'}
-        />
+        <ResponsiveContainer>
+          <ProductExplainItem
+            src={'https://dropper.s3.ca-central-1.amazonaws.com/logos.png'}
+            title={'Verify'}
+            description={['Each celebrity is', ' on the Dropper Platform']}
+            highlightText={'verified'}
+          />
+          <ProductExplainItem
+            src={'https://dropper.s3.ca-central-1.amazonaws.com/solodropper1.png'}
+            title={'Experience'}
+            description={['They craft a digital', 'for their fans powered by NFTs and Tokenization']}
+            highlightText={'experience'}
+          />
+          <ProductExplainItem
+            src={'https://dropper.s3.ca-central-1.amazonaws.com/sidewayspack.png'}
+            title={'Access'}
+            description={['Fans buy NFTs to get', '']}
+            highlightText={'access'}
+          />
+        </ResponsiveContainer>
       </ContainerRow>
     </ComponentWrapper>
   )

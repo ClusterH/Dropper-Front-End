@@ -1,8 +1,8 @@
 import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
-import { Contract as MultiCallContract } from 'ethcall'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
+import { Contract as MultiCallContract } from 'ethcall'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {

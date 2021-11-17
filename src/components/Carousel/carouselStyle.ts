@@ -68,19 +68,19 @@ export const IndicatorContainer = styled.div`
     border-radius: 50%;
     transition-property: all;
     transition-duration: 250ms;
-    transition-timing - function: linear;
+    transition-timing-function: linear;
   }
-  &>div:first-child {
-    margin-left: 0px
+  & > div:first-child {
+    margin-left: 0px;
   }
-  &>.dots-active {
+  & > .dots-active {
     width: 12px;
     height: 12px;
     background-color: var(--secondary);
     flex-shrink: 0;
     flex-grow: 1;
   }
-  &>.dots-close {
+  & > .dots-close {
     width: 12px;
     height: 12px;
     background-color: transparent;
@@ -88,7 +88,7 @@ export const IndicatorContainer = styled.div`
     flex-shrink: 0;
     flex-grow: 1;
   }
-  &>.dots-far {
+  & > .dots-far {
     width: 12px;
     height: 12px;
     margin-top: 1px;

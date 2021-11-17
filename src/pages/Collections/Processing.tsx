@@ -2,8 +2,7 @@ import React from 'react'
 import PropagateLoader from 'react-spinners/PropagateLoader'
 import styled from 'styled-components'
 import { VideoContainer } from '../../components/VideoContainer'
-import { ContainerRow, TextCustom, TextSubTitle } from '../../styles/globalStyles'
-import { TPackItem } from '../../types'
+import { ContainerRow, TextCustom } from '../../styles/globalStyles'
 
 const LoaderWrapper = styled.div`
   position: fixed;

@@ -15,7 +15,6 @@ const cartSlice = createSlice({
   reducers: {
     setUserCartList(state, action) {
       if (action.payload === undefined) {
-        console.log(packList)
         state.userCartList = [...packList]
       } else {
         const { packId, cartQuantity }: { packId: number; cartQuantity: number } = action.payload

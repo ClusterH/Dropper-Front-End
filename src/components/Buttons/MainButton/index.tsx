@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { size } from '../../../styles/globalStyles'
 
 export const MainButton = styled.button<{
   width?: string
@@ -41,6 +42,12 @@ export const MainButton = styled.button<{
   background: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'var(--secondary)')};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '0px')};
   border: ${({ border }) => (border ? border : 'none')};
+  @media screen and (max-width: ${size.tablet}) {
+    margin: ${({ margin }) => (margin ? margin : '10px 0')};
+  }
+  @media screen and (max-width: ${size.mobileL}) {
+    margin: ${({ margin }) => (margin ? margin : '5px 0')};
+  }
 `
 
 export const TransparentBtn = styled(MainButton)`

@@ -1,15 +1,14 @@
 import BigNumber from 'bignumber.js'
+import { ethers } from 'ethers'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { toast } from 'react-toastify'
 import { useHistory } from 'react-router-dom'
-import COLLECTION_ABI from '../abis/collection.json'
-import { useCollectionContext } from '../contexts/CollectionContext'
+import { toast } from 'react-toastify'
 import { AppState } from '../state'
 import { setUserCartList } from '../state/cart/reducer'
 import { setIsUSDCApproved } from '../state/dropper/reducer'
 import { useAppDispatch, useAppSelector } from '../state/hooks'
 import { TPackItem } from '../types'
-import { getCollectionAddress } from '../utils/addressHelpers'
+import { approveUSDCMexa, buyPackMeta, openPackMeta } from '../utils/biconomyHelpers'
 import { getBalanceNumber } from '../utils/bigNumber'
 import {
   allowance,
@@ -21,8 +20,8 @@ import {
   openPacks,
 } from '../utils/callHelpers'
 import { estimateGas } from '../utils/estimateGas'
-import multicall from '../utils/multicall'
 import { isSupportedNetwork } from '../utils/validateChainID'
+import { useInitBiconomy } from './useBiconomy'
 import {
   useGetCollectionContract,
   useGetDropperContract,
@@ -30,7 +29,6 @@ import {
   useGetUSDCTokenContract,
 } from './useContract'
 import { useActiveWeb3React } from './useWeb3'
-import { Biconomy } from '@biconomy/mexa'
 
 export const useApprove = () => {
   return useAppSelector((state: AppState) => state.dropper.isUSDCApproved)
@@ -62,7 +60,6 @@ export const useIsApproved = async () => {
   const { account, chainId } = useActiveWeb3React()
   const collectionContract = useGetCollectionContract()
   const usdcTokenContract = useGetUSDCTokenContract()
-  const isApproved = useApprove()
   const dispatch = useAppDispatch()
 
   if (!account || isSupportedNetwork(chainId) === false || !collectionContract || !usdcTokenContract) {
@@ -72,6 +69,7 @@ export const useIsApproved = async () => {
 
   try {
     const allowanceAmount = await allowance(usdcTokenContract, collectionContract, account)
+    console.log(allowanceAmount)
     if (allowanceAmount.lte(0)) {
       dispatch(setIsUSDCApproved(false))
     } else dispatch(setIsUSDCApproved(true))
@@ -79,10 +77,8 @@ export const useIsApproved = async () => {
     console.error(e)
   }
 }
-
 export const useApproveUSDC = () => {
   const { account, chainId } = useActiveWeb3React()
-  // const { setIsUSDCApproved } = useCollectionContext()
 
   const collectionContract = useGetCollectionContract()
   const usdcTokenContract = useGetUSDCTokenContract()
@@ -116,8 +112,29 @@ export const useApproveUSDC = () => {
   return { onApprove: handleApprove }
 }
 
-export const useBuyPack = () => {
+export const useApproveUSDCMexa = () => {
   const { account, chainId, library } = useActiveWeb3React()
+  const { usdcTokenContract } = useInitBiconomy()
+
+  const handleApprove = useCallback(async () => {
+    const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
+    const walletSigner = walletProvider.getSigner()
+
+    try {
+      const status = await approveUSDCMexa(account!, walletSigner!, chainId!, usdcTokenContract)
+      return status
+    } catch (e: any) {
+      console.log(e)
+      toast.error(e.message)
+      return false
+    }
+  }, [account, chainId])
+
+  return { onApproveMexa: handleApprove }
+}
+
+export const useBuyPack = () => {
+  const { account, chainId } = useActiveWeb3React()
 
   const collectionContract = useGetCollectionContract()
   const usdcTokenContract = useGetUSDCTokenContract()
@@ -146,7 +163,6 @@ export const useBuyPack = () => {
         toast.error(e.message)
         return false
       }
-
       try {
         const _calls = cartList.map(async (_p) => {
           if (_p.cartQuantity > 0) return await buyPacks(collectionContract!, _p.id, _p.cartQuantity)
@@ -156,7 +172,6 @@ export const useBuyPack = () => {
           return value
         })
 
-        console.log(response)
         if (response.filter((status) => status).length > 0) {
           return true
         } else {
@@ -170,6 +185,45 @@ export const useBuyPack = () => {
     [account, chainId, collectionContract, multicallContract, usdcTokenContract]
   )
   return { onBuyPack: handleBuyPack }
+}
+
+export const useBuyPackMexa = () => {
+  const { account, chainId } = useActiveWeb3React()
+  const { contract } = useInitBiconomy()
+
+  const handleBuyPack = useCallback(
+    async (cartList: TPackItem[], currentTotalPrice: number) => {
+      if (!account && !isSupportedNetwork(chainId)) {
+        toast.error('Please check your wallet Connection First!')
+        return false
+      }
+
+      const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
+      const walletSigner = walletProvider.getSigner()
+
+      try {
+        const _calls = cartList.map(async (_p) => {
+          if (_p.cartQuantity > 0)
+            return await buyPackMeta(account!, walletSigner, chainId!, _p.id, _p.cartQuantity, contract)
+        })
+
+        const response = await Promise.all(_calls).then((value) => {
+          return value
+        })
+
+        if (response.filter((status) => status).length > 0) {
+          return true
+        } else {
+          return false
+        }
+      } catch (e: any) {
+        toast.error(e.message)
+        return false
+      }
+    },
+    [account, chainId]
+  )
+  return { onBuyPackMexa: handleBuyPack }
 }
 
 export const useOpenPackWithApprove = () => {
@@ -204,6 +258,29 @@ export const useOpenPackWithApprove = () => {
   return { onOpenPack: handleOpenPack }
 }
 
+export const useOpenPackMeta = () => {
+  const { account, chainId } = useActiveWeb3React()
+  const { contract } = useInitBiconomy()
+
+  const handleOpenPack = useCallback(
+    async (packId: number) => {
+      if (!account || isSupportedNetwork(chainId) === false || contract === undefined) return undefined
+
+      const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
+      const walletSigner = walletProvider.getSigner()
+
+      try {
+        const res = await openPackMeta(account!, walletSigner, chainId!, packId, contract)
+        return res
+      } catch (e) {
+        console.info(e)
+      }
+    },
+    [account, chainId, contract]
+  )
+  return { onOpenPackMeta: handleOpenPack }
+}
+
 export const useCartList = () => {
   return useAppSelector((state: AppState) => state.cart.userCartList)
 }
@@ -231,7 +308,9 @@ export const usePackListBox = () => {
   const dispatch = useAppDispatch()
   const cartList = useCartList()
   const { onBuyPack } = useBuyPack()
+  const { onBuyPackMexa } = useBuyPackMexa()
   const { onApprove } = useApproveUSDC()
+  const { onApproveMexa } = useApproveUSDCMexa()
   const history = useHistory()
   const { account } = useActiveWeb3React()
 
@@ -240,10 +319,12 @@ export const usePackListBox = () => {
     setCurrentTotalPrice(total)
   }, [cartList])
 
-  const BuyPackProcess = async () => {
+  const BuyPackProcess = async (isMexa: boolean) => {
     try {
       setPendingTx(true)
-      const status = await onBuyPack(cartList, currentTotalPrice)
+      const status = isMexa
+        ? await onBuyPackMexa(cartList, currentTotalPrice)
+        : await onBuyPack(cartList, currentTotalPrice)
       setPendingTx(false)
 
       if (status) {
@@ -252,14 +333,15 @@ export const usePackListBox = () => {
         history.push('/inventory')
       }
     } catch (e) {
+      console.log(e)
       setPendingTx(false)
     }
   }
 
-  const ApprovingUSDC = async () => {
+  const ApprovingUSDC = async (isMexa: boolean) => {
     try {
       setIsLoading(true)
-      const status = await onApprove()
+      const status = isMexa ? await onApproveMexa() : await onApprove()
       setIsLoading(false)
 
       if (status) dispatch(setIsUSDCApproved(true))

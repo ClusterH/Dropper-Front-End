@@ -16,7 +16,7 @@ const CollectionListBox = styled(ContainerRow)`
   gap: 0;
 `
 
-const pageSize = 6
+const pageSize = isMobile ? 1 : 6
 
 const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity; titleAlign?: TFlexAlignItems }> = ({
   sliderList,
@@ -55,15 +55,15 @@ const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity; titleAl
   }, [sliderList, pageSize])
 
   const collectionBlock = (idx: number) => {
-    return sliderList.slice(idx, idx + 6)
+    return sliderList.slice(idx, idx + pageSize)
   }
 
   return (
-    <ContainerRow backgroundColor={'var(--dark-navy)'} justifyContent={'center'} padding={'60px 0'}>
+    <ContainerRow backgroundColor={'var(--dark-navy)'} justifyContent={'center'} padding={isMobile ? '0' : '60px 0'}>
       <ComponentWrapper margin={'0px 0'} padding={'24px'}>
         <TopButtonCarousel
           totalCount={sliderList.length}
-          pageSize={6}
+          pageSize={pageSize}
           currentPage={currentPage}
           direction={direction}
           onPageChange={(page: number, direction: string) => onPageChange(page, direction)}
@@ -95,7 +95,7 @@ const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity; titleAl
               {rarity}
             </SubText>
           </ContainerColumn>
-          <CollectionListBox margin={'0'} padding={'0'} ref={collectionRef}>
+          <CollectionListBox margin={isMobile ? '50px' : '0'} padding={'0'} ref={collectionRef}>
             {rangeBlock.map((idx) => {
               return (
                 <ContainerRow
@@ -106,19 +106,19 @@ const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity; titleAl
                   flexWrap={'wrap'}
                   padding={'0'}
                   margin={'0'}
-                  gap={'1.5%'}
+                  gap={isMobile ? '0' : '1.5%'}
                   style={{ minWidth: '100%' }}
                 >
                   {collectionBlock(idx * pageSize).map((item) => {
                     return (
                       <CollectionCard
                         key={item.id}
-                        boxWidth={'30%'}
-                        imgWidth={'250px'}
-                        imgHeight={'250px'}
+                        boxWidth={isMobile ? '100%' : '30%'}
+                        imgWidth={isMobile ? '160px' : '250px'}
+                        imgHeight={isMobile ? '160px' : '250px'}
                         url={`${AWS_BASE_URI}${rarity}/${item.title.replaceAll(' ', '+')}.png`}
                         title={item.title}
-                        content={item.content}
+                        contentUrl={`${AWS_BASE_URI}${rarity}/${item.title.replaceAll(' ', '+')}.txt`}
                         isVertical={true}
                       />
                     )

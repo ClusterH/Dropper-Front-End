@@ -1,8 +1,8 @@
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import styled from 'styled-components'
 import { BoxCard, ContainerColumn, TextCustom } from '../../styles/globalStyles'
 import { RemarkIcon } from '../Icons'
-import { isMobile } from 'react-device-detect'
 
 const TimelineWrapper = styled.div<{ width?: string }>`
   width: ${({ width }) => (width ? width : '100%')};

@@ -1,13 +1,13 @@
 import React from 'react'
-import { ComponentWrapper, ContainerRow, TextCustom, SubText } from '../../styles/globalStyles'
-import { PackListBox } from './PackListBox'
 import { isMobile } from 'react-device-detect'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
+import { ComponentWrapper, ContainerRow, SubText, TextCustom } from '../../styles/globalStyles'
+import { PackListBox } from './PackListBox'
 
 export const PackList: React.FC = () => {
   return (
     <ContainerRow backgroundColor={'var(--dark-navy)'} justifyContent={'center'}>
-      <ComponentWrapper margin={'60px 0'} padding={'24px'}>
+      <ComponentWrapper margin={isMobile ? '0' : '60px 0'} padding={'24px'}>
         <ContainerRow justifyContent={'center'} padding={'32px'} margin={'0 0 50px 0'}>
           <TextCustom
             color={'var(--primary-text)'}

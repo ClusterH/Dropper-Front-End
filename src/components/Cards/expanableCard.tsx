@@ -42,7 +42,7 @@ const ExpanableCard: React.FC<{
           <>
             <Divider width={'100%'} height={'1px'} margin={'1% 0 1% 0%'} backColor={'var(--primary-text)'} />
             <TextCustom
-              fontSize={isMobile ? '0.6rem' : '1rem'}
+              fontSize={isMobile ? '0.8rem' : '1rem'}
               fontWeight={300}
               lineHeight={1.3}
               textAlign={'left'}

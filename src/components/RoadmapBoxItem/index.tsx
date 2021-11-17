@@ -1,10 +1,9 @@
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import styled from 'styled-components'
 import { BoxCard, TextCustom } from '../../styles/globalStyles'
-import { isMobile } from 'react-device-detect'
 
-// eslint-disable-next-line prettier/prettier
-const ButtomBorderBoxContainer = styled(BoxCard) <{
+const ButtomBorderBoxContainer = styled(BoxCard)<{
   width?: string
   height?: string
   border?: string
@@ -18,8 +17,7 @@ const ButtomBorderBoxContainer = styled(BoxCard) <{
   transform: rotate(45deg);
   box-sizing: border-box;
 `
-// eslint-disable-next-line prettier/prettier
-const TopBorderBoxContainer = styled(BoxCard) <{
+const TopBorderBoxContainer = styled(BoxCard)<{
   width?: string
   height?: string
   border?: string

@@ -1,25 +1,19 @@
-import React, { useRef, useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useRef } from 'react'
+import { isMobile } from 'react-device-detect'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
+import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
+import { LinkedInIcon, SkypeIcon, TwitterIcon } from '../../components/Icons'
+import { teamList } from '../../constants/dummy'
 import {
-  ComponentWrapper,
   BoxCard,
-  TextCustom,
+  ComponentWrapper,
   ContainerRow,
   ImageContainer,
-  SubText,
-  ImageIconContainer,
-  device,
   PhotoContainer,
+  SubText,
+  TextCustom,
 } from '../../styles/globalStyles'
-import { isDesktop, isMobile } from 'react-device-detect'
-import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
-import FIRST_PHOTO from '../../assets/photos/photo1.png'
-import SECOND_PHOTO from '../../assets/photos/photo2.png'
-import THIRD_PHOTO from '../../assets/photos/photo3.png'
-import FOURTH_PHOTO from '../../assets/photos/photo4.png'
-import { TelegramIcon, LinkedInIcon, SkypeIcon } from '../../components/Icons'
-import { teamList } from '../../constants/dummy'
 
 const SocialNavLink = styled.a`
   text-decoration: none;
@@ -35,7 +29,7 @@ export const TeamCardBoxItem: React.FC<{
 }> = ({ src, mainText, contentText, twitter, linkedin, skype }) => {
   return (
     <BoxCard
-      boxWidth={'20%'}
+      boxWidth={isMobile ? '40%' : '20%'}
       boxHeight={'auto'}
       border={'5px solid var(--light-navy)'}
       borderHover={'5px solid var(--light-secondary)'}
@@ -43,10 +37,11 @@ export const TeamCardBoxItem: React.FC<{
       backgroundColor={'transparent'}
       flexDirection={'column'}
       justifyContent={'space-around'}
+      margin={isMobile ? '10% 12px' : '12px'}
     >
       <PhotoContainer
         position={'relative'}
-        border={'10px solid var(--primary-text)'}
+        border={isMobile ? '5px solid var(--primary-text)' : '10px solid var(--primary-text)'}
         backgroundColor={'#6E9673'}
         margin={'-50% 0 0 0'}
         padding={'0'}
@@ -55,12 +50,13 @@ export const TeamCardBoxItem: React.FC<{
       </PhotoContainer>
       <TextCustom
         color={'var(--primary-text)'}
-        fontSize={isMobile ? '0.8rem' : '25px'}
+        fontSize={isMobile ? '1rem' : '25px'}
         fontWeight={300}
         fontFamily={'Rubik'}
         lineHeight={1.1}
         textAlign={'center'}
         margin={'10% 2% 5% 2%'}
+        style={{ whiteSpace: 'nowrap' }}
       >
         {mainText}
       </TextCustom>
@@ -78,17 +74,17 @@ export const TeamCardBoxItem: React.FC<{
       <ContainerRow width={'80%'} padding={'0'} margin={'0 0 10% 0'} justifyContent={'center'} alignItems={'center'}>
         {twitter && (
           <SocialNavLink href={twitter} target="_blank">
-            <TelegramIcon />
+            <TwitterIcon width={isMobile ? '20px' : '24px'} height={isMobile ? '20px' : '24px'} />
           </SocialNavLink>
         )}
         {linkedin && (
           <SocialNavLink href={linkedin} target="_blank">
-            <LinkedInIcon />
+            <LinkedInIcon width={isMobile ? '20px' : '24px'} height={isMobile ? '20px' : '24px'} />
           </SocialNavLink>
         )}
         {skype && (
           <SocialNavLink href={skype} target="_blank">
-            <SkypeIcon />
+            <SkypeIcon width={isMobile ? '20px' : '24px'} height={isMobile ? '20px' : '24px'} />
           </SocialNavLink>
         )}
       </ContainerRow>
@@ -115,7 +111,7 @@ export const TeamCardBox: React.FC = () => {
       margin={'0'}
       justifyContent={'center'}
     >
-      <ComponentWrapper margin={'50px 0 0'} padding={'24px'}>
+      <ComponentWrapper margin={isMobile ? '10px 0 0' : '50px 0 0'} padding={'24px'}>
         <TextCustom
           fontSize={isMobile ? '2rem' : '3.5rem'}
           fontWeight={600}
@@ -136,7 +132,7 @@ export const TeamCardBox: React.FC = () => {
             Team
           </SubText>
         </TextCustom>
-        <ContainerRow margin={'10% 0 10% 0'}>
+        <ContainerRow margin={'10% 0'} flexWrap={isMobile ? 'wrap' : 'normal'}>
           {teamList.map((item) => {
             return (
               <TeamCardBoxItem

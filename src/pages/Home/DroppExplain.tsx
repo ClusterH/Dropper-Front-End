@@ -1,16 +1,16 @@
 import React from 'react'
 import { isMobile } from 'react-device-detect'
+import DROP_EXPLAIN_ITEM from '../../assets/images/dropper-explain-item.svg'
+import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
 import {
   BoxCard,
   ComponentWrapper,
   ContainerColumn,
-  ResponsiveContainer,
-  TextCustom,
-  SubText,
   ImageContainer,
+  ResponsiveContainer,
+  SubText,
+  TextCustom,
 } from '../../styles/globalStyles'
-import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
-import DROP_EXPLAIN_ITEM from '../../assets/images/dropper-explain-item.svg'
 
 const DroppExplainList = [
   {
@@ -45,7 +45,7 @@ export const DroppExplainItem: React.FC<{ url: string; description: string; subD
 }) => {
   return (
     <BoxCard
-      boxWidth={'47%'}
+      boxWidth={isMobile ? '100%' : '47%'}
       boxHeight={'150px'}
       border={'5px solid var(--light-navy-blue)'}
       justifyContent={'flex-start'}

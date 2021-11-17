@@ -1,10 +1,9 @@
 import React, { useMemo, useState } from 'react'
-import { ContainerColumn, ContainerRow, TextSubTitle } from '../../../styles/globalStyles'
-import { isMobile } from 'react-device-detect'
-import { PacksItem } from './PacksItem'
 import Pagination from '../../../components/Pagination'
 import { usePackList } from '../../../hooks/useDropper'
+import { ContainerColumn, ContainerRow, TextSubTitle } from '../../../styles/globalStyles'
 import { TSelectedTab } from '../../../types'
+import { PacksItem } from './PacksItem'
 
 const PageSize = 6
 
@@ -25,9 +24,8 @@ export const PacksList: React.FC<{ setSelectedTab: (tab: TSelectedTab) => void }
         flexWrap={'wrap'}
         justifyContent={'space-between'}
         alignItems={'flex-start'}
-        padding={'30px 0 0 40px'}
+        padding={'10px'}
         gap={'20px'}
-        minHeight={'800px'}
       >
         {packList && packList.length > 0 ? (
           currentPackList.map((pack) => {

@@ -1,7 +1,7 @@
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import styled from 'styled-components'
 import { CustomInput, RoundedIconBox, RoundedInputContainer } from '../../styles/globalStyles'
-import { isMobile } from 'react-device-detect'
 import { SearchIcon } from '../Icons'
 
 const SearchRightIconButton = styled(RoundedIconBox)`
@@ -31,7 +31,7 @@ export const SearchBox: React.FC<ISearchBox> = ({ width, height, direction = 'ri
             width={'100%'}
             height={'100%'}
             padding={isMobile ? '16px 20px' : '20px 25px'}
-            fontSize={isMobile ? '0.6rem' : '1.2rem'}
+            fontSize={isMobile ? '1rem' : '1.2rem'}
             border={'none'}
             backColor={'transparent'}
             placeholder={'Search related to NFT'}
@@ -46,8 +46,8 @@ export const SearchBox: React.FC<ISearchBox> = ({ width, height, direction = 'ri
           <CustomInput
             width={'100%'}
             height={'100%'}
-            padding={isMobile ? '16px 20px' : '10px 25px 10px 20%'}
-            fontSize={isMobile ? '0.6rem' : '1.2rem'}
+            padding={isMobile ? '16px 20px 16px 55px' : '10px 25px 10px 20%'}
+            fontSize={isMobile ? '1rem' : '1.2rem'}
             border={'none'}
             backColor={'transparent'}
             placeholder={'Search related to NFT'}

@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import styled from 'styled-components'
+import { ReactComponent as Close } from '../../../assets/images/x.svg'
+import { FacebookIcon, FavoriteIcon, LinkedInIcon, RedditIcon, TwitterIcon } from '../../../components/Icons'
+import Modal from '../../../components/Modals/Modal'
+import { VideoContainer } from '../../../components/VideoContainer'
 import {
-  TextCustom,
-  ContainerRow,
   BoxCard,
   ContainerColumn,
+  ContainerRow,
+  RoundedIconBox,
   SubText,
+  TextCustom,
   TextDescription,
 } from '../../../styles/globalStyles'
-import { isMobile } from 'react-device-detect'
-import { RoundedIconBox } from '../../../styles/globalStyles'
-import { ReactComponent as Close } from '../../../assets/images/x.svg'
-import { FavoriteIcon, FacebookIcon, LinkedInIcon, RedditIcon, TelegramIcon } from '../../../components/Icons'
-import Modal from '../../../components/Modals/Modal'
 import { TMomentItem } from '../../../types'
-import { VideoContainer } from '../../../components/VideoContainer'
 
 const Wrapper = styled.div`
   display: flex;
@@ -132,7 +132,7 @@ export const MomentModal: React.FC<IMomentModal> = ({ moment, momentModalOpen, t
           </TextCustom>
           <ContainerRow justifyContent={'flex-start'}>
             <RoundedBoxWithShadow width={'30px'}>
-              <TelegramIcon color={'var(--secondary)'} width={'16px'} height={'16px'} />
+              <TwitterIcon color={'var(--secondary)'} width={'16px'} height={'16px'} />
             </RoundedBoxWithShadow>
             <RoundedBoxWithShadow width={'30px'}>
               <FacebookIcon color={'var(--secondary)'} width={'16px'} height={'16px'} />

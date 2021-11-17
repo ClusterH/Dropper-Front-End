@@ -2,26 +2,36 @@ import { createSlice } from '@reduxjs/toolkit'
 import { IDropperState } from '../../types'
 
 const initialState: IDropperState = {
+  latestBlockNumber: 0,
   userPackList: [],
   userMomentList: [],
   isUSDCApproved: false,
+  isLoading: false,
 }
 
 const dropperSlice = createSlice({
   name: 'dropper',
   initialState,
   reducers: {
+    setLatestBlockNumber(state, action) {
+      state.latestBlockNumber = action.payload
+    },
     setPackList(state, action) {
       state.userPackList = action.payload
     },
     setMomentList(state, action) {
-      state.userMomentList = action.payload
+      if (action.payload === null) state.userMomentList = []
+      else state.userMomentList = [...action.payload, ...state.userMomentList!]
     },
     setIsUSDCApproved(state, action) {
       state.isUSDCApproved = action.payload
     },
+    setIsLoading(state, action) {
+      state.isLoading = action.payload
+    },
   },
 })
 
-export const { setPackList, setMomentList, setIsUSDCApproved } = dropperSlice.actions
+export const { setLatestBlockNumber, setPackList, setMomentList, setIsUSDCApproved, setIsLoading } =
+  dropperSlice.actions
 export default dropperSlice.reducer

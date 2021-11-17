@@ -4,18 +4,16 @@ import { MainButton } from '../../components/Buttons/MainButton'
 import { SearchBox } from '../../components/SearchBox'
 import TabMenu from '../../components/TabMenu'
 import {
-  BoxCard,
   ComponentWrapper,
-  ContainerColumn,
   ContainerRow,
   ImageContainer,
   PageWrapper,
-  RoundedIconBox,
+  ResponsiveContainer,
   TextCustom,
 } from '../../styles/globalStyles'
 import Banner from '../../components/Banners'
 import PIN_ICON from '../../assets/images/pin-icon.svg'
-import { TelegramIcon } from '../../components/Icons'
+import { TwitterIcon } from '../../components/Icons'
 import { MomentsList } from './Moments/MomentsList'
 import { PacksList } from './Packs/PacksList'
 import { Rankings } from './Rankings'
@@ -23,6 +21,7 @@ import { TSelectedTab } from '../../types'
 import { useActiveWeb3React } from '../../hooks/useWeb3'
 import { useGetPackList } from '../../hooks/useDropper'
 import { shortenAddress } from '../../utils'
+import { isMobile } from 'react-device-detect'
 
 const ContainerWithoutLeftBorder = styled(ContainerRow)`
   border: 1px solid var(--light-navy-blue);
@@ -67,21 +66,23 @@ const Inventory: React.FC = () => {
         subTitle={'dropper'}
         summary={'a non-fungible toket (NFT) is a unit of data stored on a digital ledger.'}
       />
-      <ComponentWrapper margin={'50px 0 0'} padding={'24px'}>
-        <ContainerRow backgroundColor={'var(--dark-navy)'} padding={'10px 30px'}>
-          <SearchBox width={'30%'} height={'50px'} direction={'left'} />
-          <TabMenu selectedTab={selectedTab} handleTabItem={handleTabItem} />
-          <MainButton
-            width={'fit-content'}
-            borderRadius={'24px'}
-            padding={'24px 24px'}
-            backgroundColor={'var(--secondary)'}
-            margin={'20px 0'}
-            onClick={() => (window.location.href = '/clix')}
-          >
-            <TextCustom color={'var(--primary-text)'}>View All &nbsp;</TextCustom>
-            <ImageContainer src={PIN_ICON} width={'30px'} />
-          </MainButton>
+      <ComponentWrapper margin={isMobile ? '0' : '50px 0 0'} padding={'24px'}>
+        <ContainerRow backgroundColor={'var(--dark-navy)'} padding={isMobile ? '10px' : '10px 30px'}>
+          <ResponsiveContainer justifyContent={'space-between'}>
+            <SearchBox width={isMobile ? '100%' : '30%'} height={'50px'} direction={'left'} />
+            <TabMenu selectedTab={selectedTab} handleTabItem={handleTabItem} />
+            <MainButton
+              width={isMobile ? '100%' : 'fit-content'}
+              borderRadius={'24px'}
+              padding={'24px 24px'}
+              backgroundColor={'var(--secondary)'}
+              margin={'20px 0'}
+              onClick={() => (window.location.href = '/clix')}
+            >
+              <TextCustom color={'var(--primary-text)'}>View All &nbsp;</TextCustom>
+              <ImageContainer src={PIN_ICON} width={'30px'} />
+            </MainButton>
+          </ResponsiveContainer>
         </ContainerRow>
         <ContainerRow alignItems={'stretch'}>
           {/* <ContainerColumn backgroundColor={'var(--dark-navy)'} width={'20%'} justifyContent={'flex-start'}>
@@ -133,7 +134,7 @@ const Inventory: React.FC = () => {
                 @faustygg
               </TextCustom>
               <RoundedIconBox backColor={'var(--light-navy-blue)'} width={'45px'}>
-                <TelegramIcon color={'var(--secondary)'} />
+                <TwitterIcon color={'var(--secondary)'} />
               </RoundedIconBox>
             </ContainerWithBottomBorder>
           </ContainerColumn> */}

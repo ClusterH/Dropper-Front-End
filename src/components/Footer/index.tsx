@@ -6,12 +6,15 @@ import {
   ContainerColumn,
   ContainerRow,
   Divider,
-  TextCustom,
+  ImageContainer,
   RoundedIconBox,
+  TextCustom,
 } from '../../styles/globalStyles'
-import { FacebookIcon, LinkedInIcon, RedditIcon, TelegramIcon } from '../Icons'
+import { FacebookIcon, InstagramIcon, LinkedInIcon, MediumIcon, TwitterIcon } from '../Icons'
 import Logo from '../Icons/logo'
 import QuickLink from '../QuickLink'
+import INSTAGRAM_ICON from '../../assets/images/instagram-icon.svg'
+import MEDIUM_ICON from '../../assets/images/medium-icon.svg'
 
 const FooterContainer = styled(ContainerColumn)`
   padding: 0.5rem 1rem;
@@ -20,13 +23,25 @@ const FooterContainer = styled(ContainerColumn)`
   justify-content: center;
   align-items: center;
 `
+const SocialNavLink = styled.a`
+  text-decoration: none;
+`
+
+const twitterLink = 'https://twitter.com/droppernft'
+const instagramLink = 'https://www.instagram.com/dropper.nft/'
+const mediumLink = 'https://medium.com/dropper'
 
 const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <ComponentWrapper margin={'50px 0 0'} padding={'24px'}>
-        <ContainerRow width={'100%'} alignItems={'flex-start'} justifyContent={'flex-start'}>
-          <ContainerColumn width={'25%'} alignItems={'flex-start'}>
+        <ContainerRow
+          width={'100%'}
+          alignItems={'flex-start'}
+          justifyContent={'flex-start'}
+          flexWrap={isMobile ? 'wrap' : 'normal'}
+        >
+          <ContainerColumn width={isMobile ? '100%' : '25%'} alignItems={'flex-start'}>
             <Logo />
             <TextCustom
               color={'var(--primary-opacity)'}
@@ -40,7 +55,7 @@ const Footer: React.FC = () => {
               This site is in no way affiliated with Twitch, TikTok or YouTube.
             </TextCustom>
           </ContainerColumn>
-          <ContainerColumn width={'25%'} alignItems={'flex-start'}>
+          <ContainerColumn width={isMobile ? '100%' : '25%'} alignItems={'flex-start'}>
             <TextCustom
               color={'var(--primary-text)'}
               fontSize={isMobile ? '0.8rem' : '1.5rem'}
@@ -48,7 +63,7 @@ const Footer: React.FC = () => {
               fontFamily={'RubikBold'}
               lineHeight={1.2}
               textAlign={'left'}
-              margin={'1% 0 10% 0'}
+              margin={isMobile ? '1% 0 3% 0' : '1% 0 10% 0'}
             >
               {'Location & Office'}
             </TextCustom>
@@ -63,7 +78,7 @@ const Footer: React.FC = () => {
             >
               3027 23rd Avenue SW, Calgary, AB T3E 0J3
             </TextCustom>
-            <TextCustom
+            {/* <TextCustom
               color={'var(--primary-opacity)'}
               fontSize={isMobile ? '0.6rem' : '1rem'}
               fontWeight={300}
@@ -73,9 +88,9 @@ const Footer: React.FC = () => {
               margin={'1% 0 5% 0'}
             >
               3027 23rd Avenue SW, Calgary, AB T3E 0J3
-            </TextCustom>
+            </TextCustom> */}
           </ContainerColumn>
-          <ContainerColumn width={'25%'} alignItems={'flex-start'}>
+          <ContainerColumn width={isMobile ? '100%' : '25%'} alignItems={'flex-start'}>
             <TextCustom
               color={'var(--primary-text)'}
               fontSize={isMobile ? '0.8rem' : '1.5rem'}
@@ -83,7 +98,7 @@ const Footer: React.FC = () => {
               fontFamily={'RubikBold'}
               lineHeight={1.2}
               textAlign={'left'}
-              margin={'1% 0 10% 0'}
+              margin={isMobile ? '1% 0 3% 0' : '1% 0 10% 0'}
             >
               {'Quick Links'}
             </TextCustom>
@@ -114,35 +129,43 @@ const Footer: React.FC = () => {
               fontFamily={'Rubik'}
               textAlign={'left'}
               margin={'8px 0 8px 0'}
-              text={'Contact'}
-              link={'/'}
+              text={'About Us'}
+              link={'/aboutus'}
             />
           </ContainerColumn>
-          <ContainerColumn width={'25%'} alignItems={'flex-start'}>
-            <TextCustom
+          <ContainerColumn width={isMobile ? '100%' : '25%'} alignItems={'flex-start'}>
+            {/* <TextCustom
               color={'var(--primary-text)'}
               fontSize={isMobile ? '0.8rem' : '1.5rem'}
               fontWeight={600}
               fontFamily={'RubikBold'}
               lineHeight={1.2}
               textAlign={'left'}
-              margin={'1% 0 10% 0'}
+              margin={isMobile ? '1% 0 3% 0' : '1% 0 10% 0'}
             >
               {'Socials Contact'}
-            </TextCustom>
-            <ContainerRow>
-              <RoundedIconBox backColor={'var(--primary-text)'} width={'60px'}>
-                <TelegramIcon color={'var(--secondary)'} />
-              </RoundedIconBox>
-              <RoundedIconBox backColor={'var(--primary-text)'} width={'60px'}>
-                <FacebookIcon color={'var(--secondary)'} />
-              </RoundedIconBox>
-              <RoundedIconBox backColor={'var(--primary-text)'} width={'60px'}>
-                <RedditIcon color={'var(--secondary)'} />
-              </RoundedIconBox>
-              <RoundedIconBox backColor={'var(--primary-text)'} width={'60px'}>
+            </TextCustom> */}
+            <ContainerRow justifyContent={'flex-start'}>
+              <SocialNavLink href={twitterLink} target="_blank">
+                <RoundedIconBox backColor={'var(--primary-text)'} width={isMobile ? '36px' : '50px'}>
+                  <TwitterIcon color={'var(--secondary)'} width={isMobile ? '20px' : '24px'} />
+                </RoundedIconBox>
+              </SocialNavLink>
+              <SocialNavLink href={instagramLink} target="_blank">
+                <RoundedIconBox backColor={'var(--primary-text)'} width={isMobile ? '36px' : '50px'}>
+                  {/* <InstagramIcon color={'var(--secondary)'} /> */}
+                  <ImageContainer src={INSTAGRAM_ICON} width={isMobile ? '20px' : '24px'} borderRadius={'0'} />
+                </RoundedIconBox>
+              </SocialNavLink>
+              <SocialNavLink href={mediumLink} target="_blank">
+                <RoundedIconBox backColor={'var(--primary-text)'} width={isMobile ? '36px' : '50px'}>
+                  {/* <MediumIcon color={'var(--secondary)'} /> */}
+                  <ImageContainer src={MEDIUM_ICON} width={isMobile ? '20px' : '24px'} borderRadius={'0'} />
+                </RoundedIconBox>
+              </SocialNavLink>
+              {/* <RoundedIconBox backColor={'var(--primary-text)'} width={isMobile ? '36px' : '60px'}>
                 <LinkedInIcon color={'var(--secondary)'} />
-              </RoundedIconBox>
+              </RoundedIconBox> */}
             </ContainerRow>
           </ContainerColumn>
         </ContainerRow>

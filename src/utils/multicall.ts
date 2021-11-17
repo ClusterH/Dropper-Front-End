@@ -1,9 +1,8 @@
-import { Contract, ethers } from 'ethers'
-import { Call } from '../types'
-import MULTICALL_ABI from '../abis/multicall.json'
-import { getMulticallAddress } from './addressHelpers'
-import { getSimpleRPCProvider } from './simpleRPCProvider'
+import { ethers } from 'ethers'
 import { getProviderOrSigner } from '.'
+import MULTICALL_ABI from '../abis/multicall.json'
+import { Call } from '../types'
+import { getMulticallAddress } from './addressHelpers'
 
 const multicall = async <T = any>(calls: Call[], ABI: any, library: any, account: string): Promise<T> => {
   try {

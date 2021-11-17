@@ -1,21 +1,20 @@
 import React from 'react'
-import { useCollectionContext } from '../../contexts/CollectionContext'
-import { useIsApproved } from '../../hooks/useCollection'
 import Banner from '../../components/Banners'
+import { useInitBiconomy } from '../../hooks/useBiconomy'
+import { useIsApproved } from '../../hooks/useCollection'
 import { PageWrapper } from '../../styles/globalStyles'
 import { CollectionCommon } from './CollectionCommon'
-import { CollectionUnCommon } from './CollectionUnCommon'
-import { CollectionRare } from './CollectionRare'
 import { CollectionEpic } from './CollectionEpic'
+import { CollectionMythic } from './CollectionMythic'
+import { CollectionRare } from './CollectionRare'
+import { CollectionUnCommon } from './CollectionUnCommon'
 import { CollectionVideo } from './CollectionVideo'
-import { CountdownBox } from './CountdownBox'
 import { CreatorBox } from './CreatorBox'
 import { PackList } from './PackList'
-import { CollectionMythic } from './CollectionMythic'
 
 const Collections: React.FC = () => {
-  const { creatorId } = useCollectionContext() // We are not use this logic for now since Creator is only Clix
   useIsApproved()
+  // useInitBiconomy()
 
   return (
     <PageWrapper>

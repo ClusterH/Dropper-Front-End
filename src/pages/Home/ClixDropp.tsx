@@ -5,11 +5,10 @@ import OnlineImages from '../../components/Icons/onlineImages'
 import {
   ComponentWrapper,
   ContainerColumn,
+  ResponsiveContainer,
   SpacerMedium,
   TextCustom,
   TextMain,
-  device,
-  ResponsiveContainer,
 } from '../../styles/globalStyles'
 
 export const ClixDropp: React.FC = () => {

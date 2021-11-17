@@ -1,6 +1,15 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { utils } from 'ethers'
+import { utils, ethers } from 'ethers'
+import { Contract } from 'ethcall'
+import { SupportedChainId } from '../constants/chains'
 import { AWS_BASE_URI, IPFS_BASE_URI } from '../constants/momentsURIs'
+import { getDropperAddress } from './addressHelpers'
+import { fetchEventLogs, getLatestBlockNumber, getMultiCall } from './callHelpers'
+import { getSimpleRPCProvider } from './simpleRPCProvider'
+import DROPPER_ABI from '../abis/dropper.json'
+import { TRANSFER_BATCH_FILTER } from '../constants/blockNumber'
+import { setIsLoading, setLatestBlockNumber, setMomentList } from '../state/dropper/reducer'
+import { AppDispatch } from '../state'
 
 export const getMomentId = (momentID: BigNumber) => {
   const hexString = utils.hexlify(momentID)
@@ -47,4 +56,51 @@ export const momentGenerator = (momentList: any, momentIDs: BigNumber[]) => {
       totalMintedMoments,
     }
   })
+}
+
+export const fetchMomentList = async (
+  account: string,
+  contract: Contract,
+  chainId: SupportedChainId,
+  dispatch: AppDispatch,
+  fromBlock: number | undefined
+) => {
+  const provider = getSimpleRPCProvider(chainId)
+  const ens = new ethers.Contract(getDropperAddress(chainId), DROPPER_ABI, provider)
+  const latestBlockNumber = await getLatestBlockNumber(getSimpleRPCProvider(chainId!))
+  dispatch(setLatestBlockNumber(latestBlockNumber))
+
+  const filterOption = { ...TRANSFER_BATCH_FILTER[chainId] }
+  const eventFilter = {
+    ...filterOption.eventFilter,
+    topics: [...filterOption.eventFilter.topics, ethers.utils.hexZeroPad(account, 32)],
+  }
+  const filter = { ...filterOption, eventFilter }
+  const limit = 2000
+  const startBlockNumber = fromBlock ?? filter.fromBlock
+
+  for (let i = latestBlockNumber; i > startBlockNumber; i -= limit) {
+    const eventLogs = await fetchEventLogs(
+      ens,
+      filter.eventFilter,
+      i - limit > startBlockNumber ? i - limit + 1 : startBlockNumber + 1,
+      i
+    )
+    if (eventLogs && eventLogs.length > 0) {
+      const momentIDs: Array<BigNumber> = []
+
+      eventLogs.map((item: any) => momentIDs.push(...item.args?.ids))
+
+      const _calls = momentIDs.map((id) => {
+        const { momentId } = getMomentId(id)
+        return contract.getMoment(momentId)
+      })
+      const response = await getMultiCall(_calls, chainId!)
+
+      const moments = await Promise.all(momentGenerator(response, momentIDs))
+      dispatch(setMomentList(moments))
+      dispatch(setIsLoading(false))
+    }
+  }
+  dispatch(setIsLoading(false))
 }

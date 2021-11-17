@@ -1,6 +1,4 @@
-import React from 'react'
 import { useMemo } from 'react'
-import { IPagination } from '../components/Pagination/index'
 
 export const DOTS = '...'
 

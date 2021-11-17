@@ -20,7 +20,10 @@ import {
 
 const DotBlockEffectLeft = styled(ImageContainer)`
   position: absolute;
-0;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
 `
 
 const DotBlockEffectRight = styled(ImageContainer)`
@@ -45,7 +48,7 @@ const QuotationMarkIcon = styled(ImageContainer)`
 
 export const CreatorBox: React.FC = () => {
   return (
-    <ComponentWrapper margin={'20px 0 0'} padding={'0 48px 20px 48px'}>
+    <ComponentWrapper margin={isMobile ? '0' : '20px 0 0'} padding={isMobile ? '10px' : '0 48px 20px 48px'}>
       <ContainerRow justifyContent={'center'} margin={'0 0 30px 0'}>
         <SubText
           color={'var(--primary-text)'}
@@ -61,7 +64,7 @@ export const CreatorBox: React.FC = () => {
       <ContainerRow width={'100%'} padding={'40px 10px'} margin={'0'} justifyContent={'center'}>
         <DotBlockEffectLeft src={DOT_BLOCK_EFFECT_RED} width={'240px'} height={'auto'} borderRadius={'0'} />
         <DotBlockEffectRight src={DOT_BLOCK_EFFECT_BLUE} width={'240px'} height={'auto'} borderRadius={'0'} />
-        <ContainerRow width={'85%'} padding={'0'} margin={'10px 0'} justifyContent={'center'}>
+        <ContainerRow width={isMobile ? '100%' : '85%'} padding={'0'} margin={'10px 0'} justifyContent={'center'}>
           <BoxCard
             key={creatorBio.id}
             flexDirection={'column'}
@@ -81,7 +84,7 @@ export const CreatorBox: React.FC = () => {
               />
               <TextCustom
                 color={'var(--secondary)'}
-                fontSize={isMobile ? '0.5rem' : '1rem'}
+                fontSize={isMobile ? '0.8rem' : '1rem'}
                 fontWeight={600}
                 fontFamily={'RubikBold'}
                 lineHeight={1.2}
@@ -99,9 +102,9 @@ export const CreatorBox: React.FC = () => {
               }}
             />
             <Divider width={'10%'} height={'3px'} backColor={'var(--light-blue)'} margin={'20px 0 0 0'} />
-            <ContainerRow margin={'10px 0 0'} padding={'10px 30px'}>
+            <ContainerRow margin={'10px 0 0'} padding={isMobile ? '10px' : '10px 30px'}>
               <TextCustom
-                fontSize={isMobile ? '0.5rem' : '1rem'}
+                fontSize={isMobile ? '0.8rem' : '1rem'}
                 fontWeight={300}
                 fontFamily={'Rubik'}
                 lineHeight={1.5}
@@ -110,8 +113,8 @@ export const CreatorBox: React.FC = () => {
                 {creatorBio.description}
               </TextCustom>
             </ContainerRow>
-            <ContainerColumn justifyContent={'center'} alignItems={'center'}>
-              <TextCustom
+            <ContainerColumn justifyContent={'center'} alignItems={'center'} padding={'20px'}>
+              {/* <TextCustom
                 fontSize={isMobile ? '0.8rem' : '1.2rem'}
                 fontWeight={300}
                 fontFamily={'Rubik'}
@@ -129,7 +132,7 @@ export const CreatorBox: React.FC = () => {
                 textAlign={'center'}
               >
                 {`${creatorBio.role} Angular Cooperation`}
-              </TextCustom>
+              </TextCustom> */}
             </ContainerColumn>
           </BoxCard>
         </ContainerRow>

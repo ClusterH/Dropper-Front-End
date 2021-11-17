@@ -31,7 +31,7 @@ export const GlobalStyles = createGlobalStyle`
     scroll-behavior: smooth;
   }
 `
-const size = {
+export const size = {
   mobileS: '320px',
   mobileM: '375px',
   mobileL: '425px',
@@ -135,6 +135,7 @@ export const ContainerRow = styled.div<{
   margin: ${({ margin }) => (margin ? margin : '0')};
   width: ${({ width }) => (width ? width : '100%')};
   min-height: ${({ minHeight }) => (minHeight ? minHeight : 'auto')};
+  top: 0;
   position: ${({ position }) => (position ? position : 'relative')};
   gap: ${({ gap }) => (gap ? gap : '12px')};
 `
@@ -348,6 +349,10 @@ export const PhotoContainer = styled(ImageIconContainer)`
     width: 350px !important;
     height: 350px;
   }
+  @media screen and (max-width: ${size.mobileL}) {
+    width: 145px;
+    height: 145px;
+  }
 `
 
 export const TextTitle = styled.span`
@@ -523,4 +528,7 @@ export const CustomInput = styled.input<{
   font-family: ${({ fontFamily }) => (fontFamily ? fontFamily : 'Rubik')};
   color: ${({ color }) => (color ? color : 'var(--primary-text)')};
   outline: none;
+  @media screen and (max-width: ${size.mobileL}) {
+    margin-bottom: 10px;
+  }
 `

@@ -2,13 +2,11 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { JsonRpcProvider, JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { Provider } from 'ethcall'
 import { Contract, ethers } from 'ethers'
-import DROPPER_ABI from '../abis/dropper.json'
-import { NETWORK_URLS } from '../connectors'
+import { toast } from 'react-toastify'
 import { TRANSFER_BATCH_FILTER } from '../constants/blockNumber'
 import { SupportedChainId } from '../constants/chains'
 import { getDropperAddress } from './addressHelpers'
 import { getSimpleRPCProvider } from './simpleRPCProvider'
-import { toast } from 'react-toastify'
 
 export const isApprovedForAll = async (dropperContract: Contract, collectionContract: Contract, account: string) => {
   return dropperContract.isApprovedForAll(account, collectionContract.address)
@@ -96,21 +94,14 @@ export const openPacks = async (contract: Contract, packId: number, account: str
   return receipt.status
 }
 
-export const getMomentIds = async (account: string, chainId: SupportedChainId) => {
-  const provider = getSimpleRPCProvider(chainId)
-  const ens = new ethers.Contract(getDropperAddress(chainId), DROPPER_ABI, provider)
-  const filterOption = { ...TRANSFER_BATCH_FILTER[chainId] }
-  const eventFilter = {
-    ...filterOption.eventFilter,
-    topics: [...filterOption.eventFilter.topics, ethers.utils.hexZeroPad(account, 32)],
-  }
-  const filter = { ...filterOption, eventFilter }
-  const events = await ens.queryFilter(filter.eventFilter, filter.fromBlock, filter.toBlock)
-  const ids: Array<BigNumber> = []
-
-  events.map((item: any) => ids.push(...item.args?.ids))
-
-  return ids
+export const fetchEventLogs = async (
+  contract: Contract,
+  eventFilter: ethers.EventFilter,
+  fromBlock: number,
+  toBlock: number
+) => {
+  const event = await contract.queryFilter(eventFilter, fromBlock, toBlock)
+  return event
 }
 
 export const getTokenURI = async (contract: Contract, momentId: BigNumber) => {

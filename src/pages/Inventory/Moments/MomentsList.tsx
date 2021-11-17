@@ -1,10 +1,10 @@
 import React, { useMemo, useState } from 'react'
-import { ContainerColumn, ContainerRow, TextCustom, TextSubTitle } from '../../../styles/globalStyles'
-import { isMobile } from 'react-device-detect'
-import { MomentItem } from './MomentItem'
+import ScaleLoader from 'react-spinners/ScaleLoader'
 import Pagination from '../../../components/Pagination'
+import { useGetMomentList, useLoading, useMomentList } from '../../../hooks/useDropper'
+import { ContainerColumn, ContainerRow, TextSubTitle } from '../../../styles/globalStyles'
+import { MomentItem } from './MomentItem'
 import { MomentModal } from './MomentModal'
-import { useGetMomentList, useMomentList } from '../../../hooks/useDropper'
 
 const PageSize = 6
 
@@ -14,6 +14,7 @@ export const MomentsList: React.FC = () => {
   const [isMomentModalOpen, setIsMomentModalOpen] = useState<boolean>(false)
   useGetMomentList()
   const momentList = useMomentList()
+  const isLoading = useLoading()
 
   const currentMomentList = useMemo(() => {
     if (momentList === null || momentList.length === 0) return []
@@ -33,14 +34,18 @@ export const MomentsList: React.FC = () => {
         flexWrap={'wrap'}
         justifyContent={'space-between'}
         alignItems={'flex-start'}
-        padding={'30px 0 0 40px'}
+        padding={'10px'}
         gap={'20px'}
-        minHeight={'800px'}
       >
         {momentList && momentList.length > 0 ? (
           currentMomentList.map((item, index) => {
-            return <MomentItem key={`${item.momentId}_${item.id}`} moment={item} onClick={() => viewDetail(index)} />
+            return <MomentItem key={`${item.momentId}_${index}`} moment={item} onClick={() => viewDetail(index)} />
           })
+        ) : isLoading ? (
+          <ContainerRow justifyContent={'center'}>
+            <TextSubTitle>Fetching Moments...</TextSubTitle>
+            <ScaleLoader color={'#ff0069'} width={10} height={34} radius={20} margin={2} />
+          </ContainerRow>
         ) : (
           <TextSubTitle>You don&apos;t own any Moments yet</TextSubTitle>
         )}

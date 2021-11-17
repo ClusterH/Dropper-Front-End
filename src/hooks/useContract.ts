@@ -3,8 +3,9 @@ import { Contract } from 'ethers'
 import { useMemo } from 'react'
 import COLLECTION_ABI from '../abis/collection.json'
 import DROPPER_ABI from '../abis/dropper.json'
-import ERC20_ABI from '../abis/erc20.json'
+import USDC_ABI from '../abis/usdc.json'
 import MULTICALL_ABI from '../abis/multicall.json'
+import EIP_2612_ABI from '../abis/eip_2612.json'
 import {
   COLLECTION_CONTRACT_ADDRESSES,
   DROPPER_CONTRACT_ADDRESSES,
@@ -47,11 +48,15 @@ export const useGetCollectionContract = () => {
 }
 
 export const useGetUSDCTokenContract = () => {
-  return useContract(USDC_TOKEN_ADDRESSES, ERC20_ABI, true)
+  return useContract(USDC_TOKEN_ADDRESSES, USDC_ABI, false)
 }
 
 export const useGetMultiCallContract = () => {
   return useContract(MULTICALL_CONTRACT_ADDRESSES, MULTICALL_ABI, true)
+}
+
+export const useEIP2612Contract = (tokenAddress?: string): Contract | null => {
+  return useContract(tokenAddress, EIP_2612_ABI, true)
 }
 
 /** ethcall multicall Contracts */

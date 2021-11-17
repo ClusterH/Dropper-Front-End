@@ -1,6 +1,8 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+import { useLocation } from 'react-router-dom'
+import ARROW_RIGHT_ROUNDED from '../../assets/images/arrow-right-rounded.svg'
+import { MainButton } from '../../components/Buttons/MainButton'
 import { VideoContainer } from '../../components/VideoContainer'
 import {
   ContainerColumn,
@@ -11,10 +13,8 @@ import {
   TextCustom,
   TextMain,
 } from '../../styles/globalStyles'
-import { b64DecodeUnicode } from '../../utils/convertString'
 import { TMomentItem } from '../../types'
-import { MainButton } from '../../components/Buttons/MainButton'
-import ARROW_RIGHT_ROUNDED from '../../assets/images/arrow-right-rounded.svg'
+import { b64DecodeUnicode } from '../../utils/convertString'
 
 const ItemText: React.FC<{ label: string; text: string }> = ({ label, text }) => {
   return (

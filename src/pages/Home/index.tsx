@@ -1,18 +1,11 @@
 import React from 'react'
 import { PageWrapper } from '../../styles/globalStyles'
-import { Advantage } from './Advantage'
-import { ClixDropp } from './ClixDropp'
 import { DroppExplain } from './DroppExplain'
-import { IntroducingBox } from './IntroducingBox'
-import { RememberBox } from './RememberBox'
-import { ProductExplain } from './ProductExplain'
-import { RoadmapBox } from './RoadmapBox'
-import { DroppTokenBox } from './DroppTokenBox'
-import { TeamCardBox } from './TeamCardBox'
-import { AdvisorsCardBox } from './AdvisorsCardBox'
-import { PartnersBox } from './PartnersBox'
-import { InvestorsBox } from './InvestorsBox'
 import { FAQBox } from './FAQBox'
+import { IntroducingBox } from './IntroducingBox'
+import { ProductExplain } from './ProductExplain'
+import { RememberBox } from './RememberBox'
+import { ConnectingFans } from './ConnectingFans'
 
 const Home: React.FC = () => {
   return (
@@ -21,13 +14,7 @@ const Home: React.FC = () => {
       <RememberBox />
       <ProductExplain />
       <DroppExplain />
-      <Advantage />
-      <RoadmapBox />
-      <DroppTokenBox />
-      <TeamCardBox />
-      <AdvisorsCardBox />
-      <PartnersBox />
-      <InvestorsBox />
+      <ConnectingFans />
       <FAQBox />
     </PageWrapper>
   )

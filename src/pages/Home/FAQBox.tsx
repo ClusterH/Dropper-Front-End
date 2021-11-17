@@ -71,8 +71,8 @@ export const FAQBox: React.FC = () => {
             Questions
           </SubText>
         </TextCustom>
-        <ContainerRow alignItems={'flex-start'}>
-          <ContainerColumn width={'50%'} justifyContent={'flex-start'}>
+        <ContainerRow alignItems={'flex-start'} flexWrap={isMobile ? 'wrap' : 'normal'}>
+          <ContainerColumn width={isMobile ? '100%' : '50%'} justifyContent={'flex-start'}>
             {faqContent.map((item, index) => {
               return (
                 index % 2 == 0 && (
@@ -81,7 +81,7 @@ export const FAQBox: React.FC = () => {
               )
             })}
           </ContainerColumn>
-          <ContainerColumn width={'50%'} justifyContent={'flex-start'}>
+          <ContainerColumn width={isMobile ? '100%' : '50%'} justifyContent={'flex-start'}>
             {faqContent.map((item, index) => {
               return (
                 index % 2 == 1 && (

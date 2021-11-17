@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useWyreReservationModalToggle } from '../../state/application/hook'
+import { size } from '../../styles/globalStyles'
 
 const WyreWrapper = styled.div`
   color: var(--primary-text);
@@ -9,6 +10,10 @@ const WyreWrapper = styled.div`
   &:hover {
     color: var(--secondary);
     cursor: pointer;
+  }
+  @media screen and (max-width: ${size.tablet}) {
+    font-size: 2rem;
+    margin: 24px 0 10px 0;
   }
 `
 

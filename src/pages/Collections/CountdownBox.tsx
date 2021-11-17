@@ -1,12 +1,11 @@
 import React from 'react'
-import styled from 'styled-components'
-import { ComponentWrapper, ContainerRow, TextCustom, SubText, ImageContainer } from '../../styles/globalStyles'
 import { isMobile } from 'react-device-detect'
-import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
 import COUNTDOWN_BACK from '../../assets/images/countdown-back.svg'
-import DateTimeCount from '../../components/DateTimeCount'
-import { MainButton } from '../../components/Buttons/MainButton'
 import PIN_ICON from '../../assets/images/pin-icon.svg'
+import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
+import { MainButton } from '../../components/Buttons/MainButton'
+import DateTimeCount from '../../components/DateTimeCount'
+import { ComponentWrapper, ContainerRow, ImageContainer, SubText, TextCustom } from '../../styles/globalStyles'
 
 export const CountdownBox: React.FC = () => {
   return (

@@ -1,21 +1,12 @@
 import React from 'react'
-import { SVGAttributes } from 'react'
-import { CSSProperties } from 'styled-components'
+import Svg from './Svg'
+import { SvgProps } from './types'
 
-export interface SvgProps extends SVGAttributes<HTMLOrSVGElement> {
-  color?: string
-  width?: string
-  height?: string
-  fill?: string
-  stroke?: string
-  style?: CSSProperties
-}
-
-const RoundedArrowRightIcon: React.FC<SvgProps> = ({
+const Icon: React.FC<SvgProps> = ({
   width = '24px',
   height = '24px',
+  color = '#FF0069',
   stroke = '#EFDCE4',
-  fill = '#FF0069',
   style,
 }) => (
   <svg width={width} height={height} viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
@@ -25,8 +16,8 @@ const RoundedArrowRightIcon: React.FC<SvgProps> = ({
       width="50.4167"
       height="50.4167"
       rx="25.2083"
-      fill={fill}
-      stroke={fill}
+      fill={color}
+      stroke={color}
       strokeWidth="0.916667"
     />
     <path
@@ -38,4 +29,4 @@ const RoundedArrowRightIcon: React.FC<SvgProps> = ({
   </svg>
 )
 
-export default RoundedArrowRightIcon
+export default Icon

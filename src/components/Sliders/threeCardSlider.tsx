@@ -16,7 +16,7 @@ const CollectionListBox = styled(ContainerRow)`
   gap: 0;
 `
 
-const pageSize = 3
+const pageSize = isMobile ? 1 : 3
 
 const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity }> = ({ sliderList, rarity }) => {
   const collectionRef = useRef<HTMLDivElement>(null)
@@ -56,7 +56,7 @@ const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity }> = ({ 
 
   return (
     <ContainerRow backgroundColor={'transparent'} justifyContent={'center'} padding={'60px 0'}>
-      <ComponentWrapper margin={'60px 0'} padding={'24px'}>
+      <ComponentWrapper margin={isMobile ? '0' : '60px 0'} padding={'24px'}>
         <ContainerColumn justifyContent={'flex-start'} alignItems={'center'} padding={'0'} margin={'0 0 20px 0'}>
           <TextCustom
             color={'var(--primary-text)'}
@@ -97,19 +97,19 @@ const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity }> = ({ 
                   flexWrap={'wrap'}
                   padding={'0'}
                   margin={'0'}
-                  gap={'1.5%'}
+                  gap={isMobile ? '0' : '1.5%'}
                   style={{ minWidth: '100%' }}
                 >
                   {collectionBlock(idx * pageSize).map((item, index) => {
                     return (
                       <CollectionCard
                         key={item.id}
-                        boxWidth={'30%'}
-                        imgWidth={'250px'}
-                        imgHeight={'250px'}
+                        boxWidth={isMobile ? '100%' : '30%'}
+                        imgWidth={isMobile ? '160px' : '250px'}
+                        imgHeight={isMobile ? '160px' : '250px'}
                         url={`${AWS_BASE_URI}${rarity}/${item.title.replaceAll(' ', '+')}.png`}
                         title={item.title}
-                        content={item.content}
+                        contentUrl={`${AWS_BASE_URI}${rarity}/${item.title.replaceAll(' ', '+')}.txt`}
                         isVertical={true}
                       />
                     )

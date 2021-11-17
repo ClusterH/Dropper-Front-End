@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { BoxCardWithoutBorder, ContainerColumn, ContainerRow, TextCustom } from '../../../styles/globalStyles'
-import { isMobile } from 'react-device-detect'
-import { RankItem } from './RankItem'
-import Pagination from '../../../components/Pagination'
 import Checkbox from '../../../components/Checkbox'
+import Pagination from '../../../components/Pagination'
+import { BoxCardWithoutBorder, ContainerColumn, ContainerRow, TextCustom } from '../../../styles/globalStyles'
+import { RankItem } from './RankItem'
 
 const PageSize = 6
 const ranksList = [

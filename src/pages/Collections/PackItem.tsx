@@ -13,14 +13,12 @@ import {
 } from '../../styles/globalStyles'
 import { TPackItem } from '../../types'
 
-const featureList = ['Features one', 'Features Two', 'Features Three', 'Features Four', 'Features Five', 'Features Six']
-
 export const PackItem: React.FC<{ pack: TPackItem; currentTotalPrice: number }> = ({ pack, currentTotalPrice }) => {
   const { count, setCount, isCardOver, setIsCardOver } = usePackItem(pack.id, pack.cartQuantity)
 
   return (
     <BoxCard
-      boxWidth={'30%'}
+      boxWidth={isMobile ? '90%' : '30%'}
       border={'none'}
       borderHover={'none'}
       backgroundColor={'var(--light-navy-blue)'}
@@ -28,26 +26,27 @@ export const PackItem: React.FC<{ pack: TPackItem; currentTotalPrice: number }> 
       flexDirection={'column'}
       justifyContent={'space-around'}
       padding={'20px'}
+      margin={isMobile ? '12%' : '12px'}
     >
       <ImageIconContainer
         position={'relative'}
-        boxWidth={'251px'}
-        boxHeight={'251px'}
+        boxWidth={isMobile ? '200px' : '251px'}
+        boxHeight={isMobile ? '200px' : '251px'}
         padding={'0'}
         border={`5px solid ${isCardOver ? 'var(--primary-text)' : 'var(--light-navy)'}`}
         backgroundColor={'var(--purple)'}
-        margin={'-30% 0 0 0'}
+        margin={'-20% 0 0 0'}
       >
         <ImageContainer src={pack.uri} width={'100%'} height={'100%'} borderRadius={'50%'} objectFit={'cover'} />
       </ImageIconContainer>
       <TextCustom
         color={'var(--primary-text)'}
-        fontSize={isMobile ? '0.8rem' : '35px'}
+        fontSize={isMobile ? '1.2rem' : '35px'}
         fontWeight={600}
         fontFamily={'Rubik'}
         lineHeight={1.1}
         textAlign={'center'}
-        margin={'10% 0 10% 0'}
+        margin={isMobile ? '8% 0 5% 0' : '10% 0'}
       >
         {pack.level}
       </TextCustom>
@@ -89,37 +88,3 @@ export const PackItem: React.FC<{ pack: TPackItem; currentTotalPrice: number }> 
     </BoxCard>
   )
 }
-
-// export const PackItem: React.FC<{ pack: TPackItem }> = ({ pack }) => {
-//   const [pendingTx, setPendingTx] = useState<boolean>(false)
-//   const { onBuyPack } = useBuyPack(pack.id, 1)
-//   const { account } = useActiveWeb3React()
-
-//   return (
-//     <ContainerColumn width={isMobile ? '100%' : '32%'} height={'auto'} padding={isMobile ? '0 0 70px' : '0'}>
-//       <OnlineImages url={pack.uri} imgWidth={isMobile ? '90%' : '90%'} />
-//       <TextMain>{pack.level}</TextMain>
-//       <TextDescription>{`${pack.count} Moments @ $${pack.price}`}</TextDescription>
-//       <TransparentBtn
-//         borderRadius={'24px'}
-//         padding={'24px 24px'}
-//         margin={'24px 0 0'}
-//         disabled={pendingTx || account === null || account === undefined}
-//         onClick={async () => {
-//           setPendingTx(true)
-//           try {
-//             const res = await onBuyPack(pack.id, 1)
-//             setPendingTx(false)
-//             if (res) window.location.href = `/account`
-//           } catch (e) {
-//             setPendingTx(false)
-//           }
-//         }}
-//       >
-//         {pendingTx ? 'Processing' : 'Buy Now!'}
-//         <USDCIcon />
-//       </TransparentBtn>
-//       {pendingTx && <ProcessingLoader />}
-//     </ContainerColumn>
-//   )
-// }

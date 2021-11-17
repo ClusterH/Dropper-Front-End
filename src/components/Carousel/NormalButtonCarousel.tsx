@@ -1,6 +1,6 @@
-import React, { Children, useMemo } from 'react'
-import { useSlideShow, ISlideShow } from '../../hooks/useSlideShow'
+import React from 'react'
 import styled from 'styled-components'
+import { ISlideShow, useSlideShow } from '../../hooks/useSlideShow'
 import { MainButton } from '../Buttons/MainButton'
 
 const CarouselContainer = styled.div`
@@ -50,7 +50,13 @@ const ArrowButton = styled(MainButton)<{ backColor?: string; borderColor?: strin
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 999;
+  z-index: 1;
+  &:active {
+    background-color: var(--secondary);
+  }
+  &:hover {
+    background-color: var(--secondary);
+  }
 `
 // interface ICarousel extends ISlideShow {
 //   child: React.ReactNode

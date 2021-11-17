@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
-import { usePagination, DOTS } from '../../hooks/usePagination'
 import styled from 'styled-components'
+import { DOTS, usePagination } from '../../hooks/usePagination'
 
 const PagenationContainer = styled.div`
   width: 100%;

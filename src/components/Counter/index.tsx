@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react'
-import { FaPlus, FaMinus } from 'react-icons/fa'
+import { FaMinus, FaPlus } from 'react-icons/fa'
 import styled from 'styled-components'
 import { ContainerRow, InputWrapper } from '../../styles/globalStyles'
 import { MainButton } from '../Buttons/MainButton'

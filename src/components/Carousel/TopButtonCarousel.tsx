@@ -1,7 +1,8 @@
-import React, { Children, useMemo } from 'react'
-import { useSlideShow, ISlideShow } from '../../hooks/useSlideShow'
+import React from 'react'
 import styled from 'styled-components'
+import { ISlideShow, useSlideShow } from '../../hooks/useSlideShow'
 import { MainButton } from '../Buttons/MainButton'
+import { size } from '../../styles/globalStyles'
 
 const CarouselContainer = styled.div`
   width: 100%;
@@ -23,6 +24,9 @@ const ArrowButtonContainer = styled.div`
   position: absolute;
   top: 50px;
   right: 10px;
+  @media screen and (max-width: ${size.mobileL}) {
+    top: 150px;
+  }
 `
 const Arrow = styled.div<{ backColor?: string }>`
   &::before {
@@ -56,6 +60,12 @@ const ArrowButton = styled(MainButton)<{ backColor?: string; borderColor?: strin
   border-color: ${({ borderColor }) => (borderColor ? borderColor : 'var(--navy-blue-opacity)')};
   box-shadow: none;
   border-radius: 8px;
+  &:active {
+    background-color: var(--secondary);
+  }
+  &:hover {
+    background-color: var(--secondary);
+  }
 `
 // interface ICarousel extends ISlideShow {
 //   child: React.ReactNode

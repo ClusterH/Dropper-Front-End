@@ -1,28 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
-import {
-  ComponentWrapper,
-  BoxCard,
-  TextCustom,
-  ContainerRow,
-  ImageContainer,
-  SubText,
-  ImageIconContainer,
-} from '../../styles/globalStyles'
+import { ComponentWrapper, TextCustom, ContainerRow, SubText } from '../../styles/globalStyles'
 import PartnerCard from '../../components/Cards/partnerCard'
 import { isMobile } from 'react-device-detect'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
-import PARTNER_PATHIC from '../../assets/images/partner-pathic.svg'
-import PARTNER_POLYGON from '../../assets/images/partner-polygon.svg'
 import { partnerList } from '../../constants/dummy'
 
 const ContainerWithoutLeftBorder = styled(ContainerRow)<{ border?: string }>`
   border: ${({ border }) => (border ? border : '5px solid var(--light-navy-blue)')};
+  border-right-width: 2px !important;
   border-left: none;
 `
 
 const ContainerWithoutRightBorder = styled(ContainerRow)<{ border?: string }>`
   border: ${({ border }) => (border ? border : '5px solid var(--light-navy-blue)')};
+  border-left-width: 2px !important;
   border-right: none;
 `
 
@@ -35,7 +27,7 @@ export const PartnersBox: React.FC = () => {
       margin={'0'}
       justifyContent={'center'}
     >
-      <ComponentWrapper margin={'50px 0 0'} padding={'24px'}>
+      <ComponentWrapper margin={isMobile ? '10px 0 0' : '50px 0 0'} padding={'24px'}>
         <TextCustom
           fontSize={isMobile ? '2rem' : '3.5rem'}
           fontWeight={600}
@@ -65,8 +57,8 @@ export const PartnersBox: React.FC = () => {
           >
             <PartnerCard
               url={partnerList[0].imgUri}
-              imgWidth={'137px'}
-              imgHeight={'137px'}
+              imgWidth={isMobile ? '60px' : '137px'}
+              imgHeight={isMobile ? '60px' : '137px'}
               text={partnerList[0].name}
               twitter={partnerList[0].twitter}
             />
@@ -74,8 +66,8 @@ export const PartnersBox: React.FC = () => {
           <ContainerWithoutRightBorder margin={'0'} padding={'5% 2%'}>
             <PartnerCard
               url={partnerList[1].imgUri}
-              imgWidth={'137px'}
-              imgHeight={'137px'}
+              imgWidth={isMobile ? '60px' : '137px'}
+              imgHeight={isMobile ? '60px' : '137px'}
               text={partnerList[1].name}
               twitter={partnerList[1].twitter}
             />

@@ -16,7 +16,7 @@ const CollectionListBox = styled(ContainerRow)`
   gap: 0;
 `
 
-const pageSize = 4
+const pageSize = isMobile ? 1 : 4
 
 const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity }> = ({ sliderList, rarity }) => {
   const collectionRef = useRef<HTMLDivElement>(null)
@@ -55,7 +55,7 @@ const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity }> = ({ 
   }
 
   return (
-    <ContainerRow backgroundColor={'transparent'} justifyContent={'center'} padding={'60px 0'}>
+    <ContainerRow backgroundColor={'transparent'} justifyContent={'center'} padding={isMobile ? '0' : '60px 0'}>
       <ComponentWrapper margin={'0px 0'} padding={'24px'}>
         <TopButtonCarousel
           totalCount={sliderList.length}
@@ -97,19 +97,19 @@ const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity }> = ({ 
                   flexWrap={'wrap'}
                   padding={'0'}
                   margin={'0'}
-                  gap={'1.5%'}
+                  gap={isMobile ? '0' : '1.5%'}
                   style={{ minWidth: '100%' }}
                 >
                   {collectionBlock(idx * pageSize).map((item) => {
                     return (
                       <CollectionCard
                         key={item.id}
-                        boxWidth={'47%'}
-                        imgWidth={'230px'}
-                        imgHeight={'230px'}
+                        boxWidth={isMobile ? '100%' : '47%'}
+                        imgWidth={isMobile ? '160px' : '230px'}
+                        imgHeight={isMobile ? '160px' : '230px'}
                         url={`${AWS_BASE_URI}${rarity}/${item.title.replaceAll(' ', '+')}.png`}
                         title={item.title}
-                        content={item.content}
+                        contentUrl={`${AWS_BASE_URI}${rarity}/${item.title.replaceAll(' ', '+')}.txt`}
                         isVertical={false}
                       />
                     )

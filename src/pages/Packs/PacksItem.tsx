@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
-import { TextCustom, ContainerRow, ImageContainer, BoxCard, ContainerColumn } from '../../styles/globalStyles'
-import { isMobile } from 'react-device-detect'
-import { RoundedIconBox } from '../../styles/globalStyles'
-import { FavoriteIcon, FacebookIcon, LinkedInIcon, RedditIcon, TelegramIcon } from '../../components/Icons'
+import { FacebookIcon, FavoriteIcon, LinkedInIcon, RedditIcon, TwitterIcon } from '../../components/Icons'
+import {
+  BoxCard,
+  ContainerColumn,
+  ContainerRow,
+  ImageContainer,
+  RoundedIconBox,
+  TextCustom,
+} from '../../styles/globalStyles'
 
 export const PacksItem: React.FC<{ width?: string }> = ({ width }) => {
   const [favoriteItem, setFavoriteItem] = useState(false)
@@ -50,7 +55,7 @@ export const PacksItem: React.FC<{ width?: string }> = ({ width }) => {
         </TextCustom>
         <ContainerRow justifyContent={'flex-start'}>
           <RoundedIconBox backColor={'var(--primary-text)'} width={'30px'}>
-            <TelegramIcon color={'var(--secondary)'} width={'16px'} height={'16px'} />
+            <TwitterIcon color={'var(--secondary)'} width={'16px'} height={'16px'} />
           </RoundedIconBox>
           <RoundedIconBox backColor={'var(--primary-text)'} width={'30px'}>
             <FacebookIcon color={'var(--secondary)'} width={'16px'} height={'16px'} />

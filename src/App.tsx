@@ -7,12 +7,15 @@ import { GlobalStyles, ToastWrapper } from './styles/globalStyles'
 
 const Header = lazy(() => import('./components/Header'))
 const Home = lazy(() => import('./pages/Home'))
+const AboutUs = lazy(() => import('./pages/AboutUs'))
 const Login = lazy(() => import('./pages/Login'))
 // const Creators = lazy(() => import('./pages/Creators'))
 const Collections = lazy(() => import('./pages/Collections'))
 const Inventory = lazy(() => import('./pages/Inventory'))
 const Packs = lazy(() => import('./pages/Packs'))
-// const Ranks = lazy(() => import('./pages/Ranks'))
+const Ranks = lazy(() => import('./pages/Ranks'))
+const MarketPlace = lazy(() => import('./pages/Marketplace'))
+const Footer = lazy(() => import('./components/Footer'))
 
 const App: React.FC = () => {
   return (
@@ -34,13 +37,16 @@ const App: React.FC = () => {
         <Header />
         <Switch>
           <Route exact path="/" component={Home} />
+          <Route exact path="/aboutus" component={AboutUs} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/clix" component={Collections} />
           <Route exact path="/inventory" component={Inventory} />
           <Route exact path="/packs" component={Packs} />
-          {/* <Route exact path="/ranks" component={Ranks} /> */}
+          <Route exact path="/ranks" component={Ranks} />
+          <Route exact path="/marketplace" component={MarketPlace} />
           <Route exact path="/:id" component={Home} />
         </Switch>
+        <Footer />
       </Suspense>
     </Router>
   )

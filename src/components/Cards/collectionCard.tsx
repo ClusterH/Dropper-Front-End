@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
-import { BoxCard, ContainerColumn, ContainerRow, RoundedIconBox, TextCustom } from '../../styles/globalStyles'
-import { TelegramIcon, LinkedInIcon, FacebookIcon, RedditIcon } from '../Icons'
+import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+import styled from 'styled-components'
+import { BoxCard, ContainerColumn, ContainerRow, TextCustom, size } from '../../styles/globalStyles'
 
 const ImgContainer = styled.img<{ imgWidth?: string; imgHeight?: string }>`
   width: ${({ imgWidth }) => (imgWidth ? imgWidth : '100%')};
   height: ${({ imgHeight }) => (imgHeight ? imgHeight : 'auto')};
+  min-height: ${({ imgHeight }) => (imgHeight ? imgHeight : 'auto')};
   object-fit: cover;
   border-radius: 50%;
   border: 5px solid var(--light-blue);
@@ -17,7 +17,13 @@ const CollectionTextBox = styled(TextCustom)`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  @media screen and (max-width: ${size.tablet}) {
+    width: 60vw;
+  }
 `
+interface PromiseWithCancel<T> extends Promise<T> {
+  cancel: () => void
+}
 
 const CollectionCard: React.FC<{
   url: string
@@ -25,20 +31,46 @@ const CollectionCard: React.FC<{
   imgHeight?: string
   boxWidth?: string
   title?: string
-  content?: string
+  contentUrl?: string
   isVertical: boolean
-}> = ({ url, imgWidth, imgHeight, boxWidth, title, content, isVertical }) => {
+}> = ({ url, imgWidth, imgHeight, boxWidth, title, contentUrl, isVertical }) => {
   const [isCardOver, setIsCardOver] = useState<boolean>(false)
+  const [content, setContent] = useState<string | undefined>('')
+
+  useEffect(() => {
+    const controller = new AbortController()
+    if (!!contentUrl)
+      fetch(contentUrl, {
+        headers: { 'content-type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.text()
+          } else {
+            return ''
+          }
+        })
+        .then((data) => {
+          setContent(data)
+        })
+        .catch((err) => {
+          console.log('[fetch error]', err)
+        })
+    return () => {
+      controller.abort()
+    }
+  }, [contentUrl])
 
   return (
     <BoxCard
       boxWidth={boxWidth}
+      boxHeight={isMobile ? '350px' : '500px'}
       border={'none'}
       borderHover={'none'}
       backgroundColor={'var(--light-navy-blue)'}
       backgroundHover={'var(--secondary)'}
       flexDirection={'column'}
-      justifyContent={'space-around'}
+      justifyContent={'flex-start'}
       padding={'20px'}
       onMouseOver={() => setIsCardOver(true)}
       onMouseLeave={() => setIsCardOver(false)}
@@ -58,14 +90,14 @@ const CollectionCard: React.FC<{
         </CollectionTextBox>
         <TextCustom
           color={'var(--primary-text)'}
-          fontSize={isMobile ? '0.6rem' : '1rem'}
+          fontSize={isMobile ? '0.8rem' : '1rem'}
           fontWeight={300}
           fontFamily={'Rubik'}
           lineHeight={1.3}
           textAlign={`${isVertical ? 'center' : 'left'}`}
           margin={'3% 2% 5% 5%'}
         >
-          {content}
+          {!!!content ? '' : content}
         </TextCustom>
         <TextCustom
           color={'var(--primary-text)'}

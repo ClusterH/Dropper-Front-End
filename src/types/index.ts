@@ -71,9 +71,11 @@ export type TCollectionItem = {
 }
 
 export interface IDropperState {
+  latestBlockNumber: number
   userPackList: TPackItem[] | null
   userMomentList: TMomentItem[] | null
   isUSDCApproved: boolean
+  isLoading: boolean
 }
 
 export type TWyreForm = {

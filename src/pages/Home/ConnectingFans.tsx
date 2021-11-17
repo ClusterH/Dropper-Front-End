@@ -1,19 +1,18 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
-
+import styled from 'styled-components'
+import BANNER_THIRD from '../../assets/images/banner-third.svg'
+import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
+import { TimelineContainer } from '../../components/TimelineContainer'
 import {
   ComponentWrapper,
   ContainerColumn,
-  SpacerLarge,
-  TextCustom,
   device,
-  SubText,
   ImageContainer,
+  SpacerLarge,
+  SubText,
+  TextCustom,
 } from '../../styles/globalStyles'
-import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
-import BANNER_THIRD from '../../assets/images/banner-third.svg'
-import { TimelineContainer } from '../../components/TimelineContainer'
 
 const ResponsiveWrapper = styled(ContainerColumn)`
   align-items: center;
@@ -45,7 +44,7 @@ const cardItems = [
   },
 ]
 
-export const Advantage: React.FC = () => {
+export const ConnectingFans: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState(1)
   const cardSelect = (index: number) => {
     setSelectedCard(index)
@@ -77,8 +76,13 @@ export const Advantage: React.FC = () => {
       </ResponsiveWrapper>
       <SpacerLarge />
       <ResponsiveWrapper>
-        <ImageContainer src={BANNER_THIRD} width={'35%'} objectFit={'cover'} margin={'0 20px 0 20px'} />
-        <ContainerColumn>
+        <ImageContainer
+          src={BANNER_THIRD}
+          width={isMobile ? '90%' : '35%'}
+          objectFit={'cover'}
+          margin={'0 20px 0 20px'}
+        />
+        <ContainerColumn width={isMobile ? '90%' : '62%'}>
           {cardItems.map((item, index) => {
             return (
               <TimelineContainer

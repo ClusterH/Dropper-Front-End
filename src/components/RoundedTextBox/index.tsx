@@ -1,7 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
-import { BoxCard, TextCustom } from '../../styles/globalStyles'
 import { isMobile } from 'react-device-detect'
+import { BoxCard, TextCustom } from '../../styles/globalStyles'
 
 interface IRoundedTextBox {
   width?: string
@@ -26,7 +25,7 @@ const RoundedTextBox: React.FC<IRoundedTextBox> = ({ width, height, border, text
     >
       <TextCustom
         color={textColor}
-        fontSize={isMobile ? '2rem' : '3.5rem'}
+        fontSize={isMobile ? '1.5rem' : '3.5rem'}
         fontWeight={600}
         fontFamily={'RubikBold'}
         lineHeight={1.1}
