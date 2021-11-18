@@ -9,6 +9,6 @@ export const ethersToSerializedBigNumber = (ethersBn: ethers.BigNumber): Seriali
 export const ethersToBigNumber = (ethersBn: ethers.BigNumber): BigNumber => new BigNumber(ethersBn.toString())
 
 export const getBalanceNumber = (balance: BigNumber, decimals = 18) => {
-  const displayBalance = new BigNumber(balance).dividedBy(new BigNumber(10).pow(decimals))
+  const displayBalance = ethers.BigNumber.from(balance).div(ethers.BigNumber.from(10).pow(decimals))
   return displayBalance.toNumber()
 }

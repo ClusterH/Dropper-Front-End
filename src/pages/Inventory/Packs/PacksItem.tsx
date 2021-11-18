@@ -42,6 +42,8 @@ export const PacksItem: React.FC<{ pack: TPackItem; setSelectedTab: (tab: TSelec
         height={'fit-content'}
         borderRadius={'10px'}
         border={'3px solid var(--navy-blue)'}
+        isControls={true}
+        isAutoPlay={true}
       />
       <ContainerColumn justifyContent={'flex-start'} alignItems={'flex-start'} padding={'20px 0 0 20px'} gap={'12px'}>
         <TextCustom color={'var(--primary-text)'} fontSize={'16px'} fontWeight={300}>
@@ -50,7 +52,7 @@ export const PacksItem: React.FC<{ pack: TPackItem; setSelectedTab: (tab: TSelec
         <TextCustom color={'var(--secondary)'} fontSize={'16px'} fontWeight={300}>
           {'@DropperNFT'}
         </TextCustom>
-        <TransparentBtn
+        {/* <TransparentBtn
           borderRadius={'24px'}
           padding={'24px 24px'}
           disabled={pendingTx || pack.balance === undefined || pack.balance === '0'}
@@ -70,7 +72,7 @@ export const PacksItem: React.FC<{ pack: TPackItem; setSelectedTab: (tab: TSelec
           }}
         >
           {pendingTx ? 'Processing' : 'Open Pack!'}
-        </TransparentBtn>
+        </TransparentBtn> */}
         <TransparentBtn
           borderRadius={'24px'}
           padding={'24px 24px'}
@@ -90,7 +92,7 @@ export const PacksItem: React.FC<{ pack: TPackItem; setSelectedTab: (tab: TSelec
             }
           }}
         >
-          {pendingTx ? 'Processing' : 'Open Pack - Mx!'}
+          {pendingTx ? 'Processing' : 'Open Pack!'}
         </TransparentBtn>
       </ContainerColumn>
 

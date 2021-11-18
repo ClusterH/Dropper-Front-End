@@ -14,6 +14,8 @@ interface IVideoContainerProps {
   height?: string
   borderRadius?: string
   border?: string
+  isAutoPlay?: boolean
+  isControls?: boolean
 }
 export const VideoContainer: React.FC<IVideoContainerProps> = ({
   url,
@@ -22,13 +24,15 @@ export const VideoContainer: React.FC<IVideoContainerProps> = ({
   height,
   borderRadius,
   border,
+  isAutoPlay,
+  isControls,
 }) => {
   return (
     <VideoWrapper
       loop
-      autoPlay
+      autoPlay={isAutoPlay}
+      controls={isControls}
       playsInline
-      controls
       poster={posterUrl}
       width={width}
       height={height}

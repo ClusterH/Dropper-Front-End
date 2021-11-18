@@ -85,6 +85,8 @@ export const MomentModal: React.FC<IMomentModal> = ({ moment, momentModalOpen, t
           height={'fit-content'}
           borderRadius={'10px'}
           border={'1px solid var(--navy-blue)'}
+          isAutoPlay={true}
+          isControls={true}
         />
         <ContainerColumn
           justifyContent={'flex-start'}
@@ -127,7 +129,7 @@ export const MomentModal: React.FC<IMomentModal> = ({ moment, momentModalOpen, t
               Love This Item
             </TextCustom>
           </ContainerRow>
-          <TextCustom color={'var(--primary-text)'} fontSize={'16px'} fontWeight={300}>
+          {/* <TextCustom color={'var(--primary-text)'} fontSize={'16px'} fontWeight={300}>
             Share Socials
           </TextCustom>
           <ContainerRow justifyContent={'flex-start'}>
@@ -143,7 +145,7 @@ export const MomentModal: React.FC<IMomentModal> = ({ moment, momentModalOpen, t
             <RoundedBoxWithShadow width={'30px'}>
               <LinkedInIcon color={'var(--secondary)'} width={'16px'} height={'16px'} />
             </RoundedBoxWithShadow>
-          </ContainerRow>
+          </ContainerRow> */}
         </ContainerColumn>
       </BoxCard>
     )

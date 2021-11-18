@@ -20,7 +20,7 @@ export const PackListBox: React.FC = () => {
         })}
         {isUSDCApproved ? (
           <>
-            <MainButton
+            {/* <MainButton
               width={isMobile ? '80%' : 'fit-content'}
               borderRadius={'24px'}
               padding={'24px 24px'}
@@ -30,7 +30,7 @@ export const PackListBox: React.FC = () => {
             >
               {'Buy Now!'}
               <USDCIcon />
-            </MainButton>
+            </MainButton> */}
             <MainButton
               width={isMobile ? '80%' : 'fit-content'}
               borderRadius={'24px'}
@@ -39,13 +39,13 @@ export const PackListBox: React.FC = () => {
               disabled={pendingTx || !account}
               onClick={() => BuyPackProcess(true)}
             >
-              {'Buy Now - Mx!'}
+              {'Buy Now!'}
               <USDCIcon />
             </MainButton>
           </>
         ) : (
           <>
-            <MainButton
+            {/* <MainButton
               width={isMobile ? '80%' : 'fit-content'}
               borderRadius={'24px'}
               padding={'24px 24px'}
@@ -55,7 +55,7 @@ export const PackListBox: React.FC = () => {
             >
               {'Approve'}
               {isLoading ? <ClipLoader color={'var(--light-navy-blue)'} size={'24px'} /> : <USDCIcon />}
-            </MainButton>
+            </MainButton> */}
             <MainButton
               width={isMobile ? '80%' : 'fit-content'}
               borderRadius={'24px'}
@@ -64,7 +64,7 @@ export const PackListBox: React.FC = () => {
               disabled={isLoading || pendingTx || !account}
               onClick={() => ApprovingUSDC(true)}
             >
-              {'Approve - Mx'}
+              {'Approve'}
               {isLoading ? <ClipLoader color={'var(--light-navy-blue)'} size={'24px'} /> : <USDCIcon />}
             </MainButton>
           </>

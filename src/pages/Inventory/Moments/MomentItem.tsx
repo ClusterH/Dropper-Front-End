@@ -28,6 +28,7 @@ export const MomentItem: React.FC<{ moment: TMomentItem; onClick: () => void }> 
         height={'fit-content'}
         borderRadius={'10px'}
         border={'3px solid var(--navy-blue)'}
+        isControls={true}
       />
       <ContainerColumn justifyContent={'flex-start'} alignItems={'flex-start'} padding={'20px 0 0 20px'} gap={'12px'}>
         <TextCustom color={'var(--primary-text)'} fontSize={'16px'} fontWeight={300}>
@@ -48,7 +49,7 @@ export const MomentItem: React.FC<{ moment: TMomentItem; onClick: () => void }> 
             Love This Item
           </TextCustom>
         </ContainerRow>
-        <TextCustom color={'var(--secondary)'} fontSize={'16px'} fontWeight={300}>
+        {/* <TextCustom color={'var(--secondary)'} fontSize={'16px'} fontWeight={300}>
           {'Share Socials'}
         </TextCustom>
         <ContainerRow justifyContent={'flex-start'}>
@@ -64,7 +65,7 @@ export const MomentItem: React.FC<{ moment: TMomentItem; onClick: () => void }> 
           <RoundedIconBox backColor={'var(--primary-text)'} width={'30px'}>
             <LinkedInIcon color={'var(--secondary)'} width={'16px'} height={'16px'} />
           </RoundedIconBox>
-        </ContainerRow>
+        </ContainerRow> */}
       </ContainerColumn>
     </BoxCard>
   )

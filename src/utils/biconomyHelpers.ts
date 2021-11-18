@@ -79,7 +79,7 @@ export const buyPackMeta = async (
   const { r, s, v } = getSignatureParameters(signature)
 
   try {
-    let tx = await contract.executeMetaTransaction(userAddress, functionSignature, r, s, v, { gasLimit: 1000000 })
+    const tx = await contract.executeMetaTransaction(userAddress, functionSignature, r, s, v, { gasLimit: 1000000 })
     const receipt = await tx.wait()
     return receipt.status
   } catch (error) {
@@ -107,7 +107,7 @@ export const openPackMeta = async (
   const { r, s, v } = getSignatureParameters(signature)
 
   try {
-    let tx = await contract.executeMetaTransaction(userAddress, functionSignature, r, s, v, { gasLimit: 850000 })
+    const tx = await contract.executeMetaTransaction(userAddress, functionSignature, r, s, v, { gasLimit: 1000000 })
     const receipt = await tx.wait()
     return receipt.status
   } catch (error) {
@@ -117,7 +117,7 @@ export const openPackMeta = async (
 
 export const approveUSDCMexa = async (
   userAddress: string,
-  walletSigner: any,
+  walletProvider: any,
   chainId: SupportedChainId,
   contract: any
 ) => {
@@ -134,21 +134,20 @@ export const approveUSDCMexa = async (
     { name: 'functionSignature', type: 'bytes' },
   ]
 
-  let domainData = {
+  const domainData = {
     name: 'USD Coin (PoS)',
     version: '1',
     verifyingContract: getUSDCAddress(chainId),
     salt: ethers.utils.hexZeroPad(ethers.BigNumber.from(chainId).toHexString(), 32),
   }
-  console.log(domainData)
 
   const contractInterface = new ethers.utils.Interface(USDC_ABI)
-  // const nonce = await contract.nonces(userAddress)
+  const nonce = await contract.nonces(userAddress)
   const spender = getCollectionAddress(chainId)
-  const MAX_INT = '0x3E8'
+  const MAX_INT = '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff'
   const functionSignature = contractInterface.encodeFunctionData('approve', [spender, MAX_INT])
   const message = {
-    nonce: 0,
+    nonce: nonce.toNumber(),
     from: userAddress,
     functionSignature,
   }
@@ -162,22 +161,8 @@ export const approveUSDCMexa = async (
     primaryType: 'MetaTransaction',
     message: message,
   })
-  const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
   const signature = await walletProvider.send('eth_signTypedData_v3', [userAddress, dataToSign])
   let { r, s, v } = getSignatureParameters(signature)
-
-  // const hexSpender = getHexStrFromStr(spender)
-  // const hexApproveAmount = getPaddedHexStrFromBN(BigNumber.from(1000))
-  // const hexData = hexSpender + hexApproveAmount.slice(2)
-  // const signature = await getSignature(hexData, walletSigner)
-  // const messageToSign = constructMetaTransactionMessage(
-  //   nonce.toNumber(),
-  //   chainId,
-  //   functionSignature,
-  //   getCollectionAddress(chainId!)
-  // )
-  // const signature = await walletSigner.signMessage(messageToSign)
-  // const { r, s, v } = getSignatureParameters(signature)
 
   try {
     let tx = await contract.executeMetaTransaction(userAddress, functionSignature, r, s, v, { gasLimit: 1000000 })
@@ -187,43 +172,3 @@ export const approveUSDCMexa = async (
     console.log(error)
   }
 }
-//My approach
-// export const approveUSDCMexa = async (
-//   userAddress: string,
-//   walletSigner: any,
-//   chainId: SupportedChainId,
-//   contract: any
-// ) => {
-//   const contractInterface = new ethers.utils.Interface(USDC_ABI)
-//   // const nonce = await contract.nonces(userAddress)
-//   const spender = getCollectionAddress(chainId)
-//   const MAX_INT = '0x3E8'
-//   const functionSignature = contractInterface.encodeFunctionData('approve', [spender, MAX_INT])
-//   const hexSpender = getHexStrFromStr(spender)
-//   const hexApproveAmount = getPaddedHexStrFromBN(BigNumber.from(1000))
-//   const hexData = hexSpender + hexApproveAmount.slice(2)
-//   const signature = await getSignature(hexData, walletSigner)
-//   // const messageToSign = constructMetaTransactionMessage(
-//   //   nonce.toNumber(),
-//   //   chainId,
-//   //   functionSignature,
-//   //   getCollectionAddress(chainId!)
-//   // )
-//   // const signature = await walletSigner.signMessage(messageToSign)
-//   // const { r, s, v } = getSignatureParameters(signature)
-
-//   try {
-//     let tx = await contract.executeMetaTransaction(
-//       userAddress,
-//       functionSignature,
-//       signature.r,
-//       signature.s,
-//       signature.v,
-//       { gasLimit: 1000000 }
-//     )
-//     const receipt = await tx.wait()
-//     return receipt.status
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }

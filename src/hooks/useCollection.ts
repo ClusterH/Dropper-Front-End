@@ -34,28 +34,6 @@ export const useApprove = () => {
   return useAppSelector((state: AppState) => state.dropper.isUSDCApproved)
 }
 
-export const useAllowanceUSDC = async () => {
-  const { account, chainId } = useActiveWeb3React()
-  const collectionContract = useGetCollectionContract()
-  const usdcTokenContract = useGetUSDCTokenContract()
-
-  const allowanceAmount = await useMemo(async () => {
-    if (!account || isSupportedNetwork(chainId) === false || !collectionContract || !usdcTokenContract) {
-      return undefined
-    } else {
-      try {
-        const res = await allowance(usdcTokenContract, collectionContract, account)
-        return res
-      } catch (e) {
-        console.error(e)
-        return null
-      }
-    }
-  }, [account, chainId, collectionContract, usdcTokenContract])
-
-  return allowanceAmount
-}
-
 export const useIsApproved = async () => {
   const { account, chainId } = useActiveWeb3React()
   const collectionContract = useGetCollectionContract()
@@ -69,7 +47,6 @@ export const useIsApproved = async () => {
 
   try {
     const allowanceAmount = await allowance(usdcTokenContract, collectionContract, account)
-    console.log(allowanceAmount)
     if (allowanceAmount.lte(0)) {
       dispatch(setIsUSDCApproved(false))
     } else dispatch(setIsUSDCApproved(true))
@@ -113,15 +90,14 @@ export const useApproveUSDC = () => {
 }
 
 export const useApproveUSDCMexa = () => {
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const { usdcTokenContract } = useInitBiconomy()
 
   const handleApprove = useCallback(async () => {
     const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
-    const walletSigner = walletProvider.getSigner()
 
     try {
-      const status = await approveUSDCMexa(account!, walletSigner!, chainId!, usdcTokenContract)
+      const status = await approveUSDCMexa(account!, walletProvider, chainId!, usdcTokenContract)
       return status
     } catch (e: any) {
       console.log(e)
@@ -155,7 +131,7 @@ export const useBuyPack = () => {
 
       try {
         const usdcBalance: BigNumber = await getUSDCBalance(usdcTokenContract, account)
-        if (getBalanceNumber(usdcBalance) < currentTotalPrice) {
+        if (getBalanceNumber(usdcBalance, 6) < currentTotalPrice) {
           toast.error('Insufficient USDC Balance to your wallet')
           return false
         }
@@ -189,12 +165,24 @@ export const useBuyPack = () => {
 
 export const useBuyPackMexa = () => {
   const { account, chainId } = useActiveWeb3React()
+  const usdcTokenContract = useGetUSDCTokenContract()
   const { contract } = useInitBiconomy()
 
   const handleBuyPack = useCallback(
     async (cartList: TPackItem[], currentTotalPrice: number) => {
       if (!account && !isSupportedNetwork(chainId)) {
         toast.error('Please check your wallet Connection First!')
+        return false
+      }
+
+      try {
+        const usdcBalance: BigNumber = await getUSDCBalance(usdcTokenContract!, account!)
+        if (getBalanceNumber(usdcBalance, 6) < currentTotalPrice) {
+          toast.error('Insufficient USDC Balance to your wallet')
+          return false
+        }
+      } catch (e: any) {
+        toast.error(e.message)
         return false
       }
 
