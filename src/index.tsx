@@ -6,10 +6,6 @@ import './index.scss'
 import { Providers } from './Providers'
 import reportWebVitals from './reportWebVitals'
 
-if (!!window.ethereum) {
-  window.ethereum.autoRefreshOnNetworkChange = false
-}
-
 ReactDOM.render(
   <React.StrictMode>
     <Providers>

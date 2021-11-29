@@ -1,10 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
 import { MainButton } from '../../components/Buttons/MainButton'
 import { useCollectionContext } from '../../contexts/CollectionContext'
 import { AvatarContainer, BoxCard, ContainerColumn, TextDescription, TextSubTitle } from '../../styles/globalStyles'
 import { TCreatorElement } from '../../types'
-import { isMobile, isDesktop } from 'react-device-detect'
 
 interface ICreatorCardProps {
   item: TCreatorElement

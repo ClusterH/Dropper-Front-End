@@ -1,28 +1,45 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { Contract } from '@ethersproject/contracts'
-import { utils } from 'ethers'
-import { IPFS_BASE_URI, AWS_BASE_URI } from '../constants/momentsURIs'
-import { getTotalMinted } from './callHelpers'
+import axios from 'axios'
+import { Contract } from 'ethcall'
+import { ethers, utils } from 'ethers'
+import DROPPER_ABI from '../abis/dropper.json'
+import { TRANSFER_BATCH_FILTER } from '../constants/blockNumber'
+import { SupportedChainId } from '../constants/chains'
+import { AWS_BASE_URI, AXIOS_BASE_URL, IPFS_BASE_URI } from '../constants/momentsURIs'
+import { AppDispatch } from '../state'
+import { setIsLoading, setLatestBlockNumber, setMomentList } from '../state/dropper/reducer'
+import { getDropperAddress } from './addressHelpers'
+import { setupInterceptorsTo } from './api/axiosInterceptors'
+import { fetchEventLogs, getLatestBlockNumber, getMultiCall } from './callHelpers'
+import { getSimpleRPCProvider } from './simpleRPCProvider'
 
-export const momentGenerator = (contract: Contract, momentIDs: BigNumber[], momentURIs: string[]) => {
-  const moments = momentURIs.map(async (uri, index) => {
-    const metadata = await (await fetch(`${IPFS_BASE_URI}${uri.replace('ipfs://', '')}`)).json()
-    const hexString = utils.hexlify(momentIDs[index])
-    const length = utils.hexDataLength(hexString)
-    const prefix = utils.hexDataSlice(hexString, 0, length / 2 + 1)
-    const sufix = utils.hexDataSlice(hexString, length / 2 - 1)
-    const id = parseInt(sufix).toString()
-    const momentId = `${prefix}${'0'.repeat(length - 2)}`
-    const res = await getTotalMinted(contract, momentId)
-    const totalMintedMoments = res[1].toString()
+export const getMomentId = (momentID: BigNumber) => {
+  const hexString = utils.hexlify(momentID)
+  const length = utils.hexDataLength(hexString)
+  const prefix = utils.hexDataSlice(hexString, 0, length / 2 + 1)
+  const sufix = utils.hexDataSlice(hexString, length / 2 - 1)
+  const id = parseInt(sufix).toString()
+  const momentId = `${prefix}${'0'.repeat(length - 2)}`
+  return { id, momentId }
+}
+
+export const momentGenerator = (momentList: any, momentIDs: BigNumber[]) => {
+  return momentIDs.map(async (item, index) => {
+    const { id, momentId } = getMomentId(item)
+    const metadata = await (await fetch(`${IPFS_BASE_URI}${momentList[index][0]}`)).json()
     const name = metadata.name
     const description = metadata.description
-    const imageUrl = `${IPFS_BASE_URI}${metadata.image.replace('ipfs://', '')}`
-    const animationUrl = `${IPFS_BASE_URI}${metadata.animation_url.replace('ipfs://', '')}`
-    const rarity = imageUrl.replace(IPFS_BASE_URI, '').split('/')[1]
+    const imageUrl = metadata.image
+    const animationUrl = metadata.animation_url
+    const collection = metadata.attributes[0].value
+    const rarity = metadata.attributes[1].value
+    const title = metadata.attributes[2].value
+    const genre = metadata.attributes[3].value
+    const platform = metadata.attributes[4].value
+    const twitter = metadata.attributes[5].value
     const awsImageUrl = `${AWS_BASE_URI}${rarity}/${name}.png`
     const awsAnimationUrl = `${AWS_BASE_URI}${rarity}/${name}.mp4`
-
+    const totalMintedMoments = momentList[index][1].toString()
     return {
       id,
       momentId,
@@ -30,12 +47,101 @@ export const momentGenerator = (contract: Contract, momentIDs: BigNumber[], mome
       description,
       imageUrl,
       animationUrl,
+      collection,
       rarity,
+      title,
+      genre,
+      platform,
+      twitter,
       awsImageUrl,
       awsAnimationUrl,
       totalMintedMoments,
     }
   })
+}
 
-  return moments
+export const fetchMomentList = async (
+  account: string,
+  contract: Contract,
+  chainId: SupportedChainId,
+  dispatch: AppDispatch,
+  fromBlock: number | undefined
+) => {
+  const provider = getSimpleRPCProvider(chainId)
+  const ens = new ethers.Contract(getDropperAddress(chainId), DROPPER_ABI, provider)
+  const latestBlockNumber = await getLatestBlockNumber(getSimpleRPCProvider(chainId!))
+  dispatch(setLatestBlockNumber(latestBlockNumber))
+
+  const filterOption = { ...TRANSFER_BATCH_FILTER[chainId] }
+  const eventFilter = {
+    ...filterOption.eventFilter,
+    topics: [...filterOption.eventFilter.topics, ethers.utils.hexZeroPad(account, 32)],
+  }
+  const filter = { ...filterOption, eventFilter }
+  const limit = 2000
+  const startBlockNumber = fromBlock ?? filter.fromBlock
+
+  for (let i = latestBlockNumber; i > startBlockNumber; i -= limit) {
+    const eventLogs = await fetchEventLogs(
+      ens,
+      filter.eventFilter,
+      i - limit > startBlockNumber ? i - limit + 1 : startBlockNumber + 1,
+      i
+    )
+    if (eventLogs && eventLogs.length > 0) {
+      const momentIDs: Array<BigNumber> = []
+
+      eventLogs.map((item: any) => momentIDs.push(...item.args?.ids))
+
+      const _calls = momentIDs.map((id) => {
+        const { momentId } = getMomentId(id)
+        return contract.getMoment(momentId)
+      })
+      const response = await getMultiCall(_calls, chainId!)
+
+      const moments = await Promise.all(momentGenerator(response, momentIDs))
+      dispatch(setMomentList(moments))
+      dispatch(setIsLoading(false))
+    }
+  }
+  dispatch(setIsLoading(false))
+}
+
+export const getAllMomentList = async (
+  account: string,
+  contract: Contract,
+  chainId: SupportedChainId,
+  dispatch: AppDispatch,
+  txHash?: string
+) => {
+  const specificAxios = setupInterceptorsTo(axios.create())
+  specificAxios
+    .get(`${AXIOS_BASE_URL}`, {
+      params: {
+        userAddress: account,
+        chainId,
+        transactionHash: txHash,
+      },
+    })
+    .then(async (res: any) => {
+      console.log(res)
+      if (res.data && res.data.length > 0) {
+        const momentIDs: Array<BigNumber> = []
+
+        res.data.map((item: any) => momentIDs.push(...item.momentIds.map((id: string) => ethers.BigNumber.from(id))))
+
+        const _calls = momentIDs.map((id) => {
+          const { momentId } = getMomentId(id)
+          return contract.getMoment(momentId)
+        })
+        const response = await getMultiCall(_calls, chainId!)
+
+        const moments = await Promise.all(momentGenerator(response, momentIDs))
+        dispatch(setMomentList({ moments, txHash }))
+        dispatch(setIsLoading(false))
+      }
+    })
+    .catch((e) => {
+      console.log(e)
+    })
 }

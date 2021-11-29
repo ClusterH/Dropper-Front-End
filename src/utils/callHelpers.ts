@@ -1,10 +1,12 @@
 import { BigNumber } from '@ethersproject/bignumber'
+import { JsonRpcProvider, JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
+import { Provider } from 'ethcall'
 import { Contract, ethers } from 'ethers'
-import DROPPER_ABI from '../abis/dropper.json'
-import { NETWORK_URLS } from '../connectors'
+import { toast } from 'react-toastify'
 import { TRANSFER_BATCH_FILTER } from '../constants/blockNumber'
 import { SupportedChainId } from '../constants/chains'
 import { getDropperAddress } from './addressHelpers'
+import { getSimpleRPCProvider } from './simpleRPCProvider'
 
 export const isApprovedForAll = async (dropperContract: Contract, collectionContract: Contract, account: string) => {
   return dropperContract.isApprovedForAll(account, collectionContract.address)
@@ -27,6 +29,34 @@ export const approveUSDC = async (usdcTokenContract: Contract, collectionContrac
   const receipt = await txHash.wait()
   return receipt.status
 }
+
+export const getMaticBalanace = async (provider: JsonRpcProvider, account: string) => {
+  const maticBalance = await provider.getBalance(account)
+  return ethers.utils.formatEther(maticBalance)
+}
+
+export const getUSDCBalance = async (usdcTokenContract: Contract, account: string) => {
+  const balance = await usdcTokenContract.balanceOf(account)
+  return balance
+}
+
+export const getGasPrice = async (provider: Web3Provider | JsonRpcSigner) => {
+  const feeData = await provider.getFeeData()
+  return ethers.utils.formatUnits(feeData.gasPrice!)
+}
+
+export const getLatestBlockNumber = async (provider: JsonRpcProvider) => {
+  const blockNumber = await provider.getBlockNumber()
+  return blockNumber
+}
+
+export const getMultiCall = async (calls: any, chainId: number) => {
+  const ethCallProvider = new Provider()
+  const simpleProvider = getSimpleRPCProvider(chainId)
+  await ethCallProvider.init(simpleProvider)
+  return await ethCallProvider.all(calls)
+}
+
 // It is hard coded to get Pack price
 const payableAmount = (packId: number) => {
   if (packId === 1) return '0x989680'
@@ -37,8 +67,12 @@ const payableAmount = (packId: number) => {
 }
 
 export const buyPacks = async (contract: Contract, packId: number, quantity = 1) => {
-  const txHash = await contract.buyPacks(packId, quantity)
+  const txHash = await contract.buyPacks(packId, quantity, { gasLimit: 600000 })
   const receipt = await txHash.wait()
+
+  if (receipt.status) {
+    toast.success(`Successfully Bought the ${quantity} Pack #${packId}`)
+  } else toast.error(`Buy Pack #${packId} Failed`)
 
   return receipt.status
 }
@@ -53,36 +87,29 @@ export const getPack = async (contract: Contract, packId: number) => {
   return txHash
 }
 
-export const openPacks = async (contract: Contract, packId: number, quantity = 1, account: string) => {
-  const txHash = await contract.openPacks(packId, quantity, { from: account, gasLimit: 500000 })
+export const openPacks = async (contract: Contract, packId: number, account: string, gasPrice: BigNumber) => {
+  const txHash = await contract.openPacks(packId, { from: account, gasLimit: gasPrice })
   const receipt = await txHash.wait()
 
   return receipt.status
 }
-export const getMomentIds = async (account: string, chainId: SupportedChainId) => {
-  const provider = new ethers.providers.JsonRpcProvider(NETWORK_URLS[chainId])
-  const ens = new ethers.Contract(getDropperAddress(chainId), DROPPER_ABI, provider)
-  const filterOption = { ...TRANSFER_BATCH_FILTER[chainId] }
-  const eventFilter = {
-    ...filterOption.eventFilter,
-    topics: [...filterOption.eventFilter.topics, ethers.utils.hexZeroPad(account, 32)],
-  }
-  const filter = { ...filterOption, eventFilter }
-  const events = await ens.queryFilter(filter.eventFilter, filter.fromBlock, filter.toBlock)
-  console.log(events)
-  const ids: Array<BigNumber> = []
 
-  events.map((item: any) => ids.push(...item.args?.ids))
-
-  return ids
+export const fetchEventLogs = async (
+  contract: Contract,
+  eventFilter: ethers.EventFilter,
+  fromBlock: number,
+  toBlock: number
+) => {
+  const event = await contract.queryFilter(eventFilter, fromBlock, toBlock)
+  return event
 }
 
-export const getTokenURI = async (contract: Contract, momentId: string) => {
+export const getTokenURI = async (contract: Contract, momentId: BigNumber) => {
   const tokenURI = await contract.uri(momentId)
   return tokenURI.toString()
 }
 
-export const getTotalMinted = async (contract: Contract, momentId: string) => {
+export const getMomentsWithId = async (contract: Contract, momentId: string) => {
   const res = await contract.getMoment(momentId)
   return res
 }

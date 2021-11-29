@@ -1,29 +1,21 @@
 import React from 'react'
-import { MainButton, TransparentBtn } from '../../components/Buttons/MainButton'
-import OnlineImages from '../../components/Icons/onlineImages'
-import {
-  ContainerColumn,
-  ContainerRow,
-  Divider,
-  PageWrapper,
-  SpacerMedium,
-  TextCustom,
-  TextMain,
-  TextSubTitle,
-} from '../../styles/globalStyles'
-import { Advantage } from './Advantage'
-import { ClixDropp } from './ClixDropp'
+import { PageWrapper } from '../../styles/globalStyles'
 import { DroppExplain } from './DroppExplain'
+import { FAQBox } from './FAQBox'
 import { IntroducingBox } from './IntroducingBox'
+import { ProductExplain } from './ProductExplain'
+import { RememberBox } from './RememberBox'
+import { ConnectingFans } from './ConnectingFans'
 
 const Home: React.FC = () => {
   return (
     <PageWrapper>
       <IntroducingBox />
-      <ClixDropp />
+      <RememberBox />
+      <ProductExplain />
       <DroppExplain />
-      <Divider margin={'132px 0 100px'} />
-      <Advantage />
+      <ConnectingFans />
+      <FAQBox />
     </PageWrapper>
   )
 }

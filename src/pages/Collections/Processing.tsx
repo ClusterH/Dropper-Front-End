@@ -2,15 +2,14 @@ import React from 'react'
 import PropagateLoader from 'react-spinners/PropagateLoader'
 import styled from 'styled-components'
 import { VideoContainer } from '../../components/VideoContainer'
-import { ContainerRow, TextCustom, TextSubTitle } from '../../styles/globalStyles'
-import { TPackItem } from '../../types'
+import { ContainerRow, TextCustom } from '../../styles/globalStyles'
 
 const LoaderWrapper = styled.div`
   position: fixed;
-  top: 0;
+  top: 120px;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 120px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,8 +22,10 @@ export const ProcessingLoader: React.FC<{ animationUrl?: string }> = ({ animatio
     <LoaderWrapper>
       <VideoContainer
         width={'60%'}
+        height={'calc(100vh - 300px)'}
         url={animationUrl ? animationUrl : 'https://dropper.s3.ca-central-1.amazonaws.com/processing.mp4'}
         posterUrl={'https://dropper.s3.ca-central-1.amazonaws.com/clix-pack2.png'}
+        isAutoPlay={true}
       ></VideoContainer>
       <ContainerRow justifyContent={'center'}>
         <TextCustom>Processing your transaction... This can take a few minutes</TextCustom>

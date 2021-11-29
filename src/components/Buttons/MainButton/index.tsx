@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { size } from '../../../styles/globalStyles'
 
 export const MainButton = styled.button<{
   width?: string
@@ -9,9 +10,9 @@ export const MainButton = styled.button<{
   borderRadius?: string
   backgroundColor?: string
   margin?: string
+  border?: string
 }>`
   outline: none;
-  border: none;
   cursor: pointer;
   text-decoration: none;
   display: flex;
@@ -21,10 +22,10 @@ export const MainButton = styled.button<{
   font-weight: 600;
   transition: 0.3s;
   box-shadow: 0px 3px 10px var(--secondary-opacity);
-  &:hover {
-    background: var(--primary);
+  &:hover,
+  &:active {
+    background: var(--light-primary);
     color: var(--secondary);
-    /* border: 1px solid var(--secondary); */
   }
 
   &:disabled {
@@ -40,6 +41,13 @@ export const MainButton = styled.button<{
   height: ${({ height }) => (height ? height : '32px')};
   background: ${({ backgroundColor }) => (backgroundColor ? backgroundColor : 'var(--secondary)')};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '0px')};
+  border: ${({ border }) => (border ? border : 'none')};
+  @media screen and (max-width: ${size.tablet}) {
+    margin: ${({ margin }) => (margin ? margin : '10px 0')};
+  }
+  @media screen and (max-width: ${size.mobileL}) {
+    margin: ${({ margin }) => (margin ? margin : '5px 0')};
+  }
 `
 
 export const TransparentBtn = styled(MainButton)`

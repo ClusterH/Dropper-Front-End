@@ -7,13 +7,13 @@ import { ComponentWrapper } from '../../styles/globalStyles'
 const CollectionVideoWrapper = styled(ComponentWrapper)`
   display: flex;
   justify-content: center;
-  margin-top: -20%;
+  margin: 5% 0;
 `
 export const CollectionVideo: React.FC = () => {
   return (
     <CollectionVideoWrapper>
       <VideoContainer
-        width={isMobile ? '50%' : '80%'}
+        width={isMobile ? '100%' : '80%'}
         url={'https://dropper.s3.ca-central-1.amazonaws.com/Clix+NFT+Announce+Video+(2).mp4'}
         posterUrl={'https://dropper.s3.ca-central-1.amazonaws.com/announcement-poster.jpg'}
       />

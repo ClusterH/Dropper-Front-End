@@ -1,18 +1,15 @@
 import React from 'react'
-import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
-import CreatorCard from './CreatorCard'
 import {
-  ContainerColumn,
   PageWrapper,
+  ResponsiveContainer,
   SpacerLarge,
+  SpacerXSmall,
   TextCustom,
   TextTitle,
-  device,
-  SpacerXSmall,
-  ResponsiveContainer,
 } from '../../styles/globalStyles'
 import { TCreatorElement } from '../../types'
+import CreatorCard from './CreatorCard'
 
 const Creators: React.FC = () => {
   const creatorList: TCreatorElement[] = [

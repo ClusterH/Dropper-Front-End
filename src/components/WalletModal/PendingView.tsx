@@ -1,11 +1,10 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import React from 'react'
 import styled from 'styled-components/macro'
-import Option from './Option'
-import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import { injected } from '../../connectors'
-// import { darken } from 'polished'
+import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import Loader from '../Loader'
+import Option from './Option'
 
 const PendingSection = styled.div`
   display: flex;
@@ -85,7 +84,7 @@ export default function PendingView({
         <LoadingWrapper>
           {error ? (
             <ErrorGroup>
-              <div>Error connecting.</div>
+              <div>Wrong network.</div>
               <ErrorButton
                 onClick={() => {
                   setPendingError(false)

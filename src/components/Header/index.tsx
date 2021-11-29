@@ -1,6 +1,8 @@
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import styled from 'styled-components'
 import { ContainerRow } from '../../styles/globalStyles'
+import { ProfileIcon } from '../Icons'
 import Hamburger from '../Icons/hamburgerIcon'
 import Logo from '../Icons/logo'
 import Menu from '../Menu'
@@ -8,22 +10,38 @@ import WalletConnector from '../WalletConnection'
 
 const HeaderContainer = styled(ContainerRow)`
   padding: 0.5rem 1rem;
-  box-shadow: 0px 3px 10px var(--secondary-opacity);
-  border-bottom: solid;
-  border-color: var(--secondary);
-  border-width: 1px;
+  height: 120px;
+  background-color: var(--dark-navy);
+  box-shadow: 0px 1px 10px var(--navy-blue-opacity);
+  z-index: 999;
+  position: fixed;
+`
+const SpacerHeader = styled.div`
+  height: 120px;
+  width: 100%;
+  backgound: none;
 `
 
 const Header: React.FC = () => {
   return (
-    <HeaderContainer>
-      <ContainerRow rowWidth={'fit-content'}>
-        <Logo />
-        <Menu />
-      </ContainerRow>
-      <WalletConnector />
-      <Hamburger />
-    </HeaderContainer>
+    <>
+      <HeaderContainer>
+        <ContainerRow width={'fit-content'}>
+          <Logo />
+          <Menu />
+        </ContainerRow>
+        {/* <ContainerRow width={'30%'} minHeight={'60px'} padding={'0'}>
+          <SearchBox width={'70%'} height={'100%'} />
+          <WalletConnector />
+        </ContainerRow> */}
+        <ContainerRow width={'fit-content'} padding={'0'} margin={'0'} alignItems={'center'}>
+          <WalletConnector />
+          {!isMobile && <ProfileIcon />}
+          <Hamburger />
+        </ContainerRow>
+      </HeaderContainer>
+      <SpacerHeader />
+    </>
   )
 }
 

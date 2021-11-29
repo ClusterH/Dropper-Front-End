@@ -1,17 +1,20 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+import { useLocation } from 'react-router-dom'
+import ARROW_RIGHT_ROUNDED from '../../assets/images/arrow-right-rounded.svg'
+import { MainButton } from '../../components/Buttons/MainButton'
 import { VideoContainer } from '../../components/VideoContainer'
 import {
   ContainerColumn,
   ContainerRow,
+  ImageContainer,
   PageWrapper,
   ResponsiveContainer,
   TextCustom,
   TextMain,
 } from '../../styles/globalStyles'
-import { b64DecodeUnicode } from '../../utils/convertString'
 import { TMomentItem } from '../../types'
+import { b64DecodeUnicode } from '../../utils/convertString'
 
 const ItemText: React.FC<{ label: string; text: string }> = ({ label, text }) => {
   return (
@@ -36,6 +39,19 @@ const ItemDetail: React.FC<{ moment: TMomentItem }> = ({ moment }) => {
       <ItemText label={'Class'} text={moment.rarity} />
       <ItemText label={'Moment Id'} text={moment.id} />
       <ItemText label={'Total Minted'} text={moment.totalMintedMoments} />
+      <ContainerRow justifyContent={'center'}>
+        <MainButton
+          width={'fit-content'}
+          borderRadius={'24px'}
+          padding={'24px 24px'}
+          backgroundColor={'var(--secondary)'}
+          margin={'20px 0'}
+          onClick={() => (window.location.href = '/account')}
+        >
+          Back to Account &nbsp;
+          <ImageContainer src={ARROW_RIGHT_ROUNDED} width={'36px'} />
+        </MainButton>
+      </ContainerRow>
     </ContainerColumn>
   )
 }

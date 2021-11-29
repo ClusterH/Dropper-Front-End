@@ -1,27 +1,27 @@
-import { createReducer, nanoid } from '@reduxjs/toolkit'
-import { updateBlockNumber, ApplicationModal, setOpenModal } from './actions'
+import { createSlice } from '@reduxjs/toolkit'
+
+export enum ApplicationModal {
+  WALLET,
+  WYRE_RESERVATION_FORM,
+}
 
 export interface ApplicationState {
-  readonly blockNumber: { readonly [chainId: number]: number }
   readonly openModal: ApplicationModal | null
 }
 
 const initialState: ApplicationState = {
-  blockNumber: {},
-  openModal: ApplicationModal.WALLET,
+  openModal: null,
 }
 
-export default createReducer(initialState, (builder) =>
-  builder
-    .addCase(updateBlockNumber, (state, action) => {
-      const { chainId, blockNumber } = action.payload
-      if (typeof state.blockNumber[chainId] !== 'number') {
-        state.blockNumber[chainId] = blockNumber
-      } else {
-        state.blockNumber[chainId] = Math.max(blockNumber, state.blockNumber[chainId])
-      }
-    })
-    .addCase(setOpenModal, (state, action) => {
+const applicationSlice = createSlice({
+  name: 'application',
+  initialState,
+  reducers: {
+    setOpenModal(state, action) {
       state.openModal = action.payload
-    })
-)
+    },
+  },
+})
+
+export const { setOpenModal } = applicationSlice.actions
+export default applicationSlice.reducer

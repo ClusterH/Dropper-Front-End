@@ -109,9 +109,9 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
-    "name": "collections",
-    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "collectionId",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -123,8 +123,8 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "uint256", "name": "_collectionId", "type": "uint256" }],
-    "name": "getCollection",
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "getCollectionAddress",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
@@ -207,7 +207,8 @@
     "outputs": [
       { "internalType": "string", "name": "momentURI", "type": "string" },
       { "internalType": "uint256", "name": "totalMinted", "type": "uint256" },
-      { "internalType": "uint256", "name": "mintRange", "type": "uint256" }
+      { "internalType": "uint256", "name": "mintRange", "type": "uint256" },
+      { "internalType": "uint256", "name": "collectionId", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -225,7 +226,8 @@
     "outputs": [
       { "internalType": "string", "name": "packURI", "type": "string" },
       { "internalType": "uint256", "name": "packCost", "type": "uint256" },
-      { "internalType": "uint256", "name": "momentQuantity", "type": "uint256" }
+      { "internalType": "uint256", "name": "momentQuantity", "type": "uint256" },
+      { "internalType": "uint256", "name": "collectionId", "type": "uint256" }
     ],
     "stateMutability": "view",
     "type": "function"
@@ -286,7 +288,8 @@
       { "internalType": "string", "name": "_momentURI", "type": "string" },
       { "internalType": "uint256", "name": "_totalMinted", "type": "uint256" },
       { "internalType": "uint256", "name": "_mintRange", "type": "uint256" },
-      { "internalType": "uint256", "name": "_momentId", "type": "uint256" }
+      { "internalType": "uint256", "name": "_momentId", "type": "uint256" },
+      { "internalType": "uint256", "name": "_collectionId", "type": "uint256" }
     ],
     "name": "setMoment",
     "outputs": [],
@@ -300,7 +303,8 @@
       { "internalType": "uint256[]", "name": "_rarityOdds", "type": "uint256[]" },
       { "internalType": "uint256", "name": "_momentQuantity", "type": "uint256" },
       { "internalType": "uint256[]", "name": "_momentGuarantees", "type": "uint256[]" },
-      { "internalType": "uint256", "name": "_packId", "type": "uint256" }
+      { "internalType": "uint256", "name": "_packId", "type": "uint256" },
+      { "internalType": "uint256", "name": "_collectionId", "type": "uint256" }
     ],
     "name": "setPack",
     "outputs": [],
@@ -322,7 +326,17 @@
     "type": "function"
   },
   {
-    "inputs": [{ "internalType": "string", "name": "newURI", "type": "string" }],
+    "inputs": [
+      { "internalType": "uint256", "name": "_momentId", "type": "uint256" },
+      { "internalType": "string", "name": "_newURI", "type": "string" }
+    ],
+    "name": "updateMomentURI",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "_newURI", "type": "string" }],
     "name": "updateURI",
     "outputs": [],
     "stateMutability": "nonpayable",

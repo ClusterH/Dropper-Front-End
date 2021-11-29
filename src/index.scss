@@ -1,3 +1,25 @@
+@font-face {
+  font-family: 'Rubik';
+  src: local('Rubik'), url(styles/fonts/rubik-font.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'RubikBold';
+  src: local('RubikBold'), url(styles/fonts/Rubik-Bold.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Lato';
+  src: local('Rubik'), url(styles/fonts/Lato-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'LatoThin';
+  src: local('LatoThin'), url(styles/fonts/Lato-Thin.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'LatoBold';
+  src: local('LatoBold'), url(styles/fonts/Lato-Bold.ttf) format('truetype');
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -29,13 +51,13 @@ body {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: var(--primary);
+  background: transparent; //var(--primary);
   border-radius: 4px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--secondary-opacity);
+  background: transparent; // var(--secondary-opacity);
   height: 48px;
   width: 48px;
   border-radius: 4px;
@@ -43,5 +65,10 @@ body {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
+  background: transparent; // var(--secondary);
+}
+
+::selection {
+  color: var(--primary-text);
   background: var(--secondary);
 }
