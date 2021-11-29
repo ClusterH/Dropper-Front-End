@@ -46,14 +46,15 @@ export const useIsApproved = async () => {
   }
 
   try {
-    const allowanceAmount = await allowance(usdcTokenContract, collectionContract, account)
-    if (allowanceAmount.lte(0)) {
-      dispatch(setIsUSDCApproved(false))
-    } else dispatch(setIsUSDCApproved(true))
+    // const allowanceAmount = await allowance(usdcTokenContract, collectionContract, account)
+    // if (allowanceAmount.lte(0)) {
+    dispatch(setIsUSDCApproved(true))
+    //   } else dispatch(setIsUSDCApproved(true))
   } catch (e) {
     console.error(e)
   }
 }
+
 export const useApproveUSDC = () => {
   const { account, chainId } = useActiveWeb3React()
 
@@ -175,16 +176,16 @@ export const useBuyPackMexa = () => {
         return false
       }
 
-      try {
-        const usdcBalance: BigNumber = await getUSDCBalance(usdcTokenContract!, account!)
-        if (getBalanceNumber(usdcBalance, 6) < currentTotalPrice) {
-          toast.error('Insufficient USDC Balance to your wallet')
-          return false
-        }
-      } catch (e: any) {
-        toast.error(e.message)
-        return false
-      }
+      // try {
+      //   const usdcBalance: BigNumber = await getUSDCBalance(usdcTokenContract!, account!)
+      //   if (getBalanceNumber(usdcBalance, 6) < currentTotalPrice) {
+      //     toast.error('Insufficient USDC Balance to your wallet')
+      //     return false
+      //   }
+      // } catch (e: any) {
+      //   toast.error(e.message)
+      //   return false
+      // }
 
       const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
       const walletSigner = walletProvider.getSigner()

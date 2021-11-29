@@ -4,7 +4,7 @@ import { AppState } from '../state'
 import { setIsLoading, setPackList } from '../state/dropper/reducer'
 import { useAppDispatch, useAppSelector } from '../state/hooks'
 import { getMultiCall } from '../utils/callHelpers'
-import { fetchMomentList } from '../utils/momentHelpers'
+import { getAllMomentList } from '../utils/momentHelpers'
 import { isSupportedNetwork } from '../utils/validateChainID'
 import { useGetDropperMultiCallContract } from './useContract'
 import { useActiveWeb3React } from './useWeb3'
@@ -57,23 +57,23 @@ export const useGetPackList = () => {
 export const useGetMomentList = () => {
   const { account, chainId, library } = useActiveWeb3React()
   const dropperMultiCallContract = useGetDropperMultiCallContract()
-  const momentList = useMomentList()
-  const latest = useLatestBlockNumber()
+  // const momentList = useMomentList()
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const getMomentList = async () => {
       if (!account || dropperMultiCallContract === null || isSupportedNetwork(chainId) === false) return []
-      if (!momentList || momentList.length === 0) dispatch(setIsLoading(true))
-      fetchMomentList(
-        account,
-        dropperMultiCallContract,
-        chainId!,
-        dispatch,
-        momentList && momentList.length > 0 ? latest : undefined
-      )
+      dispatch(setIsLoading(true))
+      getAllMomentList(account, dropperMultiCallContract, chainId!, dispatch)
+      // fetchMomentList(
+      //   account,
+      //   dropperMultiCallContract,
+      //   chainId!,
+      //   dispatch,
+      //   momentList && momentList.length > 0 ? latest : undefined
+      // )
     }
     getMomentList()
-  }, [account, chainId, dispatch, dropperMultiCallContract, library])
+  }, [account, chainId, dispatch])
 }

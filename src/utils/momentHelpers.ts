@@ -1,15 +1,17 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { utils, ethers } from 'ethers'
+import axios from 'axios'
 import { Contract } from 'ethcall'
-import { SupportedChainId } from '../constants/chains'
-import { AWS_BASE_URI, IPFS_BASE_URI } from '../constants/momentsURIs'
-import { getDropperAddress } from './addressHelpers'
-import { fetchEventLogs, getLatestBlockNumber, getMultiCall } from './callHelpers'
-import { getSimpleRPCProvider } from './simpleRPCProvider'
+import { ethers, utils } from 'ethers'
 import DROPPER_ABI from '../abis/dropper.json'
 import { TRANSFER_BATCH_FILTER } from '../constants/blockNumber'
-import { setIsLoading, setLatestBlockNumber, setMomentList } from '../state/dropper/reducer'
+import { SupportedChainId } from '../constants/chains'
+import { AWS_BASE_URI, AXIOS_BASE_URL, IPFS_BASE_URI } from '../constants/momentsURIs'
 import { AppDispatch } from '../state'
+import { setIsLoading, setLatestBlockNumber, setMomentList } from '../state/dropper/reducer'
+import { getDropperAddress } from './addressHelpers'
+import { setupInterceptorsTo } from './api/axiosInterceptors'
+import { fetchEventLogs, getLatestBlockNumber, getMultiCall } from './callHelpers'
+import { getSimpleRPCProvider } from './simpleRPCProvider'
 
 export const getMomentId = (momentID: BigNumber) => {
   const hexString = utils.hexlify(momentID)
@@ -103,4 +105,43 @@ export const fetchMomentList = async (
     }
   }
   dispatch(setIsLoading(false))
+}
+
+export const getAllMomentList = async (
+  account: string,
+  contract: Contract,
+  chainId: SupportedChainId,
+  dispatch: AppDispatch,
+  txHash?: string
+) => {
+  const specificAxios = setupInterceptorsTo(axios.create())
+  specificAxios
+    .get(`${AXIOS_BASE_URL}`, {
+      params: {
+        userAddress: account,
+        chainId,
+        transactionHash: txHash,
+      },
+    })
+    .then(async (res: any) => {
+      console.log(res)
+      if (res.data && res.data.length > 0) {
+        const momentIDs: Array<BigNumber> = []
+
+        res.data.map((item: any) => momentIDs.push(...item.momentIds.map((id: string) => ethers.BigNumber.from(id))))
+
+        const _calls = momentIDs.map((id) => {
+          const { momentId } = getMomentId(id)
+          return contract.getMoment(momentId)
+        })
+        const response = await getMultiCall(_calls, chainId!)
+
+        const moments = await Promise.all(momentGenerator(response, momentIDs))
+        dispatch(setMomentList({ moments, txHash }))
+        dispatch(setIsLoading(false))
+      }
+    })
+    .catch((e) => {
+      console.log(e)
+    })
 }

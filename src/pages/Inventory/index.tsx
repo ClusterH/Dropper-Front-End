@@ -19,7 +19,7 @@ import { PacksList } from './Packs/PacksList'
 import { Rankings } from './Rankings'
 import { TSelectedTab } from '../../types'
 import { useActiveWeb3React } from '../../hooks/useWeb3'
-import { useGetPackList } from '../../hooks/useDropper'
+import { useGetMomentList, useGetPackList } from '../../hooks/useDropper'
 import { shortenAddress } from '../../utils'
 import { isMobile } from 'react-device-detect'
 
@@ -44,6 +44,7 @@ const Inventory: React.FC = () => {
   const { account } = useActiveWeb3React()
   const [selectedTab, setSelectedTab] = useState<TSelectedTab>('packs')
   useGetPackList()
+  useGetMomentList()
 
   const handleTabItem = (item: TSelectedTab) => {
     setSelectedTab(item)

@@ -12,7 +12,6 @@ export const MomentsList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [idx, setIdx] = useState<number>()
   const [isMomentModalOpen, setIsMomentModalOpen] = useState<boolean>(false)
-  useGetMomentList()
   const momentList = useMomentList()
   const isLoading = useLoading()
 

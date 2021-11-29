@@ -20,8 +20,9 @@ const dropperSlice = createSlice({
       state.userPackList = action.payload
     },
     setMomentList(state, action) {
-      if (action.payload === null) state.userMomentList = []
-      else state.userMomentList = [...action.payload, ...state.userMomentList!]
+      if (action.payload === null || !action.payload.moments) state.userMomentList = []
+      else if (action.payload.txHash) state.userMomentList = [...action.payload, ...state.userMomentList!]
+      else state.userMomentList = action.payload.moments
     },
     setIsUSDCApproved(state, action) {
       state.isUSDCApproved = action.payload
