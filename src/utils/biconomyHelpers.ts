@@ -1,4 +1,5 @@
 import { JsonRpcSigner } from '@ethersproject/providers'
+import { SecretType, VenlyConnect } from '@venly/connect'
 import abi from 'ethereumjs-abi'
 import { toBuffer } from 'ethereumjs-util'
 import { BigNumber, ethers } from 'ethers'
@@ -162,13 +163,84 @@ export const approveUSDCMexa = async (
     message: message,
   })
   const signature = await walletProvider.send('eth_signTypedData_v3', [userAddress, dataToSign])
-  let { r, s, v } = getSignatureParameters(signature)
+  const { r, s, v } = getSignatureParameters(signature)
 
   try {
-    let tx = await contract.executeMetaTransaction(userAddress, functionSignature, r, s, v, { gasLimit: 1000000 })
+    const tx = await contract.executeMetaTransaction(userAddress, functionSignature, r, s, v, { gasLimit: 1000000 })
     const receipt = await tx.wait()
     return receipt.status
   } catch (error) {
     console.log(error)
   }
+}
+
+export const buyPackMexaVenly = async (
+  venlyAccount: { id: string; address: string },
+  venlyConnect: VenlyConnect,
+  chainId: SupportedChainId,
+  packId: number,
+  quantity: number,
+  contract: any
+) => {
+  // const domainType = [
+  //   { name: 'name', type: 'string' },
+  //   { name: 'version', type: 'string' },
+  //   { name: 'verifyingContract', type: 'address' },
+  //   { name: 'salt', type: 'bytes32' },
+  // ]
+
+  // const metaTransactionType = [
+  //   { name: 'nonce', type: 'uint256' },
+  //   { name: 'from', type: 'address' },
+  //   { name: 'functionSignature', type: 'bytes' },
+  // ]
+
+  // const domainData = {
+  //   name: 'Collection',
+  //   version: '1',
+  //   verifyingContract: getCollectionAddress(chainId),
+  //   salt: ethers.utils.hexZeroPad(ethers.BigNumber.from(chainId).toHexString(), 32),
+  // }
+
+  // const contractInterface = new ethers.utils.Interface(COLLECTION_ABI)
+  // const nonce = await contract.getNonce(venlyAccount.address)
+  // const functionSignature = contractInterface.encodeFunctionData('buyPacks', [packId, quantity])
+
+  // const message = {
+  //   nonce: nonce.toNumber(),
+  //   from: venlyAccount.address,
+  //   functionSignature,
+  // }
+
+  // const dataToSign = JSON.stringify({
+  //   types: {
+  //     EIP712Domain: domainType,
+  //     MetaTransaction: metaTransactionType,
+  //   },
+  //   domain: domainData,
+  //   primaryType: 'MetaTransaction',
+  //   message: message,
+  // })
+  // const signature = await walletProvider.send('eth_signTypedData_v3', [userAddress, dataToSign])
+  // const { r, s, v } = getSignatureParameters(signature)
+
+  const signer = venlyConnect.createSigner()
+  signer
+    .executeContract({
+      secretType: SecretType.MATIC,
+      walletId: venlyAccount.id,
+      to: getCollectionAddress(chainId),
+      value: 0,
+      functionName: 'buyPacks',
+      inputs: [
+        { type: 'uint256', value: packId },
+        { type: 'uint256', value: quantity },
+      ],
+    })
+    .then((signerResult) => {
+      console.log(signerResult)
+    })
+    .catch((e) => {
+      console.log(e)
+    })
 }

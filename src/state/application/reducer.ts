@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export enum ApplicationModal {
   WALLET,
   WYRE_RESERVATION_FORM,
+  MOONPAY,
 }
 
 export interface ApplicationState {

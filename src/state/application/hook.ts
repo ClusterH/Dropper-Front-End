@@ -22,3 +22,7 @@ export function useWalletModalToggle(): () => void {
 export function useWyreReservationModalToggle(): () => void {
   return useToggleModal(ApplicationModal.WYRE_RESERVATION_FORM)
 }
+
+export function useMoonPayModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.MOONPAY)
+}
