@@ -1,3 +1,4 @@
+import { VenlyConnect } from '@venly/connect'
 import BigNumber from 'bignumber.js'
 import { ethers } from 'ethers'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -8,7 +9,7 @@ import { setUserCartList } from '../state/cart/reducer'
 import { setIsUSDCApproved } from '../state/dropper/reducer'
 import { useAppDispatch, useAppSelector } from '../state/hooks'
 import { TPackItem } from '../types'
-import { approveUSDCMexa, buyPackMeta, openPackMeta } from '../utils/biconomyHelpers'
+import { approveUSDCMexa, buyPackMeta, buyPackMexaVenly, openPackMeta } from '../utils/biconomyHelpers'
 import { getBalanceNumber } from '../utils/bigNumber'
 import {
   allowance,
@@ -28,6 +29,7 @@ import {
   useGetMultiCallContract,
   useGetUSDCTokenContract,
 } from './useContract'
+import { useVenlyAccount, useVenlyConnection } from './useVenly'
 import { useActiveWeb3React } from './useWeb3'
 
 export const useApprove = () => {
@@ -168,6 +170,16 @@ export const useBuyPackMexa = () => {
   const { account, chainId } = useActiveWeb3React()
   const usdcTokenContract = useGetUSDCTokenContract()
   const { contract } = useInitBiconomy()
+  const venlyAccount = useVenlyAccount()
+
+  // const venlyOptions = useMemo(() => {
+  //   return {
+  //     environment: chainId === 137 ? 'staging' : 'staging',
+  //   }
+  // }, [chainId])
+
+  // const venlyConnect = useMemo(() => new VenlyConnect('Testaccount', venlyOptions), [venlyOptions])
+  // const venlyConnect = useVenlyConnection()
 
   const handleBuyPack = useCallback(
     async (cartList: TPackItem[], currentTotalPrice: number) => {
@@ -194,6 +206,7 @@ export const useBuyPackMexa = () => {
         const _calls = cartList.map(async (_p) => {
           if (_p.cartQuantity > 0)
             return await buyPackMeta(account!, walletSigner, chainId!, _p.id, _p.cartQuantity, contract)
+          // return await buyPackMexaVenly(venlyAccount, venlyConnect, chainId!, _p.id, _p.cartQuantity, contract)
         })
 
         const response = await Promise.all(_calls).then((value) => {
@@ -207,6 +220,7 @@ export const useBuyPackMexa = () => {
         }
       } catch (e: any) {
         toast.error(e.message)
+        console.log(e)
         return false
       }
     },

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ContainerRow, device } from '../../styles/globalStyles'
+import { MoonPayContainer, MoonPayModal } from '../MoonPay'
 import { WyreDebitCard } from '../Wyre/DebitCard'
 import WyreReservationModal from '../WyreModal'
 import { MenuItem } from './MenuItem'
@@ -27,8 +28,10 @@ const Menu: React.FC = () => {
       {/* <MenuItem to="/account" fontSize={'1.3rem'}>
         My Account
       </MenuItem> */}
-      <WyreDebitCard />
-      <WyreReservationModal />
+      {/* <WyreDebitCard />
+      <WyreReservationModal /> */}
+      <MoonPayContainer />
+      <MoonPayModal />
     </MenuContainer>
   )
 }

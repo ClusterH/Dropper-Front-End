@@ -4,6 +4,7 @@ import { load, save } from 'redux-localstorage-simple'
 import application from './application/reducer'
 import cart from './cart/reducer'
 import dropper from './dropper/reducer'
+import venly from './venly/reducer'
 import { updateVersion } from './global/actions'
 
 const PERSISTED_KEYS: string[] = ['dropper', 'cart']
@@ -14,6 +15,7 @@ const store = configureStore({
     application,
     dropper,
     cart,
+    venly,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: true }).concat(save({ states: PERSISTED_KEYS, debounce: 1000 })),

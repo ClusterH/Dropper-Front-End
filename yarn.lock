@@ -3282,6 +3282,18 @@
     keycloak-js "11.0.2"
     querystring "^0.2.0"
 
+"@venly/connect@^1.32.0":
+  version "1.32.0"
+  resolved "https://registry.yarnpkg.com/@venly/connect/-/connect-1.32.0.tgz#ff0aebfd58c56ba95ff1943ac918391eb0e69dc2"
+  integrity sha512-w+s++h0Nt4kJR2YyAgVaaFNus/L6vOi7jZmgoFaV0yH1mHKAJRuWNepjIHhldRVodkl77VAQZq+tC86k7v3Nyw==
+  dependencies:
+    "@types/node" "^12.7.1"
+    axios "^0.21.1"
+    core-js "^3.2.1"
+    es6-promise "^4.2.8"
+    keycloak-js "11.0.2"
+    querystring "^0.2.0"
+
 "@venly/web3-provider@^0.24.0":
   version "0.24.0"
   resolved "https://registry.yarnpkg.com/@venly/web3-provider/-/web3-provider-0.24.0.tgz#5f33aa1abca57a8cced933754a4e4618467fb918"
