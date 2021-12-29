@@ -111,8 +111,7 @@ export const Rankings: React.FC = () => {
     const rankChecked = tempList[idx + firstPageIndex].checked
     const lastPageIndex = firstPageIndex + PageSize
     const checkedList = tempList.filter(
-      (item, index) =>
-        index >= firstPageIndex && index < lastPageIndex && item.checked && index !== idx + firstPageIndex
+      (item, index) => index >= firstPageIndex && index < lastPageIndex && item.checked && index !== idx + firstPageIndex
     )
     if (checkedList.length === currentRankList.length - 1) {
       setSelectAllChecked(!rankChecked)
@@ -148,13 +147,7 @@ export const Rankings: React.FC = () => {
           </TextCustom>
         </BoxCardWithoutBorder>
       </ContainerRow>
-      <ContainerColumn
-        justifyContent={'flex-start'}
-        width={'100%'}
-        padding={'0'}
-        margin={'0'}
-        style={{ minHeight: '360px' }}
-      >
+      <ContainerColumn justifyContent={'flex-start'} width={'100%'} padding={'0'} margin={'0'} style={{ minHeight: '360px' }}>
         {currentRankList.map((item, index) => {
           return (
             <RankItem

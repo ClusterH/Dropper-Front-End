@@ -55,13 +55,7 @@ export const DroppExplainItem: React.FC<{ url: string; description: string; subD
     >
       <ImageContainer src={url} width={'75px'} borderRadius={'0'} objectFit={'contain'} margin={'0 20px 0 20px'} />
       <ContainerColumn width={isMobile ? '100%' : '80%'} alignItems={'flex-start'} gap={'20px'}>
-        <TextCustom
-          fontSize={isMobile ? '1rem' : '1.25rem'}
-          fontWeight={600}
-          fontFamily={'RubikBold'}
-          lineHeight={1.1}
-          textAlign={'left'}
-        >
+        <TextCustom fontSize={isMobile ? '1rem' : '1.25rem'} fontWeight={600} fontFamily={'RubikBold'} lineHeight={1.1} textAlign={'left'}>
           {description}
         </TextCustom>
         <TextCustom fontSize={isMobile ? '0.6rem' : '1rem'} fontWeight={300} lineHeight={1.3} textAlign={'left'}>
@@ -99,12 +93,7 @@ export const DroppExplain: React.FC = () => {
         <ResponsiveContainer>
           {DroppExplainList.map((item) => {
             return (
-              <DroppExplainItem
-                key={item.id}
-                url={DROP_EXPLAIN_ITEM}
-                description={item.description}
-                subDescription={item.subDescription}
-              />
+              <DroppExplainItem key={item.id} url={DROP_EXPLAIN_ITEM} description={item.description} subDescription={item.subDescription} />
             )
           })}
         </ResponsiveContainer>

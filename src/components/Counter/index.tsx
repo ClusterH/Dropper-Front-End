@@ -2,7 +2,7 @@ import React, { ChangeEvent } from 'react'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 import styled from 'styled-components'
 import { ContainerRow, InputWrapper } from '../../styles/globalStyles'
-import { MainButton } from '../Buttons/MainButton'
+import MainButton from '../Buttons/MainButton'
 
 const CounterContainer = styled(ContainerRow)`
   width: fit-content;

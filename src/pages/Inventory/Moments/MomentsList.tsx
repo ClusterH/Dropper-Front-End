@@ -29,13 +29,7 @@ export const MomentsList: React.FC = () => {
 
   return (
     <ContainerColumn width={'100%'} padding={'0'} margin={'0'}>
-      <ContainerRow
-        flexWrap={'wrap'}
-        justifyContent={'space-between'}
-        alignItems={'flex-start'}
-        padding={'10px'}
-        gap={'20px'}
-      >
+      <ContainerRow flexWrap={'wrap'} justifyContent={'space-between'} alignItems={'flex-start'} padding={'10px'} gap={'20px'}>
         {momentList && momentList.length > 0 ? (
           currentMomentList.map((item, index) => {
             return <MomentItem key={`${item.momentId}_${index}`} moment={item} onClick={() => viewDetail(index)} />

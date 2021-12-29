@@ -42,106 +42,91 @@ export const commonList: TCollectionItem[] = [
   {
     id: 1,
     title: 'Arena 200 Clix',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Arena+200+Clix.png',
   },
   {
     id: 2,
     title: 'Banana Clix',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Banana+Clix.png',
   },
   {
     id: 3,
     title: 'Chicken Clix',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 4,
     title: 'Clix Dinky',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 5,
     title: 'Clix Flex',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 6,
     title: 'Clix Thanks For The Clip',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 7,
     title: 'Clix The Tank',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 8,
     title: 'Dancing Clix',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 9,
     title: 'EJ DASH Clix',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 10,
     title: 'Fastest Clix',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 11,
     title: 'Grin Clix',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 12,
     title: 'Hype Me Up Clix',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 13,
     title: 'Longest Build Battle',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 14,
     title: 'Sit Down',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 15,
     title: 'The Clix Axe',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
 ]
@@ -150,64 +135,55 @@ export const uncommonList: TCollectionItem[] = [
   {
     id: 1,
     title: 'Clix 300IQ Grenade play',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Arena+200+Clix.png',
   },
   {
     id: 2,
     title: 'Clix Air Snipe',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Banana+Clix.png',
   },
   {
     id: 3,
     title: 'Clix Endgame',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 4,
     title: 'Clix Jumpshot No Scope',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 5,
     title: 'Clix Mariachi Surprise',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 6,
     title: 'Clix Snipes Cloakzy',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 7,
     title: 'Clix Voicecrack',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 8,
     title: 'Clix VS Ron',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 9,
     title: 'Sleepy Zex',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
 ]
@@ -216,36 +192,31 @@ export const rareList: TCollectionItem[] = [
   {
     id: 1,
     title: 'Clix 500K Highlights',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Arena+200+Clix.png',
   },
   {
     id: 2,
     title: `Clix KO's Tfue`,
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Banana+Clix.png',
   },
   {
     id: 3,
     title: 'Clix VS Benjy',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 4,
     title: 'Clix VS Bugha',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 5,
     title: 'Clix VS Unknown',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
 ]
@@ -254,36 +225,31 @@ export const epicList: TCollectionItem[] = [
   {
     id: 1,
     title: 'Clix 1 Million Subscriber Montage',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Arena+200+Clix.png',
   },
   {
     id: 2,
     title: 'Clix First Twitch Clip',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Banana+Clix.png',
   },
   {
     id: 3,
     title: 'Clix Joins NRG',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 4,
     title: 'Clix Wins BFC',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 5,
     title: 'Clix Wins Twitch Rivals',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
 ]
@@ -292,36 +258,31 @@ export const mythicList: TCollectionItem[] = [
   {
     id: 1,
     title: 'Clix Box Fights',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Arena+200+Clix.png',
   },
   {
     id: 2,
     title: 'Clix Homer Grind',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://clixnfts.s3.us-east-2.amazonaws.com/Common/Banana+Clix.png',
   },
   {
     id: 3,
     title: 'Clix Never Change',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 4,
     title: 'Clix Porsche',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
   {
     id: 5,
     title: 'Clix World Cup',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
     uri: 'https://dropper.s3.ca-central-1.amazonaws.com/clixpack-3.png',
   },
 ]

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ISlideShow, useSlideShow } from '../../hooks/useSlideShow'
-import { MainButton } from '../Buttons/MainButton'
+import MainButton from '../Buttons/MainButton'
 import { size } from '../../styles/globalStyles'
 
 const CarouselContainer = styled.div`
@@ -92,18 +92,10 @@ const TopButtonCarousel: React.FC<ISlideShow> = (props) => {
   return (
     <CarouselContainer>
       <ArrowButtonContainer>
-        <ArrowButton
-          backColor={direction === 'left' ? 'var(--secondary)' : 'var(--light-navy-blue)'}
-          disabled={!left}
-          onClick={onPrevious}
-        >
+        <ArrowButton backColor={direction === 'left' ? 'var(--secondary)' : 'var(--light-navy-blue)'} disabled={!left} onClick={onPrevious}>
           <LeftArrow />
         </ArrowButton>
-        <ArrowButton
-          backColor={direction === 'right' ? 'var(--secondary)' : 'var(--light-navy-blue)'}
-          disabled={!right}
-          onClick={onNext}
-        >
+        <ArrowButton backColor={direction === 'right' ? 'var(--secondary)' : 'var(--light-navy-blue)'} disabled={!right} onClick={onNext}>
           <RightArrow />
         </ArrowButton>
       </ArrowButtonContainer>

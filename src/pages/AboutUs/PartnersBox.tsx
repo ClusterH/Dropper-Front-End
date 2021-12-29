@@ -20,13 +20,7 @@ const ContainerWithoutRightBorder = styled(ContainerRow)<{ border?: string }>`
 
 export const PartnersBox: React.FC = () => {
   return (
-    <ContainerRow
-      width={'100%'}
-      backgroundColor={'var(--dark-navy)'}
-      padding={'0'}
-      margin={'0'}
-      justifyContent={'center'}
-    >
+    <ContainerRow width={'100%'} backgroundColor={'var(--dark-navy)'} padding={'0'} margin={'0'} justifyContent={'center'}>
       <ComponentWrapper margin={isMobile ? '10px 0 0' : '50px 0 0'} padding={'24px'}>
         <TextCustom
           fontSize={isMobile ? '2rem' : '3.5rem'}

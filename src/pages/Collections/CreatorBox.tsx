@@ -77,11 +77,7 @@ export const CreatorBox: React.FC = () => {
             style={{ position: 'relative' }}
           >
             <QuotationMarkBox width={isMobile ? '25px' : '40px'}>
-              <QuotationMarkIcon
-                src={QUOTATION_MARK}
-                width={isMobile ? '25px' : '40px'}
-                height={isMobile ? '25px' : '40px'}
-              />
+              <QuotationMarkIcon src={QUOTATION_MARK} width={isMobile ? '25px' : '40px'} height={isMobile ? '25px' : '40px'} />
               <TextCustom
                 color={'var(--secondary)'}
                 fontSize={isMobile ? '0.8rem' : '1rem'}

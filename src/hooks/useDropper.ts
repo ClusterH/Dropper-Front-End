@@ -1,13 +1,16 @@
+import { useEthers } from '@usedapp/core'
 import { useEffect } from 'react'
+import { toast } from 'react-toastify'
+import { VENLY_CHAIN_ID } from '../constants/chains'
 import { packList } from '../constants/dummy'
 import { AppState } from '../state'
 import { setIsLoading, setPackList } from '../state/dropper/reducer'
 import { useAppDispatch, useAppSelector } from '../state/hooks'
-import { getMultiCall } from '../utils/callHelpers'
+import { getPackUserBalance } from '../utils/callHelpers'
 import { getAllMomentList } from '../utils/momentHelpers'
-import { isSupportedNetwork } from '../utils/validateChainID'
-import { useGetDropperMultiCallContract } from './useContract'
-import { useActiveWeb3React } from './useWeb3'
+import { useGetContracts } from './useContract'
+import { useVenlyAccount } from './useVenly'
+import { useGetWalletConnection } from './useWallet'
 
 export const useLatestBlockNumber = () => {
   return useAppSelector((state: AppState) => state.dropper.latestBlockNumber)
@@ -26,19 +29,28 @@ export const useMomentList = () => {
 }
 
 export const useGetPackList = () => {
-  const { account, chainId } = useActiveWeb3React()
-  const dropperMultiCallContract = useGetDropperMultiCallContract()
+  const isWalletConnected = useGetWalletConnection()
+  const venlyAccount = useVenlyAccount()
+  const { account, chainId } = useEthers()
+  const { dropperContract } = useGetContracts()
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const fetchPackBalance = async () => {
-      if (!account || dropperMultiCallContract === null || isSupportedNetwork(chainId) === false) return []
+      if (isWalletConnected === undefined || !dropperContract) {
+        toast.error('Please check your wallet Connection First!', { toastId: 'Not Connected-5' })
+        dispatch(setPackList([]))
+        return []
+      }
       //handle multi calls at once as manually if in case transactions are not so much
       const _calls = packList.map((_p) => {
-        return dropperMultiCallContract.balanceOf(account, _p.id)
+        return getPackUserBalance(dropperContract, isWalletConnected === 'venly' ? venlyAccount.address : account!, _p.id)
       })
 
-      const response = await getMultiCall(_calls, chainId!)
+      const response = await Promise.all(_calls).then((value) => {
+        return value
+      })
 
       const packListWithBalance = packList
         .map((pack, index) => ({
@@ -51,21 +63,29 @@ export const useGetPackList = () => {
     }
 
     fetchPackBalance()
-  }, [account, chainId, dispatch, dropperMultiCallContract])
+  }, [account, dispatch, dropperContract, isWalletConnected, venlyAccount.address])
 }
 
 export const useGetMomentList = () => {
-  const { account, chainId, library } = useActiveWeb3React()
-  const dropperMultiCallContract = useGetDropperMultiCallContract()
-  // const momentList = useMomentList()
+  const isWalletConnected = useGetWalletConnection()
+  const venlyAccount = useVenlyAccount()
+  const { account, chainId } = useEthers()
+  const { dropperContract } = useGetContracts()
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const getMomentList = async () => {
-      if (!account || dropperMultiCallContract === null || isSupportedNetwork(chainId) === false) return []
+      if (isWalletConnected === undefined || !dropperContract) {
+        return []
+      }
       dispatch(setIsLoading(true))
-      getAllMomentList(account, dropperMultiCallContract, chainId!, dispatch)
+      getAllMomentList(
+        isWalletConnected === 'venly' ? venlyAccount.address : account!,
+        dropperContract!,
+        isWalletConnected === 'venly' ? VENLY_CHAIN_ID : chainId!,
+        dispatch
+      )
       // fetchMomentList(
       //   account,
       //   dropperMultiCallContract,
@@ -75,5 +95,5 @@ export const useGetMomentList = () => {
       // )
     }
     getMomentList()
-  }, [account, chainId, dispatch])
+  }, [account, chainId, dispatch, dropperContract, isWalletConnected, venlyAccount.address])
 }

@@ -3,27 +3,14 @@ import { isMobile } from 'react-device-detect'
 import COUNTDOWN_BACK from '../../assets/images/countdown-back.svg'
 import PIN_ICON from '../../assets/images/pin-icon.svg'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
-import { MainButton } from '../../components/Buttons/MainButton'
+import MainButton from '../../components/Buttons/MainButton'
 import DateTimeCount from '../../components/DateTimeCount'
 import { ComponentWrapper, ContainerRow, ImageContainer, SubText, TextCustom } from '../../styles/globalStyles'
 
 export const CountdownBox: React.FC = () => {
   return (
-    <ContainerRow
-      backgroundColor={'var(--dark-navy)'}
-      justifyContent={'center'}
-      width={'100%'}
-      padding={'0'}
-      position={'relative'}
-    >
-      <ImageContainer
-        src={COUNTDOWN_BACK}
-        objectFit={'cover'}
-        borderRadius={'0'}
-        width={'100%'}
-        height={'100%'}
-        position={'absolute'}
-      />
+    <ContainerRow backgroundColor={'var(--dark-navy)'} justifyContent={'center'} width={'100%'} padding={'0'} position={'relative'}>
+      <ImageContainer src={COUNTDOWN_BACK} objectFit={'cover'} borderRadius={'0'} width={'100%'} height={'100%'} position={'absolute'} />
       <ComponentWrapper margin={'40px 0'} padding={'24px'}>
         <ContainerRow justifyContent={'center'} margin={'0 0 30px 0'}>
           <TextCustom

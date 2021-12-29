@@ -47,7 +47,7 @@ const ExpanableCard: React.FC<{
               lineHeight={1.3}
               textAlign={'left'}
               margin={'0 0 20px 0'}
-              dangerouslySetInnerHTML={{ __html: !!!content ? '' : content }}
+              dangerouslySetInnerHTML={{ __html: !content ? '' : content }}
             >
               {/* {content} */}
             </TextCustom>

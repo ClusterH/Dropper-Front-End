@@ -1,13 +1,7 @@
 import React from 'react'
 import { isMobile } from 'react-device-detect'
 import BANNER_SECOND from '../../assets/images/banner-second.svg'
-import {
-  BigBoxWithoutShadow,
-  BoxCardWithoutBorder,
-  ComponentWrapper,
-  ImageContainer,
-  TextCustom,
-} from '../../styles/globalStyles'
+import { BigBoxWithoutShadow, BoxCardWithoutBorder, ComponentWrapper, ImageContainer, TextCustom } from '../../styles/globalStyles'
 
 export const RememberBox: React.FC = () => {
   return (
@@ -41,8 +35,7 @@ export const RememberBox: React.FC = () => {
             textAlign={'left'}
             margin={isMobile ? '40px 0 0 0' : '40px 90px 0 70px'}
           >
-            We enable celebrities to create web3 experiences that give fans unparalleled access and influence into their
-            world.
+            We enable celebrities to create web3 experiences that give fans unparalleled access and influence into their world.
           </TextCustom>
           <TextCustom
             color={'var(--primary-text)'}

@@ -1,29 +1,29 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { ReactComponent as Close } from '../../assets/images/x.svg'
-import { useActiveWeb3React } from '../../hooks/useWeb3'
-import { useModalOpen, useMoonPayModalToggle } from '../../state/application/hook'
-import { ApplicationModal } from '../../state/application/reducer'
+import { useMoonPay } from '../../hooks/useMoonPay'
 import Modal from '../Modals/Modal'
 
+const IFrameContainer = styled.iframe`
+  form {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+`
+
 const MoonPayModal: React.FC = () => {
-  const { chainId } = useActiveWeb3React()
-  const moonPayModalOpen = useModalOpen(ApplicationModal.MOONPAY)
-  const toggleMoonPayModal = useMoonPayModalToggle()
-  const MOONPAY_API_KEY =
-    chainId === 137 ? process.env.REACT_APP_MOONPAY_API_KEY : process.env.REACT_APP_MOONPAY_API_KEY_TEST
+  const { moonPayModalOpen, toggleMoonPayModal, moonPayURL } = useMoonPay()
 
   return (
-    <Modal isOpen={moonPayModalOpen} onDismiss={toggleMoonPayModal} width={'60vh'} minHeight={60} maxHeight={90}>
-      <iframe
+    <Modal isOpen={moonPayModalOpen} onDismiss={toggleMoonPayModal} width={'65vh'} minHeight={65} maxHeight={90}>
+      <IFrameContainer
         allow="accelerometer; autoplay; camera; gyroscope; payment"
         frameBorder="0"
         height="auto"
-        src={`https://buy-staging.moonpay.com?apiKey=${MOONPAY_API_KEY}&defaultCurrencyCode=matic&colorCode=%23ff0069`}
+        src={`${moonPayURL}`}
         width="100%"
       >
         <p>Your browser does not support iframes.</p>
-      </iframe>
+      </IFrameContainer>
     </Modal>
   )
 }

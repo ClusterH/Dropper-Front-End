@@ -2,7 +2,7 @@ import React from 'react'
 import { isMobile } from 'react-device-detect'
 import { useLocation } from 'react-router-dom'
 import ARROW_RIGHT_ROUNDED from '../../assets/images/arrow-right-rounded.svg'
-import { MainButton } from '../../components/Buttons/MainButton'
+import MainButton from '../../components/Buttons/MainButton'
 import { VideoContainer } from '../../components/VideoContainer'
 import {
   ContainerColumn,
@@ -29,12 +29,7 @@ const ItemText: React.FC<{ label: string; text: string }> = ({ label, text }) =>
 
 const ItemDetail: React.FC<{ moment: TMomentItem }> = ({ moment }) => {
   return (
-    <ContainerColumn
-      alignItems={'flex-start'}
-      width={isMobile ? '100%' : '20%'}
-      height={'auto'}
-      padding={'24px 0 0 12px'}
-    >
+    <ContainerColumn alignItems={'flex-start'} width={isMobile ? '100%' : '20%'} height={'auto'} padding={'24px 0 0 12px'}>
       <ItemText label={'Name'} text={moment.name} />
       <ItemText label={'Class'} text={moment.rarity} />
       <ItemText label={'Moment Id'} text={moment.id} />
@@ -64,11 +59,7 @@ const Item: React.FC = () => {
   return (
     <PageWrapper>
       <ResponsiveContainer height={isMobile ? 'auto' : 'calc(100vh - 72px)'}>
-        <VideoContainer
-          url={moment.animationUrl}
-          posterUrl={moment.imageUrl}
-          width={isMobile ? '100%' : '70%'}
-        ></VideoContainer>
+        <VideoContainer url={moment.animationUrl} posterUrl={moment.imageUrl} width={isMobile ? '100%' : '70%'}></VideoContainer>
         <ItemDetail moment={moment} />
       </ResponsiveContainer>
     </PageWrapper>

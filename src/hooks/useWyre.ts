@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 import { useWyre } from 'react-use-wyre'
-import { useActiveWeb3React } from './useWeb3'
+import { useEthers } from '@usedapp/core'
 
 export const useWyreDebitCard = () => {
-  const { account, chainId } = useActiveWeb3React()
+  const { account, chainId } = useEthers()
   const { wyre } = useWyre()
   const accountID = chainId === 137 ? process.env.REACT_APP_WYRE_ACCOUNT_ID : process.env.REACT_APP_WYRE_ACCOUNT_ID_TEST
 

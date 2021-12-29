@@ -13,11 +13,7 @@ import {
   SubText,
 } from '../../styles/globalStyles'
 
-export const DroppTokenBoxItem: React.FC<{ src: string; mainText: string; contentText: string }> = ({
-  src,
-  mainText,
-  contentText,
-}) => {
+export const DroppTokenBoxItem: React.FC<{ src: string; mainText: string; contentText: string }> = ({ src, mainText, contentText }) => {
   return (
     <BoxCard
       boxWidth={isMobile ? '90%' : '30%'}

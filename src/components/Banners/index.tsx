@@ -3,7 +3,7 @@ import { isMobile } from 'react-device-detect'
 import ARROW_RIGHT_ROUNDED from '../../assets/images/arrow-right-rounded.svg'
 import BANNER_IMG from '../../assets/images/banner.png'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
-import { MainButton } from '../../components/Buttons/MainButton'
+import MainButton from '../../components/Buttons/MainButton'
 import {
   BoxCardWithoutBorder,
   ComponentWrapper,
@@ -37,11 +37,7 @@ const Banner: React.FC<{ mainTitle?: string; subTitle?: string; summary?: string
       <ContainerRow padding={'0'} margin={'0'} justifyContent={'center'} position={isMobile ? 'relative' : 'absolute'}>
         <ComponentWrapper margin={isMobile ? '0' : '50px 0 0'} padding={isMobile ? '0px 24px' : '24px'}>
           <ContainerRow>
-            <BoxCardWithoutBorder
-              flexDirection={'column'}
-              boxWidth={isMobile ? '100%' : '40%'}
-              alignItems={'flex-start'}
-            >
+            <BoxCardWithoutBorder flexDirection={'column'} boxWidth={isMobile ? '100%' : '40%'} alignItems={'flex-start'}>
               <TextCustom
                 color={'var(--primary-text)'}
                 fontSize={isMobile ? '1.5rem' : '3rem'}

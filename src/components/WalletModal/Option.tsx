@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components/macro'
+import { useGetWalletBalance } from '../../hooks/useWallet'
 import { ExternalLink } from '../../styles/components'
 
 const InfoCard = styled.button<{ active?: boolean }>`
@@ -70,7 +71,7 @@ const HeaderText = styled.div`
 `
 
 const SubHeader = styled.div`
-  color: '#FFFFFF';
+  color: #8f96ac;
   margin-top: 10px;
   font-size: 12px;
 `

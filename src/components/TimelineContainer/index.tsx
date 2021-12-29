@@ -27,14 +27,7 @@ interface ITimelineItem {
   onScroll?: () => void
 }
 
-export const TimelineContainer: React.FC<ITimelineItem> = ({
-  width,
-  cardTitle,
-  cardContent,
-  cardSelected,
-  onMouseMove,
-  onScroll,
-}) => {
+export const TimelineContainer: React.FC<ITimelineItem> = ({ width, cardTitle, cardContent, cardSelected, onMouseMove, onScroll }) => {
   return (
     <TimelineWrapper width={width}>
       <ContainerColumn

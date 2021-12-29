@@ -320,8 +320,7 @@ export const ImageIconContainer = styled.div<{
   margin: ${({ margin }) => (margin ? margin : '0')};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '50%')};
   &:hover {
-    border: ${({ borderHover, border }) =>
-      borderHover ? borderHover : border ? border : '2px solid var(--secondary)'};
+    border: ${({ borderHover, border }) => (borderHover ? borderHover : border ? border : '2px solid var(--secondary)')};
     background-color: ${({ backgroundHover, backgroundColor }) =>
       backgroundHover ? backgroundHover : backgroundColor ? backgroundColor : 'none'};
     box-shadow: ${({ shadowColor }) => (shadowColor ? `3px 3px 12px 2px ${shadowColor}` : 'none')};

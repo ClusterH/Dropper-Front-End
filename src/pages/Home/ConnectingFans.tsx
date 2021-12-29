@@ -4,15 +4,7 @@ import styled from 'styled-components'
 import BANNER_THIRD from '../../assets/images/banner-third.svg'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
 import { TimelineContainer } from '../../components/TimelineContainer'
-import {
-  ComponentWrapper,
-  ContainerColumn,
-  device,
-  ImageContainer,
-  SpacerLarge,
-  SubText,
-  TextCustom,
-} from '../../styles/globalStyles'
+import { ComponentWrapper, ContainerColumn, device, ImageContainer, SpacerLarge, SubText, TextCustom } from '../../styles/globalStyles'
 
 const ResponsiveWrapper = styled(ContainerColumn)`
   align-items: center;
@@ -76,12 +68,7 @@ export const ConnectingFans: React.FC = () => {
       </ResponsiveWrapper>
       <SpacerLarge />
       <ResponsiveWrapper>
-        <ImageContainer
-          src={BANNER_THIRD}
-          width={isMobile ? '90%' : '35%'}
-          objectFit={'cover'}
-          margin={'0 20px 0 20px'}
-        />
+        <ImageContainer src={BANNER_THIRD} width={isMobile ? '90%' : '35%'} objectFit={'cover'} margin={'0 20px 0 20px'} />
         <ContainerColumn width={isMobile ? '90%' : '62%'}>
           {cardItems.map((item, index) => {
             return (

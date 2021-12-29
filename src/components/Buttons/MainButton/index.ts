@@ -1,8 +1,7 @@
-import React from 'react'
 import styled from 'styled-components'
 import { size } from '../../../styles/globalStyles'
 
-export const MainButton = styled.button<{
+const MainButton = styled.button<{
   width?: string
   height?: string
   padding?: string
@@ -62,3 +61,5 @@ export const TransparentBtn = styled(MainButton)`
     border: 2px solid var(--disabled);
   }
 `
+
+export default MainButton

@@ -2,15 +2,9 @@ import React from 'react'
 import { isMobile } from 'react-device-detect'
 import ARROW_RIGHT_ROUNDED from '../../assets/images/arrow-right-rounded.svg'
 import BANNER_MAIN from '../../assets/images/banner-main.svg'
-import LOGO_IMG from '../../assets/images/dropper-small-shaddow.png'
-import { MainButton, TransparentBtn } from '../../components/Buttons/MainButton'
-import {
-  BoxCardWithoutBorder,
-  ComponentWrapper,
-  ContainerRow,
-  ImageContainer,
-  TextCustom,
-} from '../../styles/globalStyles'
+import MainButton, { TransparentBtn } from '../../components/Buttons/MainButton'
+
+import { BoxCardWithoutBorder, ComponentWrapper, ContainerRow, ImageContainer, TextCustom } from '../../styles/globalStyles'
 
 export const IntroducingBox: React.FC = () => {
   return (

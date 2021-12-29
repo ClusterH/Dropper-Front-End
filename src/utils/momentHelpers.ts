@@ -1,7 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
-import { Contract } from 'ethcall'
-import { ethers, utils } from 'ethers'
+import { Contract, ethers, utils } from 'ethers'
 import DROPPER_ABI from '../abis/dropper.json'
 import { TRANSFER_BATCH_FILTER } from '../constants/blockNumber'
 import { SupportedChainId } from '../constants/chains'
@@ -63,7 +62,7 @@ export const momentGenerator = (momentList: any, momentIDs: BigNumber[]) => {
 export const fetchMomentList = async (
   account: string,
   contract: Contract,
-  chainId: SupportedChainId,
+  chainId: number,
   dispatch: AppDispatch,
   fromBlock: number | undefined
 ) => {
@@ -82,12 +81,7 @@ export const fetchMomentList = async (
   const startBlockNumber = fromBlock ?? filter.fromBlock
 
   for (let i = latestBlockNumber; i > startBlockNumber; i -= limit) {
-    const eventLogs = await fetchEventLogs(
-      ens,
-      filter.eventFilter,
-      i - limit > startBlockNumber ? i - limit + 1 : startBlockNumber + 1,
-      i
-    )
+    const eventLogs = await fetchEventLogs(ens, filter.eventFilter, i - limit > startBlockNumber ? i - limit + 1 : startBlockNumber + 1, i)
     if (eventLogs && eventLogs.length > 0) {
       const momentIDs: Array<BigNumber> = []
 
@@ -107,13 +101,7 @@ export const fetchMomentList = async (
   dispatch(setIsLoading(false))
 }
 
-export const getAllMomentList = async (
-  account: string,
-  contract: Contract,
-  chainId: SupportedChainId,
-  dispatch: AppDispatch,
-  txHash?: string
-) => {
+export const getAllMomentList = async (account: string, contract: Contract, chainId: number, dispatch: AppDispatch, txHash?: string) => {
   const specificAxios = setupInterceptorsTo(axios.create())
   specificAxios
     .get(`${AXIOS_BASE_URL}`, {
@@ -134,7 +122,9 @@ export const getAllMomentList = async (
           const { momentId } = getMomentId(id)
           return contract.getMoment(momentId)
         })
-        const response = await getMultiCall(_calls, chainId!)
+        const response = await Promise.all(_calls).then((value) => {
+          return value
+        })
 
         const moments = await Promise.all(momentGenerator(response, momentIDs))
         dispatch(setMomentList({ moments, txHash }))

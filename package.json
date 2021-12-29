@@ -20,6 +20,7 @@
     "@types/react-transition-group": "^4.4.4",
     "@types/styled-components": "^5.1.14",
     "@types/styled-system": "^5.1.13",
+    "@usedapp/core": "^0.7.3",
     "@venly/connect": "^1.32.0",
     "@venly/web3-provider": "^0.24.0",
     "@web3-react/core": "^6.1.9",
@@ -28,6 +29,7 @@
     "@web3-react/walletlink-connector": "^6.2.3",
     "axios": "^0.24.0",
     "bignumber.js": "^9.0.1",
+    "crypto-js": "^4.1.1",
     "ethcall": "4.1.3",
     "ethereumjs-abi": "^0.6.8",
     "ethereumjs-util": "^7.1.3",
@@ -67,7 +69,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint \"*/**/*.{js,jsx,ts,tsx,json}\" --quiet --fix"
+    "lint": "eslint \"*/**/*.{js,jsx,ts,tsx,json}\" --fix"
   },
   "eslintConfig": {
     "extends": [

@@ -7,7 +7,7 @@ import Hamburger from '../Icons/hamburgerIcon'
 import Logo from '../Icons/logo'
 import Menu from '../Menu'
 import VenlyAuth from '../Venly/VenlyAuth'
-import WalletConnector from '../WalletConnection'
+import WalletConnector from '../WalletConnector'
 
 const HeaderContainer = styled(ContainerRow)`
   padding: 0.5rem 1rem;
@@ -31,10 +31,6 @@ const Header: React.FC = () => {
           <Logo />
           <Menu />
         </ContainerRow>
-        {/* <ContainerRow width={'30%'} minHeight={'60px'} padding={'0'}>
-          <SearchBox width={'70%'} height={'100%'} />
-          <WalletConnector />
-        </ContainerRow> */}
         <ContainerRow width={'fit-content'} padding={'0'} margin={'0'} alignItems={'center'}>
           {/* <VenlyAuth /> */}
           <WalletConnector />

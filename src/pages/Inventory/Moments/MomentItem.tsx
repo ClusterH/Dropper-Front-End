@@ -38,11 +38,7 @@ export const MomentItem: React.FC<{ moment: TMomentItem; onClick: () => void }> 
           {moment.collection}
         </TextCustom>
         <ContainerRow justifyContent={'flex-start'}>
-          <RoundedIconBox
-            backColor={'var(--primary-text)'}
-            width={'30px'}
-            onClick={() => setFavoriteItem(!favoriteItem)}
-          >
+          <RoundedIconBox backColor={'var(--primary-text)'} width={'30px'} onClick={() => setFavoriteItem(!favoriteItem)}>
             <FavoriteIcon color={favoriteItem ? 'var(--secondary)' : '#666666'} />
           </RoundedIconBox>
           <TextCustom color={'var(--primary-text)'} fontSize={'12px'} fontWeight={300}>

@@ -1,13 +1,7 @@
 import React, { Children } from 'react'
 import styled from 'styled-components'
-import { MainButton } from '../Buttons/MainButton'
-import {
-  CarouselContainer,
-  CarouselContent,
-  CarouselContentWrapper,
-  CarouselWrapper,
-  IndicatorContainer,
-} from './carouselStyle'
+import MainButton from '../Buttons/MainButton'
+import { CarouselContainer, CarouselContent, CarouselContentWrapper, CarouselWrapper, IndicatorContainer } from './carouselStyle'
 
 const Arrow = styled.div<{ backColor?: string }>`
   &::before {
@@ -220,10 +214,7 @@ const InfiniteCarousel = ({
   /**
    * Is the carousel repeating it's item
    */
-  const isRepeating = React.useMemo(
-    () => infiniteLoop && Children.count(children) > show,
-    [children, infiniteLoop, show]
-  )
+  const isRepeating = React.useMemo(() => infiniteLoop && Children.count(children) > show, [children, infiniteLoop, show])
 
   /**
    * Current Index Item of the Carousel
@@ -268,7 +259,7 @@ const InfiniteCarousel = ({
     if (withIndicator) {
       const active = indicatorContainerRef.current?.querySelector('.dots-active')
       if (active) {
-        let index = active.getAttribute('data-index')
+        const index = active.getAttribute('data-index')
         if (index !== null && indicatorContainerRef.current?.scrollTo) {
           indicatorContainerRef.current?.scrollTo({
             left: ((Number(index) - 2) / 5) * 50,
@@ -361,7 +352,7 @@ const InfiniteCarousel = ({
    * Render previous items before the first item
    */
   const extraPreviousItems = React.useMemo(() => {
-    let output = []
+    const output = []
     for (let index = 0; index < show; index++) {
       output.push(Children.toArray(children)[length - 1 - index])
     }
@@ -373,7 +364,7 @@ const InfiniteCarousel = ({
    * Render next items after the last item
    */
   const extraNextItems = React.useMemo(() => {
-    let output = []
+    const output = []
     for (let index = 0; index < show; index++) {
       output.push(Children.toArray(children)[index])
     }
@@ -381,12 +372,11 @@ const InfiniteCarousel = ({
   }, [children, show])
 
   const renderDots = React.useMemo(() => {
-    let output = []
+    const output = []
 
     const localShow = isRepeating ? show : 0
     const localLength = isRepeating ? length : Math.ceil(length / show)
-    const calculatedActiveIndex =
-      currentIndex - localShow < 0 ? length + (currentIndex - localShow) : currentIndex - localShow
+    const calculatedActiveIndex = currentIndex - localShow < 0 ? length + (currentIndex - localShow) : currentIndex - localShow
 
     for (let index = 0; index < localLength; index++) {
       let className = ''

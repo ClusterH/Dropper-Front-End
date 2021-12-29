@@ -13,8 +13,7 @@ const faqContent = [
   },
   {
     title: 'What is Dropper built on?',
-    content:
-      'Dropper uses Polygon, an Ethereum side chain, to facilitate and verify all the transactions of the community.',
+    content: 'Dropper uses Polygon, an Ethereum side chain, to facilitate and verify all the transactions of the community.',
   },
   {
     title: 'What are the different moment rarities?',
@@ -74,20 +73,12 @@ export const FAQBox: React.FC = () => {
         <ContainerRow alignItems={'flex-start'} flexWrap={isMobile ? 'wrap' : 'normal'}>
           <ContainerColumn width={isMobile ? '100%' : '50%'} justifyContent={'flex-start'}>
             {faqContent.map((item, index) => {
-              return (
-                index % 2 == 0 && (
-                  <ExpanableCard key={index} boxWidth={'100%'} title={item.title} content={item.content} />
-                )
-              )
+              return index % 2 == 0 && <ExpanableCard key={index} boxWidth={'100%'} title={item.title} content={item.content} />
             })}
           </ContainerColumn>
           <ContainerColumn width={isMobile ? '100%' : '50%'} justifyContent={'flex-start'}>
             {faqContent.map((item, index) => {
-              return (
-                index % 2 == 1 && (
-                  <ExpanableCard key={index} boxWidth={'100%'} title={item.title} content={item.content} />
-                )
-              )
+              return index % 2 == 1 && <ExpanableCard key={index} boxWidth={'100%'} title={item.title} content={item.content} />
             })}
           </ContainerColumn>
         </ContainerRow>

@@ -35,12 +35,7 @@ const Footer: React.FC = () => {
   return (
     <FooterContainer>
       <ComponentWrapper margin={'50px 0 0'} padding={'24px'}>
-        <ContainerRow
-          width={'100%'}
-          alignItems={'flex-start'}
-          justifyContent={'flex-start'}
-          flexWrap={isMobile ? 'wrap' : 'normal'}
-        >
+        <ContainerRow width={'100%'} alignItems={'flex-start'} justifyContent={'flex-start'} flexWrap={isMobile ? 'wrap' : 'normal'}>
           <ContainerColumn width={isMobile ? '100%' : '25%'} alignItems={'flex-start'}>
             <Logo />
             <TextCustom

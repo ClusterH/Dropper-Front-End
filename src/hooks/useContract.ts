@@ -1,20 +1,22 @@
+import { useEthers } from '@usedapp/core'
 import { Contract as MultiCallContract } from 'ethcall'
 import { Contract } from 'ethers'
 import { useMemo } from 'react'
 import COLLECTION_ABI from '../abis/collection.json'
 import DROPPER_ABI from '../abis/dropper.json'
-import USDC_ABI from '../abis/usdc.json'
-import MULTICALL_ABI from '../abis/multicall.json'
 import EIP_2612_ABI from '../abis/eip_2612.json'
+import MULTICALL_ABI from '../abis/multicall.json'
+import USDC_ABI from '../abis/usdc.json'
 import {
   COLLECTION_CONTRACT_ADDRESSES,
   DROPPER_CONTRACT_ADDRESSES,
   MULTICALL_CONTRACT_ADDRESSES,
   USDC_TOKEN_ADDRESSES,
 } from '../constants/addresses'
+import { AppState } from '../state'
+import { useAppSelector } from '../state/hooks'
 import { getContract, getMultiCallContract } from '../utils'
 import { isSupportedNetwork } from '../utils/validateChainID'
-import { useActiveWeb3React } from './useWeb3'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -22,7 +24,7 @@ export function useContract<T extends Contract = Contract>(
   ABI: any,
   withSignerIfPossible = true
 ): T | null {
-  const { library, account, chainId } = useActiveWeb3React()
+  const { library, account, chainId } = useEthers()
 
   return useMemo(() => {
     if (!addressOrAddressMap || !ABI || !library || isSupportedNetwork(chainId) === false) return null
@@ -37,6 +39,10 @@ export function useContract<T extends Contract = Contract>(
       return null
     }
   }, [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]) as T
+}
+
+export const useGetContracts = () => {
+  return useAppSelector((state: AppState) => state.application.contracts)
 }
 
 export const useGetDropperContract = () => {
@@ -64,7 +70,7 @@ export function useMultiCallContract<T extends MultiCallContract = MultiCallCont
   addressOrAddressMap: string | { [chainId: number]: string } | undefined,
   ABI: any
 ): T | null {
-  const { library, chainId } = useActiveWeb3React()
+  const { library, chainId } = useEthers()
 
   return useMemo(() => {
     if (!addressOrAddressMap || !ABI || !library || isSupportedNetwork(chainId) === false) return null

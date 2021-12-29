@@ -70,7 +70,7 @@ const Slider: React.FC<{ sliderList: TCollectionItem[]; rarity: TRarity; titleAl
         >
           <ContainerColumn
             justifyContent={'flex-start'}
-            alignItems={!!!titleAlign ? 'flex-start' : titleAlign}
+            alignItems={!titleAlign ? 'flex-start' : titleAlign}
             padding={'0'}
             margin={'0 0 50px 0'}
           >

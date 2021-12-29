@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { ContainerRow, TextCustom, size } from '../../styles/globalStyles'
 import { device } from '../../styles/globalStyles'
 import { TSelectedTab } from '../../types'
-import { MainButton } from '../Buttons/MainButton'
+import MainButton from '../Buttons/MainButton'
 import { isMobile } from 'react-device-detect'
 
 const TabMenuContainer = styled(ContainerRow)`
@@ -46,10 +46,7 @@ const TabMenu: React.FC<ITabMenu> = ({ handleTabItem, selectedTab }) => {
       >
         <TextCustom color={'var(--primary-text)'}>{'Moments'}</TextCustom>
       </TabMenuItem>
-      <TabMenuItem
-        backgroundColor={selectedTab === 'packs' ? 'var(--secondary)' : 'transparent'}
-        onClick={() => handleTabItem('packs')}
-      >
+      <TabMenuItem backgroundColor={selectedTab === 'packs' ? 'var(--secondary)' : 'transparent'} onClick={() => handleTabItem('packs')}>
         <TextCustom color={'var(--primary-text)'}>{'Packs'}</TextCustom>
       </TabMenuItem>
       {/* <TabMenuItem

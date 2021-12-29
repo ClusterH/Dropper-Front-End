@@ -1,7 +1,7 @@
 import { AbstractConnector } from '@web3-react/abstract-connector'
-import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
-import React, { useEffect, useState } from 'react'
+import { useEthers } from '@usedapp/core'
+import React, { useCallback, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
 import styled from 'styled-components/macro'
@@ -10,13 +10,16 @@ import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { injected } from '../../connectors'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import usePrevious from '../../hooks/usePrevious'
+import { useIsVenly, useVenlyAccount, useVenlyConnect } from '../../hooks/useVenly'
 import { useModalOpen, useWalletModalToggle } from '../../state/application/hook'
 import { ApplicationModal } from '../../state/application/reducer'
 import { setupNetwork } from '../../utils/wallet'
-import AccountDetails from '../AccountDetails'
 import Modal from '../Modals/Modal'
 import Option from './Option'
-import PendingView from './PendingView'
+import VenlyWalletOption from './VenlyWalletOption'
+import { useAppDispatch } from '../../state/hooks'
+import { setIsVenly } from '../../state/venly/reducer'
+import { useGetWalletBalance } from '../../hooks/useWallet'
 
 const CloseIcon = styled.div`
   position: absolute;
@@ -83,23 +86,19 @@ const HoverText = styled.div`
     cursor: pointer;
   }
 `
-const WALLET_VIEWS = {
-  OPTIONS: 'options',
-  OPTIONS_SECONDARY: 'options_secondary',
-  ACCOUNT: 'account',
-  PENDING: 'pending',
-}
 
-export default function WalletModal() {
+const WalletModal: React.FC = () => {
   // important that these are destructed from the account-specific web3-react context
-  const { active, account, connector, activate, error } = useWeb3React()
-  const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
-  const [pendingWallet, setPendingWallet] = useState<AbstractConnector | undefined>()
-  const [pendingError, setPendingError] = useState<boolean>()
+  const { account, connector, activate, error } = useEthers()
   const walletModalOpen = useModalOpen(ApplicationModal.WALLET)
   const toggleWalletModal = useWalletModalToggle()
   const previousAccount = usePrevious(account)
+  const isVenly = useIsVenly()
+  const venlyAccount = useVenlyAccount()
+  const { handleLogOut } = useVenlyConnect()
+  const { handleGetBalance } = useGetWalletBalance()
 
+  const dispatch = useAppDispatch()
   // close on connection, when logged out before
   useEffect(() => {
     if (account && !previousAccount && walletModalOpen) {
@@ -107,63 +106,63 @@ export default function WalletModal() {
     }
   }, [account, previousAccount, toggleWalletModal, walletModalOpen])
 
-  // always reset to account view
-  useEffect(() => {
-    if (walletModalOpen) {
-      setPendingError(false)
-      setWalletView(WALLET_VIEWS.ACCOUNT)
-    }
-  }, [walletModalOpen])
+  const tryActivation = useCallback(
+    async (connector: AbstractConnector | undefined) => {
+      console.log('tryActivation=before==>>>')
 
-  // close modal when a connection is successful
-  const activePrevious = usePrevious(active)
-  const connectorPrevious = usePrevious(connector)
-  useEffect(() => {
-    if (walletModalOpen && ((active && !activePrevious) || (connector && connector !== connectorPrevious && !error))) {
-      setWalletView(WALLET_VIEWS.ACCOUNT)
-    }
-  }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
-
-  const tryActivation = async (connector: AbstractConnector | undefined) => {
-    let name = ''
-    Object.keys(SUPPORTED_WALLETS).map((key) => {
-      if (connector === SUPPORTED_WALLETS[key].connector) {
-        return (name = SUPPORTED_WALLETS[key].name)
-      }
-      return true
-    })
-    // log selected wallet
-    ReactGA.event({
-      category: 'Wallet',
-      action: 'Change Wallet',
-      label: name,
-    })
-    setPendingWallet(connector) // set wallet for pending view
-    setWalletView(WALLET_VIEWS.PENDING)
-
-    // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-    if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-      connector.walletConnectProvider = undefined
-    }
-
-    connector &&
-      activate(connector, undefined, true).catch(async (error) => {
-        if (error instanceof UnsupportedChainIdError) {
-          const hasSetup = await setupNetwork()
-          if (hasSetup) {
-            activate(connector)
-          }
-        } else {
-          setPendingError(true)
+      let name = ''
+      Object.keys(SUPPORTED_WALLETS).map((key) => {
+        if (connector === SUPPORTED_WALLETS[key].connector) {
+          return (name = SUPPORTED_WALLETS[key].name)
         }
+        return true
       })
-  }
+      // log selected wallet
+      ReactGA.event({
+        category: 'Wallet',
+        action: 'Change Wallet',
+        label: name,
+      })
+
+      // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
+      if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+        connector.walletConnectProvider = undefined
+      }
+
+      connector &&
+        activate(connector, undefined, true)
+          .then(() => {
+            if (isVenly) handleLogOut()
+            dispatch(setIsVenly(false))
+            console.log('tryActivation=after==>>>')
+
+            handleGetBalance()
+          })
+          .catch(async (error) => {
+            if (error instanceof Error) {
+              const hasSetup = await setupNetwork()
+              if (hasSetup) {
+                activate(connector)
+                if (isVenly) handleLogOut()
+                dispatch(setIsVenly(false))
+                console.log('tryActivation=error==>>>')
+
+                handleGetBalance()
+              }
+            }
+          })
+    },
+    [activate, isVenly, handleLogOut, dispatch, handleGetBalance]
+  )
 
   // get wallets user can switch too, depending on device/browser
   function getOptions() {
     const isMetamask = window.ethereum && window.ethereum.isMetaMask
     return Object.keys(SUPPORTED_WALLETS).map((key) => {
       const option = SUPPORTED_WALLETS[key]
+      if (option.name === 'Venly Wallet') {
+        return <VenlyWalletOption key={key} />
+      }
       // check for mobile options
       if (isMobile) {
         if (!window.web3 && !window.ethereum && option.mobile) {
@@ -190,28 +189,20 @@ export default function WalletModal() {
       if (option.connector === injected) {
         // don't show injected if there's no injected provider
         if (!(window.web3 || window.ethereum)) {
-          if (option.name === 'MetaMask') {
-            return (
-              <Option
-                id={`connect-${key}`}
-                key={key}
-                color={'#E8831D'}
-                header={'Install Metamask'}
-                subheader={null}
-                link={'https://metamask.io/'}
-                icon={MetamaskIcon}
-              />
-            )
-          } else {
-            return null //dont want to return install twice
-          }
+          return (
+            <Option
+              id={`connect-${key}`}
+              key={key}
+              color={'#E8831D'}
+              header={'Install Metamask'}
+              subheader={null}
+              link={'https://metamask.io/'}
+              icon={MetamaskIcon}
+            />
+          )
         }
         // don't return metamask if injected provider isn't metamask
         else if (option.name === 'MetaMask' && !isMetamask) {
-          return null
-        }
-        // likewise for generic
-        else if (option.name === 'Injected' && isMetamask) {
           return null
         }
       }
@@ -223,9 +214,8 @@ export default function WalletModal() {
           <Option
             id={`connect-${key}`}
             onClick={() => {
-              option.connector === connector
-                ? setWalletView(WALLET_VIEWS.ACCOUNT)
-                : !option.href && tryActivation(option.connector)
+              if (option.connector === connector) return
+              else if (!option.href) tryActivation(option.connector)
             }}
             key={key}
             active={option.connector === connector}
@@ -247,20 +237,11 @@ export default function WalletModal() {
           <CloseIcon onClick={toggleWalletModal}>
             <CloseColor />
           </CloseIcon>
-          <HeaderRow>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
+          <HeaderRow>{error instanceof Error ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
           <ContentWrapper>
-            {error instanceof UnsupportedChainIdError ? (
-              <h5>Please connect to the appropriate Ethereum network.</h5>
-            ) : (
-              'Error connecting. Try refreshing the page.'
-            )}
+            {error instanceof Error ? <h5>Please connect to the Polygon network.</h5> : 'Error connecting. Try refreshing the page.'}
           </ContentWrapper>
         </UpperSection>
-      )
-    }
-    if (account && walletView === WALLET_VIEWS.ACCOUNT) {
-      return (
-        <AccountDetails toggleWalletModal={toggleWalletModal} openOptions={() => setWalletView(WALLET_VIEWS.OPTIONS)} />
       )
     }
     return (
@@ -268,34 +249,17 @@ export default function WalletModal() {
         <CloseIcon onClick={toggleWalletModal}>
           <CloseColor />
         </CloseIcon>
-        {walletView !== WALLET_VIEWS.ACCOUNT ? (
-          <HeaderRow color="blue">
-            <HoverText
-              onClick={() => {
-                setPendingError(false)
-                setWalletView(WALLET_VIEWS.ACCOUNT)
-              }}
-            >
-              Back
-            </HoverText>
-          </HeaderRow>
-        ) : (
-          <HeaderRow>
-            <HoverText>Connect to a wallet</HoverText>
-          </HeaderRow>
-        )}
-
+        <HeaderRow>
+          <HoverText>
+            {isVenly && venlyAccount.address.length > 0
+              ? 'Connected with Venly'
+              : account
+              ? 'Connected with Injected Wallet'
+              : 'Connect to a wallet'}
+          </HoverText>
+        </HeaderRow>
         <ContentWrapper>
-          {walletView === WALLET_VIEWS.PENDING ? (
-            <PendingView
-              connector={pendingWallet}
-              error={pendingError}
-              setPendingError={setPendingError}
-              tryActivation={tryActivation}
-            />
-          ) : (
-            <OptionGrid>{getOptions()}</OptionGrid>
-          )}
+          <OptionGrid>{getOptions()}</OptionGrid>
         </ContentWrapper>
       </UpperSection>
     )
@@ -307,3 +271,5 @@ export default function WalletModal() {
     </Modal>
   )
 }
+
+export default WalletModal

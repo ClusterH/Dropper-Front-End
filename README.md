@@ -1,44 +1,42 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Dropper Interface
 
-## Available Scripts
+The platform where creators launch iconic NFT collections that give fans digital access to their world with 0 gas fees experience on the Polygon Network.
 
-In the project directory, you can run:
+The intent of the product is to have a one stop shop NFT purchasing experience.
 
-### `yarn start`
+## Live URL
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[https://www.joindropper.com/](https://www.joindropper.com/)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Project Status
 
-### `yarn test`
+This project is currently in development. Users can buy 3 different pack types, basic, plus and premium with MUSDC (Polygon USDC).<br />
+Users should not worry about having MATIC in their wallet to pay gas fee since we provide gasless meta transaction for all transactions.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project installation
 
-### `yarn build`
+Clone down this repository. You will need `node` and `npm` installed globally on your machine.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Get the code and dependencies:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+    git clone https://gitlab.com/RealmPlatform/dropper-ecosystem/Dropper-Front-End.git
+    cd Dropper-Front-End
+    yarn
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Start the dev server with:
 
-### `yarn eject`
+    yarn start
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Runs the app in the development mode.
+Open http://localhost:3000 to view it in the browser.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Builds the app for production to the `build` folder with:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+    yarn build
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Under the hood
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- React, React-Hook
+- Typescript
+- Redux
+- Styled-component

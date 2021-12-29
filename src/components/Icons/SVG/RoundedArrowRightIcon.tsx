@@ -2,24 +2,9 @@ import React from 'react'
 import Svg from './Svg'
 import { SvgProps } from './types'
 
-const Icon: React.FC<SvgProps> = ({
-  width = '24px',
-  height = '24px',
-  color = '#FF0069',
-  stroke = '#EFDCE4',
-  style,
-}) => (
+const Icon: React.FC<SvgProps> = ({ width = '24px', height = '24px', color = '#FF0069', stroke = '#EFDCE4', style }) => (
   <svg width={width} height={height} viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" style={style}>
-    <rect
-      x="1.12508"
-      y="0.541677"
-      width="50.4167"
-      height="50.4167"
-      rx="25.2083"
-      fill={color}
-      stroke={color}
-      strokeWidth="0.916667"
-    />
+    <rect x="1.12508" y="0.541677" width="50.4167" height="50.4167" rx="25.2083" fill={color} stroke={color} strokeWidth="0.916667" />
     <path
       fillRule="evenodd"
       clipRule="evenodd"

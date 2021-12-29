@@ -3,6 +3,7 @@ import INJECTED_ICON_URL from '../assets/images/arrow-right.svg'
 import COINBASE_ICON_URL from '../assets/images/coinbaseWalletIcon.svg'
 import METAMASK_ICON_URL from '../assets/images/metamask.png'
 import WALLETCONNECT_ICON_URL from '../assets/images/walletConnectIcon.svg'
+import VENLY_ICON_URL from '../assets/images/venly-icon.svg'
 import { injected, walletconnect, walletlink } from '../connectors'
 
 export interface WalletInfo {
@@ -18,15 +19,15 @@ export interface WalletInfo {
 }
 
 export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
-  INJECTED: {
-    connector: injected,
-    name: 'Injected',
-    iconURL: INJECTED_ICON_URL,
-    description: 'Injected web3 provider.',
-    href: null,
-    color: '#010101',
-    primary: true,
-  },
+  // INJECTED: {
+  //   connector: injected,
+  //   name: 'Injected',
+  //   iconURL: INJECTED_ICON_URL,
+  //   description: 'Injected web3 provider.',
+  //   href: null,
+  //   color: '#010101',
+  //   primary: true,
+  // },
   METAMASK: {
     connector: injected,
     name: 'MetaMask',
@@ -60,5 +61,12 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     color: '#315CF5',
     mobile: true,
     mobileOnly: true,
+  },
+  VENLY: {
+    name: 'Venly Wallet',
+    iconURL: VENLY_ICON_URL,
+    description: 'Venly Wallet',
+    href: null,
+    color: '#010101',
   },
 }

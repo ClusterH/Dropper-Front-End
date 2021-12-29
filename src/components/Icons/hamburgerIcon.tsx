@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import HAMBURGER_IMG from '../../assets/images/menu.png'
 import { ContainerColumn, ContainerRow, device } from '../../styles/globalStyles'
 import { MenuItem } from '../Menu/MenuItem'
+import { MoonPayContainer, MoonPayModal } from '../MoonPay'
 import { WyreDebitCard } from '../Wyre/DebitCard'
 import WyreReservationModal from '../WyreModal'
 
@@ -27,11 +28,7 @@ const HamburgerMenuWrapper = styled(ContainerColumn)`
   border: 2px solid var(--secondary);
   transition: background-color 3000ms ease-in-out 0s, opacity 8000ms ease-in-out 0s;
 `
-const HamburgerMenuItem: React.FC<{ label: string; navLink: string; disabled?: boolean }> = ({
-  label,
-  navLink,
-  disabled,
-}) => {
+const HamburgerMenuItem: React.FC<{ label: string; navLink: string; disabled?: boolean }> = ({ label, navLink, disabled }) => {
   return (
     <ContainerRow margin={'24px 0 0 0'} justifyContent={'center'}>
       <MenuItem
@@ -54,8 +51,10 @@ const HamburgerMenu: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({ set
       <HamburgerMenuItem disabled label={'Rankings'} navLink={'ranks'} />
       <HamburgerMenuItem disabled label={'Marketplace'} navLink={'marketplace'} />
       <HamburgerMenuItem label={'Profile'} navLink={'inventory'} />
-      <WyreDebitCard />
-      <WyreReservationModal />
+      {/* <WyreDebitCard />
+      <WyreReservationModal /> */}
+      <MoonPayContainer />
+      <MoonPayModal />
     </HamburgerMenuWrapper>
   )
 }

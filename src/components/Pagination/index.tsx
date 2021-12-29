@@ -50,8 +50,7 @@ const PaginationItem = styled.li<{
   line-height: 1.43;
   font-size: 14px;
   min-width: 30px;
-  background-color: ${({ isArrow, isActive }) =>
-    isArrow ? 'transparent' : isActive ? 'var(--secondary)' : 'var(--dark-grey)'};
+  background-color: ${({ isArrow, isActive }) => (isArrow ? 'transparent' : isActive ? 'var(--secondary)' : 'var(--dark-grey)')};
   border: ${({ isArrow }) => (isArrow ? '3px solid var(--purple)' : 'none')};
   &.dots:hover {
     background-color: transparent;
@@ -123,7 +122,7 @@ const Pagination: React.FC<IPagination> = (props) => {
     return { fistIndex: firstPageIndex, lastIndex: lastPageIndex }
   }, [currentPage, pageSize, totalCount])
 
-  if (currentPage === 0 || !!!paginationRange || paginationRange.length < 2) {
+  if (currentPage === 0 || !paginationRange || paginationRange.length < 2) {
     return null
   }
 

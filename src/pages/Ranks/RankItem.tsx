@@ -1,6 +1,6 @@
 import React from 'react'
 import PIN_ICON from '../../assets/images/pin-icon.svg'
-import { MainButton } from '../../components/Buttons/MainButton'
+import MainButton from '../../components/Buttons/MainButton'
 import Checkbox from '../../components/Checkbox'
 import { BoxCardWithoutBorder, ContainerRow, ImageContainer, TextCustom } from '../../styles/globalStyles'
 
@@ -40,13 +40,7 @@ export const RankItem: React.FC<IRankItem> = ({ creator, rank, points, checked, 
         </TextCustom>
       </BoxCardWithoutBorder>
       <BoxCardWithoutBorder boxWidth={'29%'} justifyContent={'flex-start'} padding={'2px'} margin={'0'}>
-        <MainButton
-          width={'fit-content'}
-          borderRadius={'24px'}
-          padding={'10px 10px'}
-          backgroundColor={'var(--secondary)'}
-          margin={'0'}
-        >
+        <MainButton width={'fit-content'} borderRadius={'24px'} padding={'10px 10px'} backgroundColor={'var(--secondary)'} margin={'0'}>
           <TextCustom color={'var(--primary-text)'} fontSize={'16px'} fontWeight={300}>
             view Collections &nbsp;
           </TextCustom>

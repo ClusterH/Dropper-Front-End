@@ -3,14 +3,7 @@ import { isMobile } from 'react-device-detect'
 import Counter from '../../components/Counter'
 import { RoundedCheckIcon } from '../../components/Icons'
 import { usePackItem } from '../../hooks/useCollection'
-import {
-  BoxCard,
-  ContainerRow,
-  ImageContainer,
-  ImageIconContainer,
-  TextCustom,
-  TextMain,
-} from '../../styles/globalStyles'
+import { BoxCard, ContainerRow, ImageContainer, ImageIconContainer, TextCustom, TextMain } from '../../styles/globalStyles'
 import { TPackItem } from '../../types'
 
 export const PackItem: React.FC<{ pack: TPackItem; currentTotalPrice: number }> = ({ pack, currentTotalPrice }) => {
@@ -53,13 +46,7 @@ export const PackItem: React.FC<{ pack: TPackItem; currentTotalPrice: number }> 
       <TextMain>{`${pack.count} Moments @ $${pack.price}`}</TextMain>
       {pack.featureList?.map((item, index) => {
         return (
-          <ContainerRow
-            key={`pack_${index}`}
-            justifyContent={'space-between'}
-            alignItems={'center'}
-            width={'90%'}
-            margin={'0 0 20px 0'}
-          >
+          <ContainerRow key={`pack_${index}`} justifyContent={'space-between'} alignItems={'center'} width={'90%'} margin={'0 0 20px 0'}>
             <TextCustom
               color={'var(--primary-text)'}
               fontSize={isMobile ? '0.8rem' : '1rem'}
@@ -79,12 +66,7 @@ export const PackItem: React.FC<{ pack: TPackItem; currentTotalPrice: number }> 
           </ContainerRow>
         )
       })}
-      <Counter
-        count={count}
-        setCount={setCount}
-        isDisablePlusIcon={currentTotalPrice + pack.price > 300}
-        isOver={isCardOver}
-      />
+      <Counter count={count} setCount={setCount} isDisablePlusIcon={currentTotalPrice + pack.price > 300} isOver={isCardOver} />
     </BoxCard>
   )
 }

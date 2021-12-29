@@ -2,14 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import Banner from '../../components/Banners'
 import Checkbox from '../../components/Checkbox'
 import Pagination from '../../components/Pagination'
-import {
-  BoxCardWithoutBorder,
-  ComponentWrapper,
-  ContainerColumn,
-  ContainerRow,
-  PageWrapper,
-  TextCustom,
-} from '../../styles/globalStyles'
+import { BoxCardWithoutBorder, ComponentWrapper, ContainerColumn, ContainerRow, PageWrapper, TextCustom } from '../../styles/globalStyles'
 import { RankItem } from './RankItem'
 
 const PageSize = 10
@@ -161,8 +154,7 @@ const RankList: React.FC = () => {
     const rankChecked = tempList[idx + firstPageIndex].checked
     const lastPageIndex = firstPageIndex + PageSize
     const checkedList = tempList.filter(
-      (item, index) =>
-        index >= firstPageIndex && index < lastPageIndex && item.checked && index !== idx + firstPageIndex
+      (item, index) => index >= firstPageIndex && index < lastPageIndex && item.checked && index !== idx + firstPageIndex
     )
     if (checkedList.length === currentRankList.length - 1) {
       setSelectAllChecked(!rankChecked)
@@ -205,13 +197,7 @@ const RankList: React.FC = () => {
               </TextCustom>
             </BoxCardWithoutBorder>
           </ContainerRow>
-          <ContainerColumn
-            justifyContent={'flex-start'}
-            width={'100%'}
-            padding={'0'}
-            margin={'0'}
-            style={{ minHeight: '360px' }}
-          >
+          <ContainerColumn justifyContent={'flex-start'} width={'100%'} padding={'0'} margin={'0'} style={{ minHeight: '360px' }}>
             {currentRankList.map((item, index) => {
               return (
                 <RankItem
