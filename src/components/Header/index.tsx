@@ -6,7 +6,6 @@ import { ProfileIcon } from '../Icons'
 import Hamburger from '../Icons/hamburgerIcon'
 import Logo from '../Icons/logo'
 import Menu from '../Menu'
-import VenlyAuth from '../Venly/VenlyAuth'
 import WalletConnector from '../WalletConnector'
 
 const HeaderContainer = styled(ContainerRow)`
@@ -32,7 +31,6 @@ const Header: React.FC = () => {
           <Menu />
         </ContainerRow>
         <ContainerRow width={'fit-content'} padding={'0'} margin={'0'} alignItems={'center'}>
-          {/* <VenlyAuth /> */}
           <WalletConnector />
           {!isMobile && <ProfileIcon />}
           <Hamburger />

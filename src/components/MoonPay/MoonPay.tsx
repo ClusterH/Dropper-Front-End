@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useMoonPay } from '../../hooks/useMoonPay'
-import { useMoonPayModalToggle } from '../../state/application/hook'
 import { size } from '../../styles/globalStyles'
 
 const MoonPayWrapper = styled.div`

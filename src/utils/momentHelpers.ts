@@ -112,7 +112,6 @@ export const getAllMomentList = async (account: string, contract: Contract, chai
       },
     })
     .then(async (res: any) => {
-      console.log(res)
       if (res.data && res.data.length > 0) {
         const momentIDs: Array<BigNumber> = []
 

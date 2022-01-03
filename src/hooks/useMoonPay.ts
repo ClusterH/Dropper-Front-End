@@ -1,33 +1,46 @@
 import crypto from 'crypto'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { toast } from 'react-toastify'
 import { useModalOpen, useMoonPayModalToggle } from '../state/application/hook'
 import { ApplicationModal } from '../state/application/reducer'
-import { useVenlyAccount } from './useVenly'
-import { useEthers } from '@usedapp/core'
+import { useChainId, useIsWalletConnected, useWalletAddress } from './useWallet'
 
 export const useMoonPay = () => {
-  const { chainId } = useEthers()
   const moonPayModalOpen = useModalOpen(ApplicationModal.MOONPAY)
-  const venlyAccount = useVenlyAccount()
+  const isWalletConnected = useIsWalletConnected()
+  const walletAddress = useWalletAddress()
+  const chainId = useChainId()
   const toggleMoonPayModal = useMoonPayModalToggle()
 
-  const MOONPAY_API_KEY = chainId === 137 ? process.env.REACT_APP_MOONPAY_API_KEY : process.env.REACT_APP_MOONPAY_API_KEY_TEST
-  const MOONPAY_SECRET_KEY = chainId === 137 ? process.env.REACT_APP_MOONPAY_SECRET_KEY : process.env.REACT_APP_MOONPAY_SECRET_KEY_TEST
+  const MOONPAY_API_KEY = useMemo(
+    () => (chainId === 137 ? process.env.REACT_APP_MOONPAY_API_KEY : process.env.REACT_APP_MOONPAY_API_KEY_TEST),
+    [chainId]
+  )
+  const MOONPAY_SECRET_KEY = useMemo(
+    () => (chainId === 137 ? process.env.REACT_APP_MOONPAY_SECRET_KEY : process.env.REACT_APP_MOONPAY_SECRET_KEY_TEST),
+    [chainId]
+  )
 
-  const BASE_URL = chainId === 137 ? 'https://buy.moonpay.com' : 'https://buy-staging.moonpay.com'
-  const MoonPayURL_Temp = `${BASE_URL}?apiKey=${MOONPAY_API_KEY}&defaultCurrencyCode=ETH&currencyCode=ETH&walletAddress=${venlyAccount.address}&colorCode=%23ff0069&showWalletAddressForm=true`
+  const BASE_URL = useMemo(() => (chainId === 137 ? 'https://buy.moonpay.com' : 'https://buy-staging.moonpay.com'), [chainId])
+  const MoonPayURL_Temp = useMemo(
+    () =>
+      `${BASE_URL}?apiKey=${MOONPAY_API_KEY}&defaultCurrencyCode=ETH&currencyCode=ETH&walletAddress=${walletAddress}&colorCode=%23ff0069&showWalletAddressForm=true`,
+    [BASE_URL, MOONPAY_API_KEY, walletAddress]
+  )
 
-  const signature = crypto.createHmac('sha256', MOONPAY_SECRET_KEY!).update(new URL(MoonPayURL_Temp).search).digest('base64')
-  const moonPayURL = `${MoonPayURL_Temp}&signature=${encodeURIComponent(signature)}`
+  const signature = useMemo(
+    () => crypto.createHmac('sha256', MOONPAY_SECRET_KEY!).update(new URL(MoonPayURL_Temp).search).digest('base64'),
+    [MOONPAY_SECRET_KEY, MoonPayURL_Temp]
+  )
+  const moonPayURL = useMemo(() => `${MoonPayURL_Temp}&signature=${encodeURIComponent(signature)}`, [MoonPayURL_Temp, signature])
 
   const handleMoonPayClick = useCallback(() => {
-    if (!venlyAccount.address || venlyAccount.address.length === 0) {
+    if (!isWalletConnected || walletAddress.length === 0) {
       toast.error('Please check your Venly Wallet Connection First!', { toastId: 'Not Connected-3' })
       return
     }
     toggleMoonPayModal()
-  }, [toggleMoonPayModal, venlyAccount])
+  }, [isWalletConnected, toggleMoonPayModal, walletAddress.length])
 
   return { moonPayModalOpen, moonPayURL, toggleMoonPayModal, handleMoonPayClick }
 }

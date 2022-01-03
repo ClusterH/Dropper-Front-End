@@ -21,13 +21,11 @@ export interface IUserBalance {
 export interface ApplicationState {
   readonly openModal: ApplicationModal | null
   contracts: ContractInterfaces
-  userBalance: IUserBalance
 }
 
 const initialState: ApplicationState = {
   openModal: null,
   contracts: { collectionContract: undefined, dropperContract: undefined, usdcTokenContract: undefined },
-  userBalance: { maticBalance: BigNumber.from(0), usdcBalance: BigNumber.from(0) },
 }
 
 const applicationSlice = createSlice({
@@ -40,11 +38,8 @@ const applicationSlice = createSlice({
     setContracts(state, action) {
       state.contracts = { ...action.payload }
     },
-    setUserBalance(state, action) {
-      state.userBalance = { ...action.payload }
-    },
   },
 })
 
-export const { setOpenModal, setContracts, setUserBalance } = applicationSlice.actions
+export const { setOpenModal, setContracts } = applicationSlice.actions
 export default applicationSlice.reducer

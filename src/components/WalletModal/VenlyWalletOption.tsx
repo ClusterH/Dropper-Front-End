@@ -1,12 +1,13 @@
 import React from 'react'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
-import { useIsVenly, useVenlyConnect } from '../../hooks/useVenly'
+import { useVenlyConnect } from '../../hooks/useVenly'
+import { useIsWalletConnected } from '../../hooks/useWallet'
 import Option from './Option'
 
 const option = SUPPORTED_WALLETS.VENLY
 
 const VenlyWalletOption: React.FC = () => {
-  const isVenly = useIsVenly()
+  const isWalletConnected = useIsWalletConnected()
   const { handleAuthentication } = useVenlyConnect()
 
   return (
@@ -16,7 +17,7 @@ const VenlyWalletOption: React.FC = () => {
       header={'Venly Wallet'}
       subheader={null}
       icon={option.iconURL}
-      active={isVenly}
+      active={isWalletConnected === 'venly'}
       onClick={handleAuthentication}
     />
   )

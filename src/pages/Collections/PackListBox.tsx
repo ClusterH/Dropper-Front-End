@@ -9,7 +9,8 @@ import { PackItem } from './PackItem'
 import { ProcessingLoader } from './Processing'
 
 export const PackListBox = () => {
-  const { account, cartList, pendingTx, isLoading, currentTotalPrice, isUSDCApproved, BuyPackProcess, ApprovingUSDC } = usePackListBox()
+  const { walletAddress, cartList, pendingTx, isLoading, currentTotalPrice, isUSDCApproved, BuyPackProcess, ApprovingUSDC } =
+    usePackListBox()
 
   return (
     <>
@@ -23,7 +24,7 @@ export const PackListBox = () => {
             borderRadius={'24px'}
             padding={'24px 24px'}
             margin={'20px 0'}
-            disabled={pendingTx || !account}
+            disabled={pendingTx || !walletAddress}
             onClick={() => BuyPackProcess()}
           >
             {'Buy Now!'}
@@ -35,7 +36,7 @@ export const PackListBox = () => {
             borderRadius={'24px'}
             padding={'24px 24px'}
             margin={'20px 0'}
-            disabled={isLoading || pendingTx || !account}
+            disabled={isLoading || pendingTx || !walletAddress}
             onClick={() => ApprovingUSDC()}
           >
             {'Approve'}

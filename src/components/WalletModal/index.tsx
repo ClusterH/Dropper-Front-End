@@ -1,25 +1,21 @@
-import { AbstractConnector } from '@web3-react/abstract-connector'
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { useEthers } from '@usedapp/core'
-import React, { useCallback, useEffect, useState } from 'react'
+import { AbstractConnector } from '@web3-react/abstract-connector'
+import React, { useCallback, useEffect } from 'react'
 import { isMobile } from 'react-device-detect'
-import ReactGA from 'react-ga'
 import styled from 'styled-components/macro'
 import MetamaskIcon from '../../assets/images/metamask.png'
 import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { injected } from '../../connectors'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
-import usePrevious from '../../hooks/usePrevious'
-import { useIsVenly, useVenlyAccount, useVenlyConnect } from '../../hooks/useVenly'
+import { useIsWalletConnected, useWalletAddress } from '../../hooks/useWallet'
 import { useModalOpen, useWalletModalToggle } from '../../state/application/hook'
 import { ApplicationModal } from '../../state/application/reducer'
+import { useAppDispatch } from '../../state/hooks'
+import { setChainId, setIsWalletConnected, setWalletAddress } from '../../state/wallet/reducer'
 import { setupNetwork } from '../../utils/wallet'
 import Modal from '../Modals/Modal'
 import Option from './Option'
 import VenlyWalletOption from './VenlyWalletOption'
-import { useAppDispatch } from '../../state/hooks'
-import { setIsVenly } from '../../state/venly/reducer'
-import { useGetWalletBalance } from '../../hooks/useWallet'
 
 const CloseIcon = styled.div`
   position: absolute;
@@ -89,70 +85,51 @@ const HoverText = styled.div`
 
 const WalletModal: React.FC = () => {
   // important that these are destructed from the account-specific web3-react context
-  const { account, connector, activate, error } = useEthers()
+  const { account, chainId, activate } = useEthers()
   const walletModalOpen = useModalOpen(ApplicationModal.WALLET)
+  const walletAddress = useWalletAddress()
   const toggleWalletModal = useWalletModalToggle()
-  const previousAccount = usePrevious(account)
-  const isVenly = useIsVenly()
-  const venlyAccount = useVenlyAccount()
-  const { handleLogOut } = useVenlyConnect()
-  const { handleGetBalance } = useGetWalletBalance()
+  const isWalletConnected = useIsWalletConnected()
 
   const dispatch = useAppDispatch()
-  // close on connection, when logged out before
+
   useEffect(() => {
-    if (account && !previousAccount && walletModalOpen) {
+    if (account && chainId && isWalletConnected === 'injected') {
+      dispatch(setChainId(chainId))
+      dispatch(setWalletAddress(account))
+    }
+    if (walletModalOpen) {
       toggleWalletModal()
     }
-  }, [account, previousAccount, toggleWalletModal, walletModalOpen])
+  }, [account, chainId, dispatch, isWalletConnected])
 
   const tryActivation = useCallback(
     async (connector: AbstractConnector | undefined) => {
-      console.log('tryActivation=before==>>>')
-
-      let name = ''
-      Object.keys(SUPPORTED_WALLETS).map((key) => {
-        if (connector === SUPPORTED_WALLETS[key].connector) {
-          return (name = SUPPORTED_WALLETS[key].name)
-        }
-        return true
-      })
-      // log selected wallet
-      ReactGA.event({
-        category: 'Wallet',
-        action: 'Change Wallet',
-        label: name,
-      })
-
-      // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-      if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-        connector.walletConnectProvider = undefined
+      if (account && chainId) {
+        dispatch(setChainId(chainId))
+        dispatch(setWalletAddress(account))
+        dispatch(setIsWalletConnected('injected'))
+        toggleWalletModal()
+        return
       }
 
       connector &&
         activate(connector, undefined, true)
-          .then(() => {
-            if (isVenly) handleLogOut()
-            dispatch(setIsVenly(false))
-            console.log('tryActivation=after==>>>')
-
-            handleGetBalance()
+          .then((res) => {
+            if (walletModalOpen) toggleWalletModal()
           })
           .catch(async (error) => {
             if (error instanceof Error) {
               const hasSetup = await setupNetwork()
               if (hasSetup) {
-                activate(connector)
-                if (isVenly) handleLogOut()
-                dispatch(setIsVenly(false))
-                console.log('tryActivation=error==>>>')
-
-                handleGetBalance()
+                activate(connector).then((res) => {
+                  if (walletModalOpen) toggleWalletModal()
+                })
               }
             }
           })
     },
-    [activate, isVenly, handleLogOut, dispatch, handleGetBalance]
+    [account, chainId, activate, dispatch]
   )
 
   // get wallets user can switch too, depending on device/browser
@@ -165,23 +142,6 @@ const WalletModal: React.FC = () => {
       }
       // check for mobile options
       if (isMobile) {
-        if (!window.web3 && !window.ethereum && option.mobile) {
-          return (
-            <Option
-              onClick={() => {
-                option.connector !== connector && !option.href && tryActivation(option.connector)
-              }}
-              id={`connect-${key}`}
-              key={key}
-              active={option.connector && option.connector === connector}
-              color={option.color}
-              link={option.href}
-              header={option.name}
-              subheader={null}
-              icon={option.iconURL}
-            />
-          )
-        }
         return null
       }
 
@@ -214,11 +174,10 @@ const WalletModal: React.FC = () => {
           <Option
             id={`connect-${key}`}
             onClick={() => {
-              if (option.connector === connector) return
-              else if (!option.href) tryActivation(option.connector)
+              tryActivation(option.connector)
             }}
             key={key}
-            active={option.connector === connector}
+            active={isWalletConnected === 'injected'}
             color={option.color}
             link={option.href}
             header={option.name}
@@ -231,19 +190,6 @@ const WalletModal: React.FC = () => {
   }
 
   function getModalContent() {
-    if (error) {
-      return (
-        <UpperSection>
-          <CloseIcon onClick={toggleWalletModal}>
-            <CloseColor />
-          </CloseIcon>
-          <HeaderRow>{error instanceof Error ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
-          <ContentWrapper>
-            {error instanceof Error ? <h5>Please connect to the Polygon network.</h5> : 'Error connecting. Try refreshing the page.'}
-          </ContentWrapper>
-        </UpperSection>
-      )
-    }
     return (
       <UpperSection>
         <CloseIcon onClick={toggleWalletModal}>
@@ -251,9 +197,9 @@ const WalletModal: React.FC = () => {
         </CloseIcon>
         <HeaderRow>
           <HoverText>
-            {isVenly && venlyAccount.address.length > 0
+            {isWalletConnected === 'venly' && walletAddress.length > 0
               ? 'Connected with Venly'
-              : account
+              : isWalletConnected === 'injected' && walletAddress.length > 0
               ? 'Connected with Injected Wallet'
               : 'Connect to a wallet'}
           </HoverText>

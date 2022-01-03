@@ -1,7 +1,5 @@
-import { useEthers } from '@usedapp/core'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { VENLY_CHAIN_ID } from '../constants/chains'
 import { packList } from '../constants/dummy'
 import { AppState } from '../state'
 import { setIsLoading, setPackList } from '../state/dropper/reducer'
@@ -10,7 +8,7 @@ import { getPackUserBalance } from '../utils/callHelpers'
 import { getAllMomentList } from '../utils/momentHelpers'
 import { useGetContracts } from './useContract'
 import { useVenlyAccount } from './useVenly'
-import { useGetWalletConnection } from './useWallet'
+import { useChainId, useIsWalletConnected, useWalletAddress } from './useWallet'
 
 export const useLatestBlockNumber = () => {
   return useAppSelector((state: AppState) => state.dropper.latestBlockNumber)
@@ -29,9 +27,8 @@ export const useMomentList = () => {
 }
 
 export const useGetPackList = () => {
-  const isWalletConnected = useGetWalletConnection()
-  const venlyAccount = useVenlyAccount()
-  const { account, chainId } = useEthers()
+  const isWalletConnected = useIsWalletConnected()
+  const walletAddress = useWalletAddress()
   const { dropperContract } = useGetContracts()
 
   const dispatch = useAppDispatch()
@@ -45,7 +42,7 @@ export const useGetPackList = () => {
       }
       //handle multi calls at once as manually if in case transactions are not so much
       const _calls = packList.map((_p) => {
-        return getPackUserBalance(dropperContract, isWalletConnected === 'venly' ? venlyAccount.address : account!, _p.id)
+        return getPackUserBalance(dropperContract, walletAddress, _p.id)
       })
 
       const response = await Promise.all(_calls).then((value) => {
@@ -63,29 +60,25 @@ export const useGetPackList = () => {
     }
 
     fetchPackBalance()
-  }, [account, dispatch, dropperContract, isWalletConnected, venlyAccount.address])
+  }, [dispatch, dropperContract, isWalletConnected, walletAddress])
 }
 
 export const useGetMomentList = () => {
-  const isWalletConnected = useGetWalletConnection()
+  const isWalletConnected = useIsWalletConnected()
+  const walletAddress = useWalletAddress()
+  const chainId = useChainId()
   const venlyAccount = useVenlyAccount()
-  const { account, chainId } = useEthers()
   const { dropperContract } = useGetContracts()
 
   const dispatch = useAppDispatch()
 
   useEffect(() => {
     const getMomentList = async () => {
-      if (isWalletConnected === undefined || !dropperContract) {
+      if (isWalletConnected === undefined || !chainId || !dropperContract) {
         return []
       }
       dispatch(setIsLoading(true))
-      getAllMomentList(
-        isWalletConnected === 'venly' ? venlyAccount.address : account!,
-        dropperContract!,
-        isWalletConnected === 'venly' ? VENLY_CHAIN_ID : chainId!,
-        dispatch
-      )
+      getAllMomentList(walletAddress, dropperContract, chainId, dispatch)
       // fetchMomentList(
       //   account,
       //   dropperMultiCallContract,
@@ -95,5 +88,5 @@ export const useGetMomentList = () => {
       // )
     }
     getMomentList()
-  }, [account, chainId, dispatch, dropperContract, isWalletConnected, venlyAccount.address])
+  }, [chainId, dispatch, dropperContract, isWalletConnected, venlyAccount.address, walletAddress])
 }

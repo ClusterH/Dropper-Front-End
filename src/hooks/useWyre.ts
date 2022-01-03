@@ -3,7 +3,7 @@ import { useWyre } from 'react-use-wyre'
 import { useEthers } from '@usedapp/core'
 
 export const useWyreDebitCard = () => {
-  const { account, chainId } = useEthers()
+  const { chainId } = useEthers()
   const { wyre } = useWyre()
   const accountID = chainId === 137 ? process.env.REACT_APP_WYRE_ACCOUNT_ID : process.env.REACT_APP_WYRE_ACCOUNT_ID_TEST
 

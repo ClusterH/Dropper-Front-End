@@ -1,18 +1,22 @@
+import { formatEther } from '@ethersproject/units'
 import React from 'react'
 import { FiActivity } from 'react-icons/fi'
-import { useEthers, useEtherBalance, useTokenBalance } from '@usedapp/core'
-import { formatEther } from '@ethersproject/units'
 import styled from 'styled-components'
-import { NetworkContextName } from '../../constants/misc'
+import { useVenlyAccount, useVenlyConnection } from '../../hooks/useVenly'
+import {
+  useChainId,
+  useGetWalletBalance,
+  useIsWalletConnected,
+  useMaticBalance,
+  useUSDCBalance,
+  useWalletAddress,
+} from '../../hooks/useWallet'
 import { useWalletModalToggle } from '../../state/application/hook'
-import { shortenAddress } from '../../utils'
-import WalletModal from '../WalletModal'
-import { getUSDCAddress } from '../../utils/addressHelpers'
-import { isSupportedNetwork } from '../../utils/validateChainID'
 import { ContainerRow } from '../../styles/globalStyles'
-import { useIsVenly, useVenlyAccount, useVenlyConnection } from '../../hooks/useVenly'
-import { useBalance, useGetWalletBalance, useGetWalletConnection } from '../../hooks/useWallet'
-import { VENLY_CHAIN_ID } from '../../constants/chains'
+import { shortenAddress } from '../../utils'
+import { isSupportedNetwork } from '../../utils/validateChainID'
+import WalletModal from '../WalletModal'
+
 const Web3StatusGeneric = styled.div`
   display: inline-block;
   cursor: pointer;
@@ -71,21 +75,14 @@ const NetworkIcon = styled(FiActivity)`
   height: 16px;
 `
 const Web3StatusInner: React.FC = () => {
-  const { account, chainId, error } = useEthers()
-  const toggleWalletModal = useWalletModalToggle()
-  const isWalletConnected = useGetWalletConnection()
+  useGetWalletBalance()
+  const isWalletConnected = useIsWalletConnected()
   const venlyAccount = useVenlyAccount()
-
-  const { maticBalance, usdcBalance } = useBalance()
-  console.log('wallets===>>>', isWalletConnected, venlyAccount, chainId)
-  // const maticBalance = useEtherBalance(
-  //   isWalletConnected === 'venly' ? venlyAccount.address : isWalletConnected === 'injected' ? account : false
-  // )
-  // const usdcBalance = useTokenBalance(
-  //   isWalletConnected === undefined ? undefined : getUSDCAddress(isWalletConnected === 'venly' ? VENLY_CHAIN_ID : chainId!),
-  //   isWalletConnected === undefined ? undefined : isWalletConnected === 'venly' ? venlyAccount.address : account
-  // )
-  console.log(venlyAccount, isWalletConnected, parseFloat(formatEther(maticBalance)).toFixed(3), usdcBalance)
+  const maticBalance = useMaticBalance()
+  const usdcBalance = useUSDCBalance()
+  const chainId = useChainId()
+  const walletAddress = useWalletAddress()
+  const toggleWalletModal = useWalletModalToggle()
 
   if (isWalletConnected === undefined) {
     return (
@@ -93,14 +90,14 @@ const Web3StatusInner: React.FC = () => {
         <Text>{'Connect Wallet'}</Text>
       </Web3StatusConnect>
     )
-  } else if (isWalletConnected === 'injected' && account && !isSupportedNetwork(chainId)) {
+  } else if (isWalletConnected === 'injected' && walletAddress.length > 0 && !isSupportedNetwork(chainId)) {
     return (
       <Web3StatusError onClick={toggleWalletModal}>
         <NetworkIcon />
         <Text>{'Wrong Network!'}</Text>
       </Web3StatusError>
     )
-  } else if (isWalletConnected === 'venly' || (account && isSupportedNetwork(chainId))) {
+  } else if (walletAddress.length > 0 && isSupportedNetwork(chainId)) {
     return (
       <Web3StatusWrapper>
         <Text>
@@ -108,12 +105,11 @@ const Web3StatusInner: React.FC = () => {
           {usdcBalance && parseFloat(formatEther(usdcBalance)).toFixed(3)} USDC
         </Text>
         <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal}>
-          <Text>{shortenAddress(isWalletConnected === 'venly' ? venlyAccount.address : account!)}</Text>
+          <Text>{shortenAddress(walletAddress)}</Text>
         </Web3StatusConnected>
       </Web3StatusWrapper>
     )
   } else {
-    console.log(error)
     return (
       <Web3StatusError onClick={toggleWalletModal}>
         <NetworkIcon />
@@ -124,13 +120,7 @@ const Web3StatusInner: React.FC = () => {
 }
 
 const WalletConnector: React.FC = () => {
-  const { active } = useEthers()
-  const isVenly = useIsVenly()
   useVenlyConnection()
-
-  // if (!isVenly && !active) {
-  //   return null
-  // }
 
   return (
     <>

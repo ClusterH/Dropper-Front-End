@@ -1,15 +1,14 @@
-import { JsonRpcSigner } from '@ethersproject/providers'
-import { SecretType, VenlyConnect, SignerResult } from '@venly/connect'
 import { Biconomy } from '@biconomy/mexa'
-import { toBuffer } from 'ethereumjs-util'
+import { JsonRpcSigner } from '@ethersproject/providers'
+import { SecretType, VenlyConnect } from '@venly/connect'
 import { BigNumber, Contract, ethers } from 'ethers'
 import COLLECTION_ABI from '../abis/collection.json'
 import DROPPER_ABI from '../abis/dropper.json'
 import USDC_ABI from '../abis/usdc.json'
 import { SupportedChainId } from '../constants/chains'
+import { ContractInterfaces } from '../state/application/reducer'
 import { getCollectionAddress, getDropperAddress, getUSDCAddress } from './addressHelpers'
 import { getSimpleRPCProvider } from './simpleRPCProvider'
-import { ContractInterfaces } from '../state/application/reducer'
 
 export const BICONOMY_CONFIG: {
   [chainId in number]: { apiKey: string | undefined }
@@ -181,7 +180,6 @@ export const buyPackMeta = async (
   contract: any
 ) => {
   const contractInterface = new ethers.utils.Interface(COLLECTION_ABI)
-  console.log('buyPackMeta===>>>', contract)
   let nonce: BigNumber = ethers.BigNumber.from(0)
   try {
     nonce = await contract.getNonce(userAddress)
@@ -190,7 +188,6 @@ export const buyPackMeta = async (
   }
   // const nonce = await contract.getNonce(userAddress)
   const functionSignature = contractInterface.encodeFunctionData('buyPacks', [packId, quantity])
-  console.log('buyPackMeta===>>>', contract)
 
   const dataToSign = getMetaTransactionEIP712SignConfig(
     chainId,
@@ -200,9 +197,7 @@ export const buyPackMeta = async (
     functionSignature,
     nonce
   )
-  console.log(functionSignature)
   const signature = await walletProvider.send('eth_signTypedData_v3', [userAddress, dataToSign])
-  console.log(signature)
   const { r, s, v } = getSignatureParameters(signature)
 
   return await executeMetaTransaction(userAddress, contract, functionSignature, r, s, v)

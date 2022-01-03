@@ -2,18 +2,18 @@ import { DAppProvider, Polygon, useEthers } from '@usedapp/core'
 import React, { useMemo } from 'react'
 import { NETWORK_URLS } from './connectors'
 import { VENLY_CHAIN_ID } from './constants/chains'
-import { useGetWalletConnection } from './hooks/useWallet'
+import { useChainId, useIsWalletConnected } from './hooks/useWallet'
 
 export const DAppProviders: React.FC = ({ children }) => {
-  const { chainId } = useEthers()
-  const isWalletConnected = useGetWalletConnection()
+  const isWalletConnected = useIsWalletConnected()
+  const chainId = useChainId()
+
   const config = useMemo(() => {
-    console.log('Dappprovider===>>>', chainId, isWalletConnected)
-    if (isWalletConnected === undefined) return {}
+    if (isWalletConnected === undefined || !chainId) return {}
     return {
-      readOnlyChainId: isWalletConnected === 'venly' ? VENLY_CHAIN_ID : chainId,
+      readOnlyChainId: chainId,
       readOnlyUrls: {
-        [Polygon.chainId]: NETWORK_URLS[isWalletConnected === 'venly' ? VENLY_CHAIN_ID : chainId!],
+        [Polygon.chainId]: NETWORK_URLS[chainId!],
       },
     }
   }, [chainId, isWalletConnected])

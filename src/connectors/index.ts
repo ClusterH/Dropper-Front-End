@@ -1,10 +1,8 @@
-import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 import DROPPER_LOGO_URL from '../assets/images/dropper-small-shaddow.png'
 import { SupportedChainId } from '../constants/chains'
-import getLibrary from '../utils/getLibrary'
 import { NetworkConnector } from './NetworkConnector'
 
 const ALCHEMY_KEY = process.env.REACT_APP_ALCHEMY_KEY
@@ -15,7 +13,6 @@ export const NETWORK_URLS: {
   [chainId in number]: string
 } = {
   [SupportedChainId.MATIC]: `https://polygon-mainnet.g.alchemy.com/v2/${ALCHEMY_KEY}`,
-  // [SupportedChainId.MATIC_TESTNET]: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
   [SupportedChainId.MATIC_TESTNET]: `https://polygon-mumbai.g.alchemy.com/v2/${ALCHEMY_KEY_TEST}`,
   [SupportedChainId.RINKEBY_TESTNET]: `https://polygon-mumbai.g.alchemy.com/v2/qMgMczZuXG71yJy9a16t3UrvNTFMQk8d`,
 }
