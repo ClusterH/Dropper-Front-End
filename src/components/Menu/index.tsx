@@ -30,7 +30,7 @@ const Menu: React.FC = () => {
       </MenuItem> */}
       {/* <WyreDebitCard />
       <WyreReservationModal /> */}
-      <MoonPayContainer />
+      {/* <MoonPayContainer /> */}
       <MoonPayModal />
     </MenuContainer>
   )

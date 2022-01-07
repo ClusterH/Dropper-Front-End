@@ -20,7 +20,7 @@ const MoonPayWrapper = styled.div`
 const MoonPay: React.FC = () => {
   const { handleMoonPayClick } = useMoonPay()
 
-  return <MoonPayWrapper onClick={handleMoonPayClick}>Buy Crypto(MoonPay)</MoonPayWrapper>
+  return <MoonPayWrapper onClick={handleMoonPayClick}>Buy Crypto</MoonPayWrapper>
 }
 
 export default MoonPay

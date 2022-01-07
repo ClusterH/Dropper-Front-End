@@ -24,7 +24,7 @@ export const useMoonPay = () => {
   const BASE_URL = useMemo(() => (chainId === 137 ? 'https://buy.moonpay.com' : 'https://buy-staging.moonpay.com'), [chainId])
   const MoonPayURL_Temp = useMemo(
     () =>
-      `${BASE_URL}?apiKey=${MOONPAY_API_KEY}&defaultCurrencyCode=ETH&currencyCode=ETH&walletAddress=${walletAddress}&colorCode=%23ff0069&showWalletAddressForm=true`,
+      `${BASE_URL}?apiKey=${MOONPAY_API_KEY}&defaultCurrencyCode=USDC_POLYGON&currencyCode=USDC_POLYGON&walletAddress=${walletAddress}&colorCode=%23ff0069&showWalletAddressForm=true`,
     [BASE_URL, MOONPAY_API_KEY, walletAddress]
   )
 
@@ -36,7 +36,7 @@ export const useMoonPay = () => {
 
   const handleMoonPayClick = useCallback(() => {
     if (!isWalletConnected || walletAddress.length === 0) {
-      toast.error('Please check your Venly Wallet Connection First!', { toastId: 'Not Connected-3' })
+      toast.error('Please check your Wallet Connection First!', { toastId: 'Not Connected-3' })
       return
     }
     toggleMoonPayModal()

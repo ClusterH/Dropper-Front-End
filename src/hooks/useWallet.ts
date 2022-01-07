@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { AppState } from '../state'
 import { useAppDispatch, useAppSelector } from '../state/hooks'
-import { setMaticBalance } from '../state/wallet/reducer'
-import { getMaticBalanace } from '../utils/callHelpers'
+import { setMaticBalance, setUSDCBalance } from '../state/wallet/reducer'
+import { getMaticBalanace, getUSDCBalance } from '../utils/callHelpers'
 import { getSimpleRPCProvider } from '../utils/simpleRPCProvider'
 import { useGetContracts } from './useContract'
 
@@ -28,7 +28,6 @@ export const useGetWalletBalance = () => {
   const chainId = useChainId()
 
   const { usdcTokenContract } = useGetContracts()
-  // const userBalance = useBalance()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -45,13 +44,13 @@ export const useGetWalletBalance = () => {
         .catch((err) => {
           console.log(err)
         })
-      // getUSDCBalance(usdcTokenContract!, isWalletConnected === 'venly' ? venlyAccount.address : account!)
-      //   .then((usdcBalance) => {
-      //     dispatch(setUserBalance({ ...userBalance, usdcBalance }))
-      //   })
-      //   .catch((err) => {
-      //     console.log(err)
-      //   })
+      getUSDCBalance(usdcTokenContract!, walletAddress)
+        .then((usdcBalance) => {
+          dispatch(setUSDCBalance(usdcBalance))
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
 
     handleGetBalance()

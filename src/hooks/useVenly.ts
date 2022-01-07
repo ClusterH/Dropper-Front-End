@@ -27,7 +27,7 @@ export const useVenlyProvider = () => {
   return useMemo(async () => {
     const options = {
       clientId: 'Testaccount',
-      environment: 'staging', //optional, production by default
+      // environment: 'staging', //optional, production by default
       signMethod: 'POPUP', //optional, REDIRECT by default
       //optional: you can set an identity provider to be used when authenticating
       authenticationOptions: {

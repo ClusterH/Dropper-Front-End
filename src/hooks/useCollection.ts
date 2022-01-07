@@ -1,9 +1,10 @@
 import { useEthers } from '@usedapp/core'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 import { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AppState } from '../state'
+import { useMoonPayModalToggle } from '../state/application/hook'
 import { setUserCartList } from '../state/cart/reducer'
 import { setIsUSDCApproved } from '../state/dropper/reducer'
 import { useAppDispatch, useAppSelector } from '../state/hooks'
@@ -16,16 +17,19 @@ import {
   openPackMeta,
   openPackMetaVenly,
 } from '../utils/biconomyHelpers'
+import { getBalanceNumber } from '../utils/bigNumber'
+import { allowance } from '../utils/callHelpers'
 import { useGetContracts } from './useContract'
 import { useGetVenlyConnect, useVenlyAccount } from './useVenly'
-import { useChainId, useIsWalletConnected, useWalletAddress } from './useWallet'
+import { useChainId, useIsWalletConnected, useUSDCBalance, useWalletAddress } from './useWallet'
 
 export const useApprove = () => {
   return useAppSelector((state: AppState) => state.dropper.isUSDCApproved)
 }
 
-export const useIsApproved = () => {
+export const useIsApproved = async () => {
   const isWalletConnected = useIsWalletConnected()
+  const walletAddress = useWalletAddress()
   const { collectionContract, usdcTokenContract } = useGetContracts()
 
   const dispatch = useAppDispatch()
@@ -36,14 +40,10 @@ export const useIsApproved = () => {
   }
 
   try {
-    // const allowanceAmount = await allowance(
-    //   usdcTokenContract,
-    //   collectionContract,
-    //   isWalletConnected === 'venly' ? venlyAccount.address : account!
-    // )
-    // if (allowanceAmount.lte(0)) {
-    dispatch(setIsUSDCApproved(true))
-    // } else dispatch(setIsUSDCApproved(true))
+    const allowanceAmount = await allowance(usdcTokenContract, collectionContract, walletAddress)
+    if (allowanceAmount.lte(0)) {
+      dispatch(setIsUSDCApproved(true))
+    } else dispatch(setIsUSDCApproved(true))
   } catch (e) {
     console.error(e)
   }
@@ -94,7 +94,9 @@ export const useBuyPackMeta = () => {
   const chainId = useChainId()
   const venlyAccount = useVenlyAccount()
   const venlyConnect = useGetVenlyConnect()
+  const usdcBalance = useUSDCBalance()
   const { collectionContract, usdcTokenContract } = useGetContracts()
+  const toggleMoonPayModal = useMoonPayModalToggle()
 
   const handleBuyPack = useCallback(
     async (cartList: TPackItem[], currentTotalPrice: number) => {
@@ -103,19 +105,15 @@ export const useBuyPackMeta = () => {
         return false
       }
 
-      // try {
-      //   const usdcBalance: BigNumber = await getUSDCBalance(
-      //     usdcTokenContract,
-      //     isWalletConnected === 'venly' ? venlyAccount.address : account!
-      //   )
-      //   if (getBalanceNumber(usdcBalance, 6) < currentTotalPrice) {
-      //     toast.error('Insufficient USDC Balance to your wallet')
-      //     return false
-      //   }
-      // } catch (e: any) {
-      //   toast.error(e.message)
-      //   return false
-      // }
+      try {
+        if (getBalanceNumber(usdcBalance, 6) < currentTotalPrice) {
+          toggleMoonPayModal()
+          return false
+        }
+      } catch (e: any) {
+        toast.error(e.message)
+        return false
+      }
       const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
 
       try {
@@ -140,7 +138,7 @@ export const useBuyPackMeta = () => {
         return false
       }
     },
-    [isWalletConnected, collectionContract, chainId, usdcTokenContract, venlyAccount, venlyConnect, walletAddress]
+    [isWalletConnected, chainId, collectionContract, usdcTokenContract, usdcBalance, venlyAccount, venlyConnect, walletAddress]
   )
   return { onBuyPackMeta: handleBuyPack }
 }

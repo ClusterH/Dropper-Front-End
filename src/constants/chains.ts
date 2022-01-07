@@ -4,4 +4,4 @@ export enum SupportedChainId {
   RINKEBY_TESTNET = 4,
 }
 
-export const VENLY_CHAIN_ID = 80001
+export const VENLY_CHAIN_ID = 137 //For the Test use 80001
