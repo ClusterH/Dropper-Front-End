@@ -2,6 +2,8 @@ import React from 'react'
 import { isMobile } from 'react-device-detect'
 import ARROW_RIGHT_ROUNDED from '../../assets/images/arrow-right-rounded.svg'
 import BANNER_IMG from '../../assets/images/banner.png'
+import BANNER_IMG2 from '../../assets/images/background.png'
+import HEADER_IMG from '../../assets/images/headerimage.png'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
 import MainButton from '../../components/Buttons/MainButton'
 import {
@@ -14,8 +16,6 @@ import {
   TextCustom,
 } from '../../styles/globalStyles'
 
-const InventoryBanner = 'https://dropper.s3.ca-central-1.amazonaws.com/main-banner.png'
-
 const Banner: React.FC<{ mainTitle?: string; subTitle?: string; summary?: string; isClix?: boolean }> = ({
   mainTitle,
   subTitle,
@@ -25,7 +25,7 @@ const Banner: React.FC<{ mainTitle?: string; subTitle?: string; summary?: string
   return (
     <ContainerColumn height={isMobile ? '50vw' : 'auto'}>
       <ImageContainer
-        src={isClix ? BANNER_IMG : InventoryBanner}
+        src={isClix ? BANNER_IMG : BANNER_IMG2}
         width={'100%'}
         height={isMobile ? '50vw' : 'auto'}
         borderRadius={'0'}
@@ -40,7 +40,7 @@ const Banner: React.FC<{ mainTitle?: string; subTitle?: string; summary?: string
             <BoxCardWithoutBorder flexDirection={'column'} boxWidth={isMobile ? '100%' : '40%'} alignItems={'flex-start'}>
               <TextCustom
                 color={'var(--primary-text)'}
-                fontSize={isMobile ? '1.5rem' : '3rem'}
+                fontSize={'3.33vmax'}
                 fontWeight={700}
                 fontFamily={'RubikBold'}
                 lineHeight={1.2}
@@ -50,7 +50,7 @@ const Banner: React.FC<{ mainTitle?: string; subTitle?: string; summary?: string
               </TextCustom>
               <SubText
                 color={'var(--secondary)'}
-                fontSize={isMobile ? '1.5rem' : '3rem'}
+                fontSize={'3.33vmax'}
                 fontWeight={600}
                 fontFamily={'RubikBold'}
                 textAlign={'center'}
@@ -72,16 +72,21 @@ const Banner: React.FC<{ mainTitle?: string; subTitle?: string; summary?: string
               <MainButton
                 width={'fit-content'}
                 borderRadius={'24px'}
-                height={isMobile ? '40px' : '50px'}
-                padding={isMobile ? '0 10px' : '0 24px'}
+                padding={'1.7vmax 2.4vmax'}
                 backgroundColor={'var(--secondary)'}
-                // margin={isMobile ? '' : '20px 0'}
                 onClick={() => (window.location.href = '/')}
               >
-                Back to Home &nbsp;
-                <ImageContainer src={ARROW_RIGHT_ROUNDED} width={isMobile ? '24px' : '36px'} />
+                <TextCustom fontSize={'1.1vmax'} fontWeight={600}>
+                  Back to Home &nbsp;
+                </TextCustom>
+                <ImageContainer src={ARROW_RIGHT_ROUNDED} width={'1.5vmax'} />
               </MainButton>
             </BoxCardWithoutBorder>
+            {!isMobile && !isClix && (
+              <BoxCardWithoutBorder boxWidth={'50%'}>
+                <ImageContainer src={HEADER_IMG} width={'70%'} />
+              </BoxCardWithoutBorder>
+            )}
           </ContainerRow>
         </ComponentWrapper>
       </ContainerRow>

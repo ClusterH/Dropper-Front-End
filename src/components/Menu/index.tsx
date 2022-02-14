@@ -17,14 +17,15 @@ const MenuContainer = styled(ContainerRow)`
 const Menu: React.FC = () => {
   return (
     <MenuContainer justifyContent={'flex-start'} width={'fit-content'}>
-      <MenuItem to="/clix">Drops</MenuItem>
+      <MenuItem to="/upcoming">Drops</MenuItem>
       <MenuItem to="/aboutus">About Us</MenuItem>
-      <MenuItem color={'var(--disabled)'} to="/ranks" onClick={(e) => e.preventDefault()}>
+      <MenuItem to="/howitwork">Launchpad</MenuItem>
+      {/* <MenuItem color={'var(--disabled)'} to="/ranks" onClick={(e) => e.preventDefault()}>
         Rankings
       </MenuItem>
       <MenuItem color={'var(--disabled)'} to="/marketplace" onClick={(e) => e.preventDefault()}>
         Marketplace
-      </MenuItem>
+      </MenuItem> */}
       {/* <MenuItem to="/account" fontSize={'1.3rem'}>
         My Account
       </MenuItem> */}

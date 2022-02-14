@@ -32,7 +32,7 @@ export const useGetWalletBalance = () => {
 
   useEffect(() => {
     const handleGetBalance = () => {
-      if (isWalletConnected === undefined || walletAddress.length === 0 || !chainId) {
+      if (isWalletConnected === undefined || walletAddress.length === 0 || !chainId || !usdcTokenContract) {
         return
       }
 
@@ -54,5 +54,5 @@ export const useGetWalletBalance = () => {
     }
 
     handleGetBalance()
-  }, [chainId, dispatch, walletAddress])
+  }, [chainId, dispatch, isWalletConnected, usdcTokenContract, walletAddress])
 }

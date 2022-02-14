@@ -17,6 +17,9 @@ const Inventory = lazy(() => import('./pages/Inventory'))
 const Packs = lazy(() => import('./pages/Packs'))
 const Ranks = lazy(() => import('./pages/Ranks'))
 const MarketPlace = lazy(() => import('./pages/Marketplace'))
+const UpcomingDropers = lazy(() => import('./pages/UpcomingDrops'))
+const HowToBuy = lazy(() => import('./pages/HowToBuy'))
+const HowItWork = lazy(() => import('./pages/HowItWork'))
 const Footer = lazy(() => import('./components/Footer'))
 
 const App: React.FC = () => {
@@ -49,6 +52,9 @@ const App: React.FC = () => {
             <Route exact path="/packs" component={Packs} />
             <Route exact path="/ranks" component={Ranks} />
             <Route exact path="/marketplace" component={MarketPlace} />
+            <Route exact path="/upcoming" component={UpcomingDropers} />
+            <Route exact path="/howtobuy" component={HowToBuy} />
+            <Route exact path="/howitwork" component={HowItWork} />
             <Route exact path="/:id" component={Home} />
           </Switch>
           <Footer />

@@ -34,7 +34,7 @@ export const CountdownBox: React.FC = () => {
             Launch!
           </SubText>
         </ContainerRow>
-        <DateTimeCount />
+        {/* <DateTimeCount /> */}
         <ContainerRow justifyContent={'center'} width={'70%'} margin={'15% auto 5% auto'}>
           <TextCustom
             color={'var(--primary-text)'}

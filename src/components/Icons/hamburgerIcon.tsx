@@ -46,14 +46,13 @@ const HamburgerMenuItem: React.FC<{ label: string; navLink: string; disabled?: b
 const HamburgerMenu: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({ setIsOpen }) => {
   return (
     <HamburgerMenuWrapper justifyContent={'flex-start'} onClick={() => setIsOpen(false)}>
-      <HamburgerMenuItem label={'Drops'} navLink={'clix'} />
+      <HamburgerMenuItem label={'Drops'} navLink={'upcoming'} />
       <HamburgerMenuItem label={'About Us'} navLink={'aboutus'} />
-      <HamburgerMenuItem disabled label={'Rankings'} navLink={'ranks'} />
-      <HamburgerMenuItem disabled label={'Marketplace'} navLink={'marketplace'} />
+      <HamburgerMenuItem label={'Launchpad'} navLink={'howitwork'} />
       <HamburgerMenuItem label={'Profile'} navLink={'inventory'} />
       {/* <WyreDebitCard />
       <WyreReservationModal /> */}
-      <MoonPayContainer />
+      {/* <MoonPayContainer /> */}
       <MoonPayModal />
     </HamburgerMenuWrapper>
   )

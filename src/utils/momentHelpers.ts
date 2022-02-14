@@ -3,8 +3,7 @@ import axios from 'axios'
 import { Contract, ethers, utils } from 'ethers'
 import DROPPER_ABI from '../abis/dropper.json'
 import { TRANSFER_BATCH_FILTER } from '../constants/blockNumber'
-import { SupportedChainId } from '../constants/chains'
-import { AWS_BASE_URI, AXIOS_BASE_URL, IPFS_BASE_URI } from '../constants/momentsURIs'
+import { AWS_BASE_URI, IPFS_BASE_URI } from '../constants/momentsURIs'
 import { AppDispatch } from '../state'
 import { setIsLoading, setLatestBlockNumber, setMomentList } from '../state/dropper/reducer'
 import { getDropperAddress } from './addressHelpers'
@@ -103,8 +102,10 @@ export const fetchMomentList = async (
 
 export const getAllMomentList = async (account: string, contract: Contract, chainId: number, dispatch: AppDispatch, txHash?: string) => {
   const specificAxios = setupInterceptorsTo(axios.create())
+  const AXIOS_BASE_URL = process.env.REACT_APP_AXIOS_BASE_URL
+  // const AXIOS_BASE_URL = 'http://127.0.0.1:5000'
   specificAxios
-    .get(`${AXIOS_BASE_URL}`, {
+    .get(`${AXIOS_BASE_URL}/dropper/transferBatch`, {
       params: {
         userAddress: account,
         chainId,

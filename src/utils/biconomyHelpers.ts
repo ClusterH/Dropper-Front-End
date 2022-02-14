@@ -142,7 +142,7 @@ const getMetaTransactionEIP712SignConfig = (
 
 const executeMetaTransaction = async (userAddress: string, contract: Contract, functionSignature: string, r: any, s: string, v: number) => {
   try {
-    const tx = await contract.executeMetaTransaction(userAddress, functionSignature, r, s, v, { gasLimit: 1000000 })
+    const tx = await contract.executeMetaTransaction(userAddress, functionSignature, r, s, v, { gasLimit: 3000000 })
     const receipt = await tx.wait()
     return receipt.status
   } catch (error) {

@@ -14,6 +14,7 @@ import {
 import { useWalletModalToggle } from '../../state/application/hook'
 import { ContainerRow } from '../../styles/globalStyles'
 import { shortenAddress } from '../../utils'
+import { getBalanceNumber } from '../../utils/bigNumber'
 import { isSupportedNetwork } from '../../utils/validateChainID'
 import WalletModal from '../WalletModal'
 
@@ -102,7 +103,7 @@ const Web3StatusInner: React.FC = () => {
       <Web3StatusWrapper>
         <Text>
           {maticBalance && parseFloat(formatEther(maticBalance)).toFixed(3)} MATIC /{' '}
-          {usdcBalance && parseFloat(formatEther(usdcBalance)).toFixed(3)} USDC
+          {usdcBalance && getBalanceNumber(usdcBalance, 6).toFixed(3)} USDC
         </Text>
         <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal}>
           <Text>{shortenAddress(walletAddress)}</Text>

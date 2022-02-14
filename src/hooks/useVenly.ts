@@ -1,6 +1,5 @@
 import { SecretType } from '@venly/connect'
 import { AuthenticationResult } from '@venly/connect/dist/src/connect/connect'
-import { Venly } from '@venly/web3-provider'
 import { useCallback, useEffect, useMemo } from 'react'
 import { VENLY_CHAIN_ID } from '../constants/chains'
 import { AppState } from '../state'
@@ -21,24 +20,6 @@ export const useGetVenlyConnect = () => {
 
 export const useIsVenly = () => {
   return useAppSelector((state: AppState) => state.venly.isVenly)
-}
-
-export const useVenlyProvider = () => {
-  return useMemo(async () => {
-    const options = {
-      clientId: 'Testaccount',
-      // environment: 'staging', //optional, production by default
-      signMethod: 'POPUP', //optional, REDIRECT by default
-      //optional: you can set an identity provider to be used when authenticating
-      authenticationOptions: {
-        idpHint: 'google',
-      },
-      skipAuthentication: true,
-      secretType: SecretType.MATIC, //optional, ETHEREUM by default
-    }
-    const venlyProvider = await Venly.createProviderEngine(options)
-    return venlyProvider
-  }, [])
 }
 
 export const useVenlyConnection = () => {
