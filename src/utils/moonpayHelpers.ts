@@ -24,7 +24,7 @@ export const getMoonPayNFTWidgetURL = (chainId: number, tokenId: number, walletA
   const { apiKey, secretKey, baseUrl } = getMoonPayConfig(chainId)
   const collectionAddress = getCollectionAddress(chainId)
 
-  const urlTemp = `${baseUrl}/nft?contractAddress=${collectionAddress}&tokenId=${tokenId}&apiKey=${apiKey}&walletAddress=${walletAddress}&colorCode=%23ff0069&showWalletAddressForm=true`
+  const urlTemp = `${baseUrl}/nft?contractAddress=${collectionAddress}&tokenId=${tokenId}&apiKey=${apiKey}&walletAddress=${walletAddress}&colorCode=%23ff0069`
 
   const signature = crypto.createHmac('sha256', secretKey!).update(new URL(urlTemp).search).digest('base64')
   const moonPayNFTURL = `${urlTemp}&signature=${encodeURIComponent(signature)}`
