@@ -11,11 +11,7 @@ class WorkaroundWeb3Provider extends Web3Provider {
 export default function getLibrary(provider: any): Web3Provider {
   const library = new WorkaroundWeb3Provider(
     provider,
-    typeof provider.chainId === 'number'
-      ? provider.chainId
-      : typeof provider.chainId === 'string'
-      ? parseInt(provider.chainId)
-      : 'any'
+    typeof provider.chainId === 'number' ? provider.chainId : typeof provider.chainId === 'string' ? parseInt(provider.chainId) : 'any'
   )
   library.pollingInterval = 15000
   return library

@@ -1,7 +1,7 @@
 import Jazzicon from '@metamask/jazzicon'
 import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components/macro'
-import { useActiveWeb3React } from '../../../hooks/useWeb3'
+import { useEthers } from '@usedapp/core'
 
 const StyledIdenticonContainer = styled.div`
   height: 1rem;
@@ -12,7 +12,7 @@ const StyledIdenticonContainer = styled.div`
 
 export default function Identicon() {
   const ref = useRef<HTMLDivElement>()
-  const { account } = useActiveWeb3React()
+  const { account } = useEthers()
 
   useEffect(() => {
     if (account && ref.current) {

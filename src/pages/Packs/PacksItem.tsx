@@ -1,13 +1,6 @@
 import React, { useState } from 'react'
 import { FacebookIcon, FavoriteIcon, LinkedInIcon, RedditIcon, TwitterIcon } from '../../components/Icons'
-import {
-  BoxCard,
-  ContainerColumn,
-  ContainerRow,
-  ImageContainer,
-  RoundedIconBox,
-  TextCustom,
-} from '../../styles/globalStyles'
+import { BoxCard, ContainerColumn, ContainerRow, ImageContainer, RoundedIconBox, TextCustom } from '../../styles/globalStyles'
 
 export const PacksItem: React.FC<{ width?: string }> = ({ width }) => {
   const [favoriteItem, setFavoriteItem] = useState(false)
@@ -39,11 +32,7 @@ export const PacksItem: React.FC<{ width?: string }> = ({ width }) => {
           Realm
         </TextCustom>
         <ContainerRow justifyContent={'flex-start'}>
-          <RoundedIconBox
-            backColor={'var(--primary-text)'}
-            width={'30px'}
-            onClick={() => setFavoriteItem(!favoriteItem)}
-          >
+          <RoundedIconBox backColor={'var(--primary-text)'} width={'30px'} onClick={() => setFavoriteItem(!favoriteItem)}>
             <FavoriteIcon color={favoriteItem ? 'var(--secondary)' : '#666666'} />
           </RoundedIconBox>
           <TextCustom color={'var(--primary-text)'} fontSize={'12px'} fontWeight={300}>

@@ -26,3 +26,7 @@ export function useWyreReservationModalToggle(): () => void {
 export function useMoonPayModalToggle(): () => void {
   return useToggleModal(ApplicationModal.MOONPAY)
 }
+
+export function useMoonPayNFTModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.MOONPAY_NFT)
+}

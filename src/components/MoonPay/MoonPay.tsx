@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useMoonPayModalToggle } from '../../state/application/hook'
+import { useMoonPay } from '../../hooks/useMoonPay'
 import { size } from '../../styles/globalStyles'
 
 const MoonPayWrapper = styled.div`
@@ -18,9 +18,9 @@ const MoonPayWrapper = styled.div`
 `
 
 const MoonPay: React.FC = () => {
-  const toogleMoonPayModal = useMoonPayModalToggle()
+  const { handleMoonPayClick } = useMoonPay()
 
-  return <MoonPayWrapper onClick={toogleMoonPayModal}>Buy Crypto(MoonPay)</MoonPayWrapper>
+  return <MoonPayWrapper onClick={handleMoonPayClick}>Buy Crypto</MoonPayWrapper>
 }
 
 export default MoonPay

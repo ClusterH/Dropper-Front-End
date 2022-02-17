@@ -49,47 +49,25 @@ const PartnerCard: React.FC<{
         >
           {text}
         </TextCustom>
-        <ContainerRow
-          width={'80%'}
-          padding={'0'}
-          margin={'5% 0 10% 0'}
-          justifyContent={'flex-start'}
-          alignItems={'center'}
-        >
+        <ContainerRow width={'80%'} padding={'0'} margin={'5% 0 10% 0'} justifyContent={'flex-start'} alignItems={'center'}>
           {website && (
-            <SocialNavLink
-              href={website}
-              target="_blank"
-              onClick={(event) => (website ? null : event.preventDefault())}
-            >
+            <SocialNavLink href={website} target="_blank" onClick={(event) => (website ? null : event.preventDefault())}>
               <BiLink color={'var(--primary-text)'} size={isMobile ? '20px' : '24px'} />
             </SocialNavLink>
           )}
           {twitter && (
             <SocialNavLink href={twitter} target="_blank">
-              <TwitterIcon
-                color={'var(--primary-text)'}
-                width={isMobile ? '20px' : '24px'}
-                height={isMobile ? '20px' : '24px'}
-              />
+              <TwitterIcon color={'var(--primary-text)'} width={isMobile ? '20px' : '24px'} height={isMobile ? '20px' : '24px'} />
             </SocialNavLink>
           )}
           {linkedin && (
             <SocialNavLink href={linkedin} target="_blank">
-              <LinkedInIcon
-                color={'var(--primary-text)'}
-                width={isMobile ? '20px' : '24px'}
-                height={isMobile ? '20px' : '24px'}
-              />
+              <LinkedInIcon color={'var(--primary-text)'} width={isMobile ? '20px' : '24px'} height={isMobile ? '20px' : '24px'} />
             </SocialNavLink>
           )}
           {skype && (
             <SocialNavLink href={skype} target="_blank">
-              <SkypeIcon
-                color={'var(--primary-text)'}
-                width={isMobile ? '20px' : '24px'}
-                height={isMobile ? '20px' : '24px'}
-              />
+              <SkypeIcon color={'var(--primary-text)'} width={isMobile ? '20px' : '24px'} height={isMobile ? '20px' : '24px'} />
             </SocialNavLink>
           )}
         </ContainerRow>

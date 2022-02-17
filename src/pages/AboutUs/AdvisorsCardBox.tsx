@@ -2,20 +2,9 @@ import React from 'react'
 import { isMobile } from 'react-device-detect'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
 import { advisorList } from '../../constants/dummy'
-import {
-  BoxCard,
-  ComponentWrapper,
-  ContainerRow,
-  ImageContainer,
-  PhotoContainer,
-  SubText,
-  TextCustom,
-} from '../../styles/globalStyles'
+import { BoxCard, ComponentWrapper, ContainerRow, ImageContainer, PhotoContainer, SubText, TextCustom } from '../../styles/globalStyles'
 
-export const AdvisorCardBoxItem: React.FC<{ src: string; mainText: string; contentText?: string }> = ({
-  src,
-  mainText,
-}) => {
+export const AdvisorCardBoxItem: React.FC<{ src: string; mainText: string; contentText?: string }> = ({ src, mainText }) => {
   return (
     <BoxCard
       boxWidth={isMobile ? '40%' : '20%'}
@@ -59,13 +48,7 @@ export const AdvisorCardBoxItem: React.FC<{ src: string; mainText: string; conte
       >
         {contentText}
       </TextCustom> */}
-      <ContainerRow
-        width={'80%'}
-        padding={'10% 0'}
-        margin={'0 0 10% 0'}
-        justifyContent={'space-around'}
-        alignItems={'center'}
-      >
+      <ContainerRow width={'80%'} padding={'10% 0'} margin={'0 0 10% 0'} justifyContent={'space-around'} alignItems={'center'}>
         {/* <TwitterIcon />
         <LinkedInIcon />
         <SkypeIcon /> */}

@@ -9,11 +9,7 @@ const ImgContainer = styled.img<{ imgWidth?: string; imgHeight?: string }>`
   object-fit: cover;
 `
 
-const OnlineImages: React.FC<{ url: string; imgWidth?: string; imgHeight?: string }> = ({
-  url,
-  imgWidth,
-  imgHeight,
-}) => {
+const OnlineImages: React.FC<{ url: string; imgWidth?: string; imgHeight?: string }> = ({ url, imgWidth, imgHeight }) => {
   return <ImgContainer src={url} imgWidth={imgWidth} imgHeight={imgHeight} />
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ISlideShow, useSlideShow } from '../../hooks/useSlideShow'
-import { MainButton } from '../Buttons/MainButton'
+import MainButton from '../Buttons/MainButton'
 
 const CarouselContainer = styled.div`
   width: 100%;

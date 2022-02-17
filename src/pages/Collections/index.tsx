@@ -1,7 +1,5 @@
 import React from 'react'
 import Banner from '../../components/Banners'
-import { useInitBiconomy } from '../../hooks/useBiconomy'
-import { useIsApproved } from '../../hooks/useCollection'
 import { PageWrapper } from '../../styles/globalStyles'
 import { CollectionCommon } from './CollectionCommon'
 import { CollectionEpic } from './CollectionEpic'
@@ -13,17 +11,9 @@ import { CreatorBox } from './CreatorBox'
 import { PackList } from './PackList'
 
 const Collections: React.FC = () => {
-  useIsApproved()
-  // useInitBiconomy()
-
   return (
     <PageWrapper>
-      <Banner
-        mainTitle={'Fortnite Star'}
-        subTitle={'Clix'}
-        summary={'Get his first NFTs here, exclusively on Dropper'}
-        isClix
-      />
+      <Banner mainTitle={'Fortnite Star'} subTitle={'Clix'} summary={'Get his first NFTs here, exclusively on Dropper'} isClix />
       <CollectionVideo />
       <PackList />
       {/* <CountdownBox /> */}

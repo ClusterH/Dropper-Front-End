@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { TransparentBtn } from '../../../components/Buttons/MainButton'
 import { VideoContainer } from '../../../components/VideoContainer'
-import { useOpenPackMeta, useOpenPackWithApprove } from '../../../hooks/useCollection'
+import { useOpenPackMeta } from '../../../hooks/useCollection'
 import { BoxCard, ContainerColumn, TextCustom } from '../../../styles/globalStyles'
 import { TPackItem, TSelectedTab } from '../../../types'
 import { ProcessingLoader } from '../../Collections/Processing'
@@ -15,12 +15,8 @@ interface IPackItem {
   onClick: () => void
 }
 
-export const PacksItem: React.FC<{ pack: TPackItem; setSelectedTab: (tab: TSelectedTab) => void }> = ({
-  pack,
-  setSelectedTab,
-}) => {
+export const PacksItem: React.FC<{ pack: TPackItem; setSelectedTab: (tab: TSelectedTab) => void }> = ({ pack, setSelectedTab }) => {
   const [pendingTx, setPendingTx] = useState<boolean>(false)
-  const { onOpenPack } = useOpenPackWithApprove()
   const { onOpenPackMeta } = useOpenPackMeta()
 
   return (

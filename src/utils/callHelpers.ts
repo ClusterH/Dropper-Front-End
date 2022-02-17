@@ -31,13 +31,11 @@ export const approveUSDC = async (usdcTokenContract: Contract, collectionContrac
 }
 
 export const getMaticBalanace = async (provider: JsonRpcProvider, account: string) => {
-  const maticBalance = await provider.getBalance(account)
-  return ethers.utils.formatEther(maticBalance)
+  return await provider.getBalance(account)
 }
 
 export const getUSDCBalance = async (usdcTokenContract: Contract, account: string) => {
-  const balance = await usdcTokenContract.balanceOf(account)
-  return balance
+  return await usdcTokenContract.balanceOf(account)
 }
 
 export const getGasPrice = async (provider: Web3Provider | JsonRpcSigner) => {
@@ -94,12 +92,7 @@ export const openPacks = async (contract: Contract, packId: number, account: str
   return receipt.status
 }
 
-export const fetchEventLogs = async (
-  contract: Contract,
-  eventFilter: ethers.EventFilter,
-  fromBlock: number,
-  toBlock: number
-) => {
+export const fetchEventLogs = async (contract: Contract, eventFilter: ethers.EventFilter, fromBlock: number, toBlock: number) => {
   const event = await contract.queryFilter(eventFilter, fromBlock, toBlock)
   return event
 }

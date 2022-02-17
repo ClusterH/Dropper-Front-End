@@ -1,6 +1,6 @@
 import React from 'react'
 import PIN_ICON from '../../../assets/images/pin-icon.svg'
-import { MainButton } from '../../../components/Buttons/MainButton'
+import MainButton from '../../../components/Buttons/MainButton'
 import Checkbox from '../../../components/Checkbox'
 import { BoxCardWithoutBorder, ContainerRow, ImageContainer, TextCustom } from '../../../styles/globalStyles'
 

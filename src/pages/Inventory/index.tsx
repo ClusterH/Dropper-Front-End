@@ -1,27 +1,18 @@
+import { useEthers } from '@usedapp/core'
 import React, { useEffect, useState } from 'react'
+import { isMobile } from 'react-device-detect'
 import styled from 'styled-components'
-import { MainButton } from '../../components/Buttons/MainButton'
+import PIN_ICON from '../../assets/images/pin-icon.svg'
+import Banner from '../../components/Banners'
+import MainButton from '../../components/Buttons/MainButton'
 import { SearchBox } from '../../components/SearchBox'
 import TabMenu from '../../components/TabMenu'
-import {
-  ComponentWrapper,
-  ContainerRow,
-  ImageContainer,
-  PageWrapper,
-  ResponsiveContainer,
-  TextCustom,
-} from '../../styles/globalStyles'
-import Banner from '../../components/Banners'
-import PIN_ICON from '../../assets/images/pin-icon.svg'
-import { TwitterIcon } from '../../components/Icons'
+import { useGetMomentList, useGetPackList } from '../../hooks/useDropper'
+import { ComponentWrapper, ContainerRow, ImageContainer, PageWrapper, ResponsiveContainer, TextCustom } from '../../styles/globalStyles'
+import { TSelectedTab } from '../../types'
 import { MomentsList } from './Moments/MomentsList'
 import { PacksList } from './Packs/PacksList'
 import { Rankings } from './Rankings'
-import { TSelectedTab } from '../../types'
-import { useActiveWeb3React } from '../../hooks/useWeb3'
-import { useGetMomentList, useGetPackList } from '../../hooks/useDropper'
-import { shortenAddress } from '../../utils'
-import { isMobile } from 'react-device-detect'
 
 const ContainerWithoutLeftBorder = styled(ContainerRow)`
   border: 1px solid var(--light-navy-blue);
@@ -41,7 +32,7 @@ const ContainerWithBottomBorder = styled(ContainerRow)`
 `
 
 const Inventory: React.FC = () => {
-  const { account } = useActiveWeb3React()
+  const { account } = useEthers()
   const [selectedTab, setSelectedTab] = useState<TSelectedTab>('packs')
   useGetPackList()
   useGetMomentList()

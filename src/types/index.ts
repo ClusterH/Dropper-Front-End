@@ -1,12 +1,6 @@
 //Flex Layout
 export type TFlexDirections = 'row' | 'row-reverse' | 'column' | 'column-reverse'
-export type TFlexJustifyContents =
-  | 'flex-start'
-  | 'flex-end'
-  | 'center'
-  | 'space-between'
-  | 'space-around'
-  | 'space-evenly'
+export type TFlexJustifyContents = 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly'
 export type TFlexAlignItems =
   | 'stretch'
   | 'flex-start'

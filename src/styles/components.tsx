@@ -7,6 +7,7 @@ const StyledLink = styled.a`
   cursor: pointer;
   color: var(--secondary);
   font-weight: 500;
+  word-break: break-all;
 
   :hover {
     text-decoration: underline;

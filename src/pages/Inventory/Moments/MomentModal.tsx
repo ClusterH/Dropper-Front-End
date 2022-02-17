@@ -5,15 +5,7 @@ import { ReactComponent as Close } from '../../../assets/images/x.svg'
 import { FacebookIcon, FavoriteIcon, LinkedInIcon, RedditIcon, TwitterIcon } from '../../../components/Icons'
 import Modal from '../../../components/Modals/Modal'
 import { VideoContainer } from '../../../components/VideoContainer'
-import {
-  BoxCard,
-  ContainerColumn,
-  ContainerRow,
-  RoundedIconBox,
-  SubText,
-  TextCustom,
-  TextDescription,
-} from '../../../styles/globalStyles'
+import { BoxCard, ContainerColumn, ContainerRow, RoundedIconBox, SubText, TextCustom, TextDescription } from '../../../styles/globalStyles'
 import { TMomentItem } from '../../../types'
 
 const Wrapper = styled.div`
@@ -118,11 +110,7 @@ export const MomentModal: React.FC<IMomentModal> = ({ moment, momentModalOpen, t
           </TextCustom>
           <ContainerRow justifyContent={'flex-start'}>
             {/* <TransparentBtn borderRadius={'39px'}>Place for Scale</TransparentBtn> */}
-            <RoundedIconBox
-              backColor={'var(--primary-opacity)'}
-              width={'30px'}
-              onClick={() => setFavoriteItem(!favoriteItem)}
-            >
+            <RoundedIconBox backColor={'var(--primary-opacity)'} width={'30px'} onClick={() => setFavoriteItem(!favoriteItem)}>
               <FavoriteIcon color={favoriteItem ? 'var(--secondary)' : 'var(--primary-text)'} width={'20px'} />
             </RoundedIconBox>
             <TextCustom color={'var(--primary-text)'} fontSize={'12px'} fontWeight={300}>

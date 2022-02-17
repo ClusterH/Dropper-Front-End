@@ -5,15 +5,7 @@ import styled from 'styled-components'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
 import { LinkedInIcon, SkypeIcon, TwitterIcon } from '../../components/Icons'
 import { teamList } from '../../constants/dummy'
-import {
-  BoxCard,
-  ComponentWrapper,
-  ContainerRow,
-  ImageContainer,
-  PhotoContainer,
-  SubText,
-  TextCustom,
-} from '../../styles/globalStyles'
+import { BoxCard, ComponentWrapper, ContainerRow, ImageContainer, PhotoContainer, SubText, TextCustom } from '../../styles/globalStyles'
 
 const SocialNavLink = styled.a`
   text-decoration: none;
@@ -103,14 +95,7 @@ export const TeamCardBox: React.FC = () => {
   }, [id])
 
   return (
-    <ContainerRow
-      ref={teamRef}
-      width={'100%'}
-      backgroundColor={'var(--dark-navy)'}
-      padding={'0'}
-      margin={'0'}
-      justifyContent={'center'}
-    >
+    <ContainerRow ref={teamRef} width={'100%'} backgroundColor={'var(--dark-navy)'} padding={'0'} margin={'0'} justifyContent={'center'}>
       <ComponentWrapper margin={isMobile ? '10px 0 0' : '50px 0 0'} padding={'24px'}>
         <TextCustom
           fontSize={isMobile ? '2rem' : '3.5rem'}

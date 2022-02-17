@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import HAMBURGER_IMG from '../../assets/images/menu.png'
 import { ContainerColumn, ContainerRow, device } from '../../styles/globalStyles'
 import { MenuItem } from '../Menu/MenuItem'
+import { MoonPayContainer, MoonPayModal } from '../MoonPay'
+import MoonPayNFTModal from '../MoonPay/MoonPayNFTModal'
 import { WyreDebitCard } from '../Wyre/DebitCard'
 import WyreReservationModal from '../WyreModal'
 
@@ -27,11 +29,7 @@ const HamburgerMenuWrapper = styled(ContainerColumn)`
   border: 2px solid var(--secondary);
   transition: background-color 3000ms ease-in-out 0s, opacity 8000ms ease-in-out 0s;
 `
-const HamburgerMenuItem: React.FC<{ label: string; navLink: string; disabled?: boolean }> = ({
-  label,
-  navLink,
-  disabled,
-}) => {
+const HamburgerMenuItem: React.FC<{ label: string; navLink: string; disabled?: boolean }> = ({ label, navLink, disabled }) => {
   return (
     <ContainerRow margin={'24px 0 0 0'} justifyContent={'center'}>
       <MenuItem
@@ -49,13 +47,15 @@ const HamburgerMenuItem: React.FC<{ label: string; navLink: string; disabled?: b
 const HamburgerMenu: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({ setIsOpen }) => {
   return (
     <HamburgerMenuWrapper justifyContent={'flex-start'} onClick={() => setIsOpen(false)}>
-      <HamburgerMenuItem label={'Drops'} navLink={'clix'} />
+      <HamburgerMenuItem label={'Drops'} navLink={'upcoming'} />
       <HamburgerMenuItem label={'About Us'} navLink={'aboutus'} />
-      <HamburgerMenuItem disabled label={'Rankings'} navLink={'ranks'} />
-      <HamburgerMenuItem disabled label={'Marketplace'} navLink={'marketplace'} />
+      <HamburgerMenuItem label={'Launchpad'} navLink={'howitwork'} />
       <HamburgerMenuItem label={'Profile'} navLink={'inventory'} />
-      <WyreDebitCard />
-      <WyreReservationModal />
+      {/* <WyreDebitCard />
+      <WyreReservationModal /> */}
+      {/* <MoonPayContainer /> */}
+      <MoonPayModal />
+      <MoonPayNFTModal />
     </HamburgerMenuWrapper>
   )
 }

@@ -1,81 +1,49 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import DROP_EXPLAIN_ITEM from '../../assets/images/dropper-explain-item.svg'
+import styled from 'styled-components'
+import BANNER_THIRD from '../../assets/images/banner-third.svg'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
-import {
-  BoxCard,
-  ComponentWrapper,
-  ContainerColumn,
-  ImageContainer,
-  ResponsiveContainer,
-  SubText,
-  TextCustom,
-} from '../../styles/globalStyles'
+import { TimelineContainer } from '../../components/TimelineContainer'
+import { ComponentWrapper, ContainerColumn, device, ImageContainer, SpacerLarge, SubText, TextCustom } from '../../styles/globalStyles'
 
-const DroppExplainList = [
+const ResponsiveWrapper = styled(ContainerColumn)`
+  align-items: center;
+  @media ${device.laptop} {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+`
+const cardItems = [
   {
-    id: 1,
-    description: 'Web3 Powered Innovation',
-    subDescription:
-      'Dropper is a digital web3 platform for celebrities to create unique experiences for fans powered by NFTs and Tokenization.',
+    cardTitle: 'A Multi-Chain NFT Launchpad',
+    cardSecondTitle: 'With a Multi-Chain Marketplace Coming Soon',
+    cardContent: 'Launch your NFT collection with a pre-audited smart contract on leading chains like Ethereum, Polygon, Solana and Hedera',
   },
   {
-    id: 2,
-    description: 'Where Celebrities Drop NFTs',
-    subDescription:
-      'Celebrities create NFTs both from historical and freshly generated content. Fans collect these NFTs to get access to web3 powered experiences.',
+    cardTitle: 'Introducing $DROPP',
+    cardSecondTitle: 'The token powering the Dropper platform',
+    cardContent: '100% of transaction fees from Mint, Royalties, and Trade are distributed to Stakers of the DROPP token.',
   },
   {
-    id: 3,
-    description: 'Unique Access into Digital Worlds',
-    subDescription: "These NFTs enable you unique access into celebrities' worlds. No two experiences are the same.",
+    cardTitle: 'Mint & Trade to Earn.',
+    cardContent: 'Earn DROPP token every time you mint or trade an NFT on the Dropper platform.',
   },
   {
-    id: 4,
-    description: 'Access to the Impossible',
-    subDescription:
-      'It’s not just about collecting content, it’s about getting access. Access to unique experiences that only token holders are able to access.',
+    cardTitle: 'Incentivizing Creators',
+    cardSecondTitle: 'To Launch with an incentivized community',
+    cardContent: 'Dropper enables creators to launch with pre-audited smart contracts within an incentivized community. ',
   },
 ]
 
-export const DroppExplainItem: React.FC<{ url: string; description: string; subDescription: string }> = ({
-  url,
-  description,
-  subDescription,
-}) => {
-  return (
-    <BoxCard
-      boxWidth={isMobile ? '100%' : '47%'}
-      boxHeight={'150px'}
-      border={'5px solid var(--light-navy-blue)'}
-      justifyContent={'flex-start'}
-      borderRadius={'5px'}
-      borderHover={'2px solid var(--secondary-opacity)'}
-      backgroundHover={'var(--dark-secondary)'}
-    >
-      <ImageContainer src={url} width={'75px'} borderRadius={'0'} objectFit={'contain'} margin={'0 20px 0 20px'} />
-      <ContainerColumn width={isMobile ? '100%' : '80%'} alignItems={'flex-start'} gap={'20px'}>
-        <TextCustom
-          fontSize={isMobile ? '1rem' : '1.25rem'}
-          fontWeight={600}
-          fontFamily={'RubikBold'}
-          lineHeight={1.1}
-          textAlign={'left'}
-        >
-          {description}
-        </TextCustom>
-        <TextCustom fontSize={isMobile ? '0.6rem' : '1rem'} fontWeight={300} lineHeight={1.3} textAlign={'left'}>
-          {subDescription}
-        </TextCustom>
-      </ContainerColumn>
-    </BoxCard>
-  )
-}
-
 export const DroppExplain: React.FC = () => {
+  const [selectedCard, setSelectedCard] = useState(1)
+  const cardSelect = (index: number) => {
+    setSelectedCard(index)
+  }
+
   return (
-    <ComponentWrapper padding={'24px'}>
-      <ContainerColumn>
+    <ComponentWrapper margin={'0 0 50px'}>
+      <ResponsiveWrapper justifyContent={'center'}>
         <TextCustom
           fontSize={isMobile ? '2rem' : '3.5rem'}
           fontWeight={600}
@@ -96,19 +64,26 @@ export const DroppExplain: React.FC = () => {
             Dropper?
           </SubText>
         </TextCustom>
-        <ResponsiveContainer>
-          {DroppExplainList.map((item) => {
+      </ResponsiveWrapper>
+      <SpacerLarge />
+      <ResponsiveWrapper>
+        <ImageContainer src={BANNER_THIRD} width={isMobile ? '90%' : '35%'} objectFit={'cover'} margin={'0 20px 0 20px'} />
+        <ContainerColumn width={isMobile ? '90%' : '62%'}>
+          {cardItems.map((item, index) => {
             return (
-              <DroppExplainItem
-                key={item.id}
-                url={DROP_EXPLAIN_ITEM}
-                description={item.description}
-                subDescription={item.subDescription}
+              <TimelineContainer
+                key={`card_${index}`}
+                cardTitle={item.cardTitle}
+                cardSecondTitle={item.cardSecondTitle}
+                cardContent={item.cardContent}
+                cardSelected={selectedCard >= index}
+                onMouseMove={() => cardSelect(index)}
+                onScroll={() => cardSelect(index)}
               />
             )
           })}
-        </ResponsiveContainer>
-      </ContainerColumn>
+        </ContainerColumn>
+      </ResponsiveWrapper>
     </ComponentWrapper>
   )
 }

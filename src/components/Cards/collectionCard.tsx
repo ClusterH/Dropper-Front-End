@@ -21,9 +21,6 @@ const CollectionTextBox = styled(TextCustom)`
     width: 60vw;
   }
 `
-interface PromiseWithCancel<T> extends Promise<T> {
-  cancel: () => void
-}
 
 const CollectionCard: React.FC<{
   url: string
@@ -34,12 +31,12 @@ const CollectionCard: React.FC<{
   contentUrl?: string
   isVertical: boolean
 }> = ({ url, imgWidth, imgHeight, boxWidth, title, contentUrl, isVertical }) => {
-  const [isCardOver, setIsCardOver] = useState<boolean>(false)
+  // const [isCardOver, setIsCardOver] = useState<boolean>(false)
   const [content, setContent] = useState<string | undefined>('')
 
   useEffect(() => {
     const controller = new AbortController()
-    if (!!contentUrl)
+    if (contentUrl)
       fetch(contentUrl, {
         headers: { 'content-type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       })
@@ -72,8 +69,8 @@ const CollectionCard: React.FC<{
       flexDirection={'column'}
       justifyContent={'flex-start'}
       padding={'20px'}
-      onMouseOver={() => setIsCardOver(true)}
-      onMouseLeave={() => setIsCardOver(false)}
+      // onMouseOver={() => setIsCardOver(true)}
+      // onMouseLeave={() => setIsCardOver(false)}
     >
       <ImgContainer src={url} imgWidth={imgWidth} imgHeight={imgHeight} />
       <ContainerColumn alignItems={`${isVertical ? 'center' : 'flex-start'}`}>
@@ -97,7 +94,7 @@ const CollectionCard: React.FC<{
           textAlign={`${isVertical ? 'center' : 'left'}`}
           margin={'3% 2% 5% 5%'}
         >
-          {!!!content ? '' : content}
+          {!content ? '' : content}
         </TextCustom>
         <TextCustom
           color={'var(--primary-text)'}

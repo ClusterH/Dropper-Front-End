@@ -1,85 +1,82 @@
-import { VenlyConnect } from '@venly/connect'
-import BigNumber from 'bignumber.js'
-import { ethers } from 'ethers'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEthers } from '@usedapp/core'
+import { BigNumber, ethers } from 'ethers'
+import { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { AppState } from '../state'
+import { useMoonPayModalToggle } from '../state/application/hook'
 import { setUserCartList } from '../state/cart/reducer'
 import { setIsUSDCApproved } from '../state/dropper/reducer'
 import { useAppDispatch, useAppSelector } from '../state/hooks'
 import { TPackItem } from '../types'
-import { approveUSDCMexa, buyPackMeta, buyPackMexaVenly, openPackMeta } from '../utils/biconomyHelpers'
+import {
+  approveUSDCMeta,
+  approveUSDCMetaVenly,
+  buyPackMeta,
+  buyPackMetaVenly,
+  openPackMeta,
+  openPackMetaVenly,
+} from '../utils/biconomyHelpers'
 import { getBalanceNumber } from '../utils/bigNumber'
-import {
-  allowance,
-  approve,
-  approveUSDC,
-  buyPacks,
-  getUSDCBalance,
-  isApprovedForAll,
-  openPacks,
-} from '../utils/callHelpers'
-import { estimateGas } from '../utils/estimateGas'
-import { isSupportedNetwork } from '../utils/validateChainID'
-import { useInitBiconomy } from './useBiconomy'
-import {
-  useGetCollectionContract,
-  useGetDropperContract,
-  useGetMultiCallContract,
-  useGetUSDCTokenContract,
-} from './useContract'
-import { useVenlyAccount, useVenlyConnection } from './useVenly'
-import { useActiveWeb3React } from './useWeb3'
+import { allowance } from '../utils/callHelpers'
+import { useGetContracts } from './useContract'
+import { useMoonPayNFT } from './useMoonPay'
+import { useGetVenlyConnect, useVenlyAccount } from './useVenly'
+import { useChainId, useIsWalletConnected, useUSDCBalance, useWalletAddress } from './useWallet'
 
 export const useApprove = () => {
   return useAppSelector((state: AppState) => state.dropper.isUSDCApproved)
 }
 
 export const useIsApproved = async () => {
-  const { account, chainId } = useActiveWeb3React()
-  const collectionContract = useGetCollectionContract()
-  const usdcTokenContract = useGetUSDCTokenContract()
+  const isWalletConnected = useIsWalletConnected()
+  const walletAddress = useWalletAddress()
+  const { collectionContract, usdcTokenContract } = useGetContracts()
+
   const dispatch = useAppDispatch()
 
-  if (!account || isSupportedNetwork(chainId) === false || !collectionContract || !usdcTokenContract) {
+  if (isWalletConnected === undefined || !collectionContract || !usdcTokenContract) {
     toast.error('Please check your Wallet Connection First!', { toastId: 'Not Connected' })
     return
   }
 
   try {
-    // const allowanceAmount = await allowance(usdcTokenContract, collectionContract, account)
-    // if (allowanceAmount.lte(0)) {
-    dispatch(setIsUSDCApproved(true))
-    //   } else dispatch(setIsUSDCApproved(true))
+    const allowanceAmount = await allowance(usdcTokenContract, collectionContract, walletAddress)
+    if (allowanceAmount.lte(0)) {
+      dispatch(setIsUSDCApproved(true))
+    } else dispatch(setIsUSDCApproved(true))
   } catch (e) {
     console.error(e)
   }
 }
 
-export const useApproveUSDC = () => {
-  const { account, chainId } = useActiveWeb3React()
-
-  const collectionContract = useGetCollectionContract()
-  const usdcTokenContract = useGetUSDCTokenContract()
-  const dispatch = useAppDispatch()
+export const useApproveUSDCMeta = () => {
+  const isWalletConnected = useIsWalletConnected()
+  const walletAddress = useWalletAddress()
+  const chainId = useChainId()
+  const venlyConnect = useGetVenlyConnect()
+  const venlyAccount = useVenlyAccount()
+  const { collectionContract, usdcTokenContract } = useGetContracts()
 
   const handleApprove = useCallback(async () => {
-    if (!account || isSupportedNetwork(chainId) === false || !collectionContract || !usdcTokenContract) {
+    if (isWalletConnected === undefined || !chainId || !collectionContract || !usdcTokenContract) {
       toast.error('Please check your Wallet Connection First!', { toastId: 'Not Connected-2' })
       setIsUSDCApproved(false)
       return false
     }
+    const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
 
     try {
-      const status = await approveUSDC(usdcTokenContract, collectionContract, account)
+      const status =
+        isWalletConnected === 'venly'
+          ? await approveUSDCMetaVenly(venlyAccount, venlyConnect!, chainId, usdcTokenContract)
+          : await approveUSDCMeta(walletAddress, walletProvider, chainId, usdcTokenContract)
+
       if (status) {
         toast.success('Successfully Approved, You can buy the Pack now')
-        dispatch(setIsUSDCApproved(true))
         return true
       } else {
         toast.warn('Approve Failed!')
-        dispatch(setIsUSDCApproved(false))
         return false
       }
     } catch (e: any) {
@@ -87,126 +84,45 @@ export const useApproveUSDC = () => {
       setIsUSDCApproved(false)
       return false
     }
-  }, [account, chainId, collectionContract, dispatch, usdcTokenContract])
+  }, [isWalletConnected, chainId, collectionContract, usdcTokenContract, venlyAccount, venlyConnect, walletAddress])
 
   return { onApprove: handleApprove }
 }
 
-export const useApproveUSDCMexa = () => {
-  const { account, chainId } = useActiveWeb3React()
-  const { usdcTokenContract } = useInitBiconomy()
-
-  const handleApprove = useCallback(async () => {
-    const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
-
-    try {
-      const status = await approveUSDCMexa(account!, walletProvider, chainId!, usdcTokenContract)
-      return status
-    } catch (e: any) {
-      console.log(e)
-      toast.error(e.message)
-      return false
-    }
-  }, [account, chainId])
-
-  return { onApproveMexa: handleApprove }
-}
-
-export const useBuyPack = () => {
-  const { account, chainId } = useActiveWeb3React()
-
-  const collectionContract = useGetCollectionContract()
-  const usdcTokenContract = useGetUSDCTokenContract()
-  const multicallContract = useGetMultiCallContract()
-
-  const handleBuyPack = useCallback(
-    async (cartList: TPackItem[], currentTotalPrice: number) => {
-      if (
-        !account ||
-        isSupportedNetwork(chainId) === false ||
-        !collectionContract ||
-        !usdcTokenContract ||
-        !multicallContract
-      ) {
-        toast.error('Please check your wallet Connection First!')
-        return false
-      }
-
-      try {
-        const usdcBalance: BigNumber = await getUSDCBalance(usdcTokenContract, account)
-        if (getBalanceNumber(usdcBalance, 6) < currentTotalPrice) {
-          toast.error('Insufficient USDC Balance to your wallet')
-          return false
-        }
-      } catch (e: any) {
-        toast.error(e.message)
-        return false
-      }
-      try {
-        const _calls = cartList.map(async (_p) => {
-          if (_p.cartQuantity > 0) return await buyPacks(collectionContract!, _p.id, _p.cartQuantity)
-        })
-
-        const response = await Promise.all(_calls).then((value) => {
-          return value
-        })
-
-        if (response.filter((status) => status).length > 0) {
-          return true
-        } else {
-          return false
-        }
-      } catch (e: any) {
-        toast.error(e.message)
-        return false
-      }
-    },
-    [account, chainId, collectionContract, multicallContract, usdcTokenContract]
-  )
-  return { onBuyPack: handleBuyPack }
-}
-
-export const useBuyPackMexa = () => {
-  const { account, chainId } = useActiveWeb3React()
-  const usdcTokenContract = useGetUSDCTokenContract()
-  const { contract } = useInitBiconomy()
+export const useBuyPackMeta = () => {
+  const isWalletConnected = useIsWalletConnected()
+  const walletAddress = useWalletAddress()
+  const chainId = useChainId()
   const venlyAccount = useVenlyAccount()
-
-  // const venlyOptions = useMemo(() => {
-  //   return {
-  //     environment: chainId === 137 ? 'staging' : 'staging',
-  //   }
-  // }, [chainId])
-
-  // const venlyConnect = useMemo(() => new VenlyConnect('Testaccount', venlyOptions), [venlyOptions])
-  // const venlyConnect = useVenlyConnection()
+  const venlyConnect = useGetVenlyConnect()
+  const usdcBalance = useUSDCBalance()
+  const { collectionContract, usdcTokenContract } = useGetContracts()
+  const toggleMoonPayModal = useMoonPayModalToggle()
 
   const handleBuyPack = useCallback(
     async (cartList: TPackItem[], currentTotalPrice: number) => {
-      if (!account && !isSupportedNetwork(chainId)) {
+      if (isWalletConnected === undefined || !chainId || !collectionContract || !usdcTokenContract) {
         toast.error('Please check your wallet Connection First!')
         return false
       }
 
-      // try {
-      //   const usdcBalance: BigNumber = await getUSDCBalance(usdcTokenContract!, account!)
-      //   if (getBalanceNumber(usdcBalance, 6) < currentTotalPrice) {
-      //     toast.error('Insufficient USDC Balance to your wallet')
-      //     return false
-      //   }
-      // } catch (e: any) {
-      //   toast.error(e.message)
-      //   return false
-      // }
-
+      try {
+        if (getBalanceNumber(usdcBalance, 6) < currentTotalPrice) {
+          toggleMoonPayModal()
+          return false
+        }
+      } catch (e: any) {
+        toast.error(e.message)
+        return false
+      }
       const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
-      const walletSigner = walletProvider.getSigner()
 
       try {
         const _calls = cartList.map(async (_p) => {
           if (_p.cartQuantity > 0)
-            return await buyPackMeta(account!, walletSigner, chainId!, _p.id, _p.cartQuantity, contract)
-          // return await buyPackMexaVenly(venlyAccount, venlyConnect, chainId!, _p.id, _p.cartQuantity, contract)
+            return isWalletConnected === 'venly'
+              ? await buyPackMetaVenly(venlyAccount, venlyConnect!, chainId, _p.id, _p.cartQuantity, collectionContract)
+              : await buyPackMeta(walletAddress, walletProvider, chainId!, _p.id, _p.cartQuantity, collectionContract)
         })
 
         const response = await Promise.all(_calls).then((value) => {
@@ -220,66 +136,40 @@ export const useBuyPackMexa = () => {
         }
       } catch (e: any) {
         toast.error(e.message)
-        console.log(e)
         return false
       }
     },
-    [account, chainId]
+    [isWalletConnected, chainId, collectionContract, usdcTokenContract, usdcBalance, venlyAccount, venlyConnect, walletAddress]
   )
-  return { onBuyPackMexa: handleBuyPack }
-}
-
-export const useOpenPackWithApprove = () => {
-  const { account, chainId } = useActiveWeb3React()
-  const collectionContract = useGetCollectionContract()
-  const dropperContract = useGetDropperContract()
-
-  const handleOpenPack = useCallback(
-    async (packId: number) => {
-      if (!account || isSupportedNetwork(chainId) === false || dropperContract === null || collectionContract === null)
-        return undefined
-      const estimateGasPrice = await estimateGas(collectionContract, 'openPacks', [packId])
-
-      const isApproved = await isApprovedForAll(dropperContract, collectionContract, account)
-      if (!isApproved) {
-        const status = await approve(dropperContract, collectionContract, account)
-        if (status) {
-          try {
-            const res = await openPacks(collectionContract, packId, account, estimateGasPrice)
-            return res
-          } catch (e) {
-            console.info(e)
-          }
-        }
-      } else {
-        const res = await openPacks(collectionContract, packId, account, estimateGasPrice)
-        return res
-      }
-    },
-    [account, chainId, collectionContract, dropperContract]
-  )
-  return { onOpenPack: handleOpenPack }
+  return { onBuyPackMeta: handleBuyPack }
 }
 
 export const useOpenPackMeta = () => {
-  const { account, chainId } = useActiveWeb3React()
-  const { contract } = useInitBiconomy()
+  const isWalletConnected = useIsWalletConnected()
+  const walletAddress = useWalletAddress()
+  const chainId = useChainId()
+  const venlyAccount = useVenlyAccount()
+  const venlyConnect = useGetVenlyConnect()
+  const { collectionContract } = useGetContracts()
 
   const handleOpenPack = useCallback(
     async (packId: number) => {
-      if (!account || isSupportedNetwork(chainId) === false || contract === undefined) return undefined
+      if (isWalletConnected === undefined || !chainId) {
+        toast.error('Please check your Wallet Connection First!', { toastId: 'Not Connected-4' })
+        return
+      }
 
       const walletProvider = new ethers.providers.Web3Provider(window.ethereum!)
-      const walletSigner = walletProvider.getSigner()
 
       try {
-        const res = await openPackMeta(account!, walletSigner, chainId!, packId, contract)
-        return res
+        return isWalletConnected === 'venly'
+          ? await openPackMetaVenly(venlyAccount, venlyConnect!, chainId, packId, collectionContract)
+          : await openPackMeta(walletAddress, walletProvider, chainId, packId, collectionContract)
       } catch (e) {
         console.info(e)
       }
     },
-    [account, chainId, contract]
+    [chainId, collectionContract, isWalletConnected, venlyAccount, venlyConnect, walletAddress]
   )
   return { onOpenPackMeta: handleOpenPack }
 }
@@ -306,28 +196,27 @@ export const usePackListBox = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [currentTotalPrice, setCurrentTotalPrice] = useState<number>(0)
 
+  useIsApproved()
+
   const isUSDCApproved = useApprove()
 
   const dispatch = useAppDispatch()
   const cartList = useCartList()
-  const { onBuyPack } = useBuyPack()
-  const { onBuyPackMexa } = useBuyPackMexa()
-  const { onApprove } = useApproveUSDC()
-  const { onApproveMexa } = useApproveUSDCMexa()
+  const { onBuyPackMeta } = useBuyPackMeta()
+  const { onApprove } = useApproveUSDCMeta()
   const history = useHistory()
-  const { account } = useActiveWeb3React()
+  const walletAddress = useWalletAddress()
+  const { handleMoonPayNFTClick } = useMoonPayNFT()
 
   useEffect(() => {
     const total = cartList.map((pack) => pack.price * pack.cartQuantity).reduce((a, b) => a + b, 0)
     setCurrentTotalPrice(total)
   }, [cartList])
 
-  const BuyPackProcess = async (isMexa: boolean) => {
+  const BuyPackProcess = async () => {
     try {
       setPendingTx(true)
-      const status = isMexa
-        ? await onBuyPackMexa(cartList, currentTotalPrice)
-        : await onBuyPack(cartList, currentTotalPrice)
+      const status = await onBuyPackMeta(cartList, currentTotalPrice)
       setPendingTx(false)
 
       if (status) {
@@ -341,17 +230,29 @@ export const usePackListBox = () => {
     }
   }
 
-  const ApprovingUSDC = async (isMexa: boolean) => {
+  const ApprovingUSDC = async () => {
     try {
       setIsLoading(true)
-      const status = isMexa ? await onApproveMexa() : await onApprove()
+      const status = await onApprove()
       setIsLoading(false)
 
-      if (status) dispatch(setIsUSDCApproved(true))
+      dispatch(setIsUSDCApproved(status))
     } catch (e) {
       setPendingTx(false)
     }
   }
 
-  return { account, cartList, pendingTx, isLoading, currentTotalPrice, isUSDCApproved, BuyPackProcess, ApprovingUSDC }
+  const handleMoonPayNFTBtnClick = useCallback(() => handleMoonPayNFTClick(cartList[0].id), [cartList, handleMoonPayNFTClick])
+
+  return {
+    walletAddress,
+    cartList,
+    pendingTx,
+    isLoading,
+    currentTotalPrice,
+    isUSDCApproved,
+    BuyPackProcess,
+    ApprovingUSDC,
+    handleMoonPayNFTBtnClick,
+  }
 }

@@ -1,13 +1,5 @@
 import React from 'react'
-import {
-  AvatarContainer,
-  ComponentWrapper,
-  ContainerRow,
-  Divider,
-  TextMain,
-  TextSubTitle,
-  TextTitle,
-} from '../../styles/globalStyles'
+import { AvatarContainer, ComponentWrapper, ContainerRow, Divider, TextMain, TextSubTitle, TextTitle } from '../../styles/globalStyles'
 
 export const CreatorDetail: React.FC = () => {
   return (
@@ -28,11 +20,10 @@ export const CreatorDetail: React.FC = () => {
       </ContainerRow>
       <ContainerRow margin={'24px 0 0'}>
         <TextMain>
-          This is the official NFT Ultimate Clix Collection by myself, Cody “Clix” Conrad! I have been working on
-          something special for my community that’s been ride or die from day one. From the Fortnite World Cup, to
-          winning the BFC and Twitch rivals, going 100-0 in boxfights, and even copping my dream car, you all have made
-          this experience so amazing, and now we can share these moments together with this collection. I love making
-          people happy and I hope that you’ll join me in this journey too!
+          This is the official NFT Ultimate Clix Collection by myself, Cody “Clix” Conrad! I have been working on something special for my
+          community that’s been ride or die from day one. From the Fortnite World Cup, to winning the BFC and Twitch rivals, going 100-0 in
+          boxfights, and even copping my dream car, you all have made this experience so amazing, and now we can share these moments
+          together with this collection. I love making people happy and I hope that you’ll join me in this journey too!
         </TextMain>
       </ContainerRow>
     </ComponentWrapper>

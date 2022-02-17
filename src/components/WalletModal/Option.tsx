@@ -9,9 +9,9 @@ const InfoCard = styled.button<{ active?: boolean }>`
   border: 1px solid;
   border-radius: 12px;
   width: 100% !important;
-  &:focus {
-    box-shadow: 0 0 0 1px var(--secondary);
-  }
+  // &:focus {
+  //   box-shadow: 0 0 0 1px var(--secondary);
+  // }
 `
 
 const OptionCard = styled(InfoCard as any)`
@@ -70,7 +70,7 @@ const HeaderText = styled.div`
 `
 
 const SubHeader = styled.div`
-  color: '#FFFFFF';
+  color: #8f96ac;
   margin-top: 10px;
   font-size: 12px;
 `
@@ -89,7 +89,6 @@ const IconWrapper = styled.div<{ size?: number | null }>`
 
 export default function Option({
   link = null,
-  clickable = true,
   size,
   onClick = null,
   color,
@@ -111,7 +110,7 @@ export default function Option({
   id: string
 }) {
   const content = (
-    <OptionCardClickable id={id} onClick={onClick} clickable={clickable && !active} active={active}>
+    <OptionCardClickable id={id} onClick={onClick} clickable={!active} active={active}>
       <OptionCardLeft>
         <HeaderText color={color}>
           {active ? (

@@ -6,16 +6,18 @@ import { IntroducingBox } from './IntroducingBox'
 import { ProductExplain } from './ProductExplain'
 import { RememberBox } from './RememberBox'
 import { ConnectingFans } from './ConnectingFans'
+import CreatorAdvertise from './CreatorAdvertise'
 
 const Home: React.FC = () => {
   return (
     <PageWrapper>
       <IntroducingBox />
-      <RememberBox />
-      <ProductExplain />
       <DroppExplain />
+      <RememberBox />
+      <CreatorAdvertise />
+      {/* <ProductExplain />
       <ConnectingFans />
-      <FAQBox />
+      <FAQBox /> */}
     </PageWrapper>
   )
 }

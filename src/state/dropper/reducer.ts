@@ -33,6 +33,5 @@ const dropperSlice = createSlice({
   },
 })
 
-export const { setLatestBlockNumber, setPackList, setMomentList, setIsUSDCApproved, setIsLoading } =
-  dropperSlice.actions
+export const { setLatestBlockNumber, setPackList, setMomentList, setIsUSDCApproved, setIsLoading } = dropperSlice.actions
 export default dropperSlice.reducer

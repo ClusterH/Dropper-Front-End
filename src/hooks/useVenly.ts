@@ -1,70 +1,89 @@
-import { useCallback, useMemo, useState } from 'react'
-import { SecretType, VenlyConnect } from '@venly/connect'
+import { SecretType } from '@venly/connect'
 import { AuthenticationResult } from '@venly/connect/dist/src/connect/connect'
-import { useActiveWeb3React } from './useWeb3'
-import { useAppDispatch, useAppSelector } from '../state/hooks'
-import { setVenlyAccount } from '../state/venly/reducer'
+import { useCallback, useEffect, useMemo } from 'react'
+import { VENLY_CHAIN_ID } from '../constants/chains'
 import { AppState } from '../state'
+import { useWalletModalToggle } from '../state/application/hook'
+import { useAppDispatch, useAppSelector } from '../state/hooks'
+import { resetVenlyState, setIsVenly, setVenlyAccount, setVenlyConnect } from '../state/venly/reducer'
+import { setChainId, setIsWalletConnected, setWalletAddress } from '../state/wallet/reducer'
+import { getVenlyConnect } from '../utils/venlyHelper'
+import { useIsWalletConnected } from './useWallet'
 
 export const useVenlyAccount = () => {
   return useAppSelector((state: AppState) => state.venly.venlyAccount)
 }
 
-export const useVenlyConnection = () => {
-  const { chainId } = useActiveWeb3React()
-  const venlyOptions = useMemo(() => {
-    return {
-      environment: chainId === 137 ? 'staging' : 'staging',
-    }
-  }, [chainId])
+export const useGetVenlyConnect = () => {
+  return useAppSelector((state: AppState) => state.venly.venlyConnect)
+}
 
-  const venlyConnect = useMemo(() => new VenlyConnect('Testaccount', venlyOptions), [venlyOptions])
-  return venlyConnect
+export const useIsVenly = () => {
+  return useAppSelector((state: AppState) => state.venly.isVenly)
+}
+
+export const useVenlyConnection = () => {
+  const dispatch = useAppDispatch()
+  const venlyConnect = useMemo(() => getVenlyConnect(), [])
+
+  const memorizedDispatch = useCallback(() => {
+    dispatch(setVenlyConnect(venlyConnect))
+  }, [dispatch, venlyConnect])
+
+  useEffect(() => {
+    memorizedDispatch()
+  }, [memorizedDispatch])
 }
 
 export const useVenlyConnect = () => {
-  const [authStatus, setAuthStatus] = useState<boolean>(false)
-  const { chainId } = useActiveWeb3React()
   const dispatch = useAppDispatch()
-
-  const venlyOptions = useMemo(() => {
-    return {
-      environment: 'staging',
-    }
-  }, [])
-
-  const venlyConnect = useMemo(() => new VenlyConnect('Testaccount', venlyOptions), [venlyOptions])
+  const venlyConnect = useGetVenlyConnect()
+  const toggleWalletModal = useWalletModalToggle()
+  const isWalletConnected = useIsWalletConnected()
 
   const handleGetAccount = useCallback(() => {
+    if (venlyConnect === undefined) return
     venlyConnect.flows
       .getAccount(SecretType.MATIC)
-      .then((account: any) => {
+      .then(async (account: any) => {
         if (account.isAuthenticated) {
           dispatch(setVenlyAccount({ id: account.wallets[0].id, address: account.wallets[0].address }))
+          dispatch(setIsWalletConnected('venly'))
+          dispatch(setWalletAddress(account.wallets[0].address))
+          dispatch(setChainId(VENLY_CHAIN_ID))
+          toggleWalletModal()
         }
       })
       .catch((e) => {
         console.log('user closed window, or an error occurred', e)
       })
-  }, [dispatch, venlyConnect])
+  }, [dispatch, toggleWalletModal, venlyConnect])
 
   const handleAuthentication = useCallback(() => {
-    venlyConnect.flows.authenticate().then((result: AuthenticationResult) => {
+    if (isWalletConnected === 'venly') return
+
+    if (!venlyConnect) {
+      const newVenlyConnect = getVenlyConnect()
+      dispatch(setVenlyConnect(newVenlyConnect))
+    }
+
+    venlyConnect!.flows.authenticate().then((result: AuthenticationResult) => {
       result
         .authenticated((auth: Keycloak.KeycloakInstance) => {
-          setAuthStatus(true)
           handleGetAccount()
         })
         .notAuthenticated((auth: any) => {
-          setAuthStatus(false)
+          dispatch(setIsVenly(false))
         })
     })
-  }, [handleGetAccount, venlyConnect])
+  }, [dispatch, handleGetAccount, isWalletConnected, venlyConnect])
 
   const handleLogOut = useCallback(() => {
-    venlyConnect.logout()
-    setAuthStatus(false)
-  }, [venlyConnect])
+    if (venlyConnect === undefined) return
 
-  return { authStatus, handleAuthentication, handleLogOut }
+    venlyConnect.logout()
+    dispatch(resetVenlyState())
+  }, [dispatch, venlyConnect])
+
+  return { handleAuthentication, handleLogOut }
 }

@@ -1,55 +1,27 @@
-import { useEffect, useMemo } from 'react'
-import { getAPIKey } from '../utils/biconomyHelpers'
-import { getSimpleRPCProvider } from '../utils/simpleRPCProvider'
+import { useEffect } from 'react'
+import { setContracts } from '../state/application/reducer'
+import { useAppDispatch } from '../state/hooks'
+import { getBiconomy } from '../utils/biconomyHelpers'
 import { isSupportedNetwork } from '../utils/validateChainID'
-import { useGetCollectionContract } from './useContract'
-import { useActiveWeb3React } from './useWeb3'
-import { Biconomy } from '@biconomy/mexa'
-import { ethers } from 'ethers'
-import { getCollectionAddress, getUSDCAddress } from '../utils/addressHelpers'
-import COLLECTION_ABI from '../abis/collection.json'
-import USDC_ABI from '../abis/usdc.json'
+import { useChainId, useIsWalletConnected, useWalletAddress } from './useWallet'
 
 export const useInitBiconomy = () => {
-  const { account, chainId } = useActiveWeb3React()
+  const isWalletConnected = useIsWalletConnected()
+  const chainId = useChainId()
+  const walletAddress = useWalletAddress()
+  const dispatch = useAppDispatch()
 
-  return useMemo(() => {
-    if (typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask && isSupportedNetwork(chainId)) {
-      const jsonRpcProvider = getSimpleRPCProvider(chainId!)
+  useEffect(() => {
+    const initBiconomy = async (chainId: number, userAddress: string) => {
+      const { collectionContract, dropperContract, usdcTokenContract } = await getBiconomy(chainId, userAddress)
+      dispatch(setContracts({ collectionContract, dropperContract, usdcTokenContract }))
+    }
 
-      const biconomy = new Biconomy(jsonRpcProvider, {
-        walletProvider: window.ethereum,
-        apiKey: getAPIKey(chainId!),
-        debug: true,
-      })
-
-      const contractInterface = new ethers.utils.Interface(COLLECTION_ABI)
-      const usdcInterface = new ethers.utils.Interface(USDC_ABI)
-
-      const contract = new ethers.Contract(
-        getCollectionAddress(chainId!),
-        contractInterface,
-        biconomy.getSignerByAddress(account)
-      )
-
-      const usdcTokenContract = new ethers.Contract(
-        getUSDCAddress(chainId!),
-        usdcInterface,
-        biconomy.getSignerByAddress(account)
-      )
-
-      biconomy
-        .onEvent(biconomy.READY, async () => {
-          console.info('biconomy ready')
-        })
-        .onEvent(biconomy.ERROR, (error: any, message: string) => {
-          console.log(message)
-          console.log(error)
-        })
-      return { contract, usdcTokenContract }
+    if (isWalletConnected !== undefined && isSupportedNetwork(chainId) && walletAddress.length > 0) {
+      initBiconomy(chainId!, walletAddress)
     } else {
       console.info('Please check your network connection')
-      return { contract: undefined, usdcTokenContract: undefined }
+      return
     }
-  }, [account, chainId])
+  }, [chainId, dispatch, isWalletConnected, walletAddress])
 }

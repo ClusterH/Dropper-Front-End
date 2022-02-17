@@ -1,16 +1,9 @@
 import React, { useMemo, useState } from 'react'
 import PIN_ICON from '../../assets/images/pin-icon.svg'
 import Banner from '../../components/Banners'
-import { MainButton } from '../../components/Buttons/MainButton'
+import MainButton from '../../components/Buttons/MainButton'
 import { SearchBox } from '../../components/SearchBox'
-import {
-  ComponentWrapper,
-  ContainerColumn,
-  ContainerRow,
-  ImageContainer,
-  PageWrapper,
-  TextCustom,
-} from '../../styles/globalStyles'
+import { ComponentWrapper, ContainerColumn, ContainerRow, ImageContainer, PageWrapper, TextCustom } from '../../styles/globalStyles'
 import { PacksItem } from './PacksItem'
 
 const PageSize = 6
@@ -75,13 +68,7 @@ const Packs: React.FC = () => {
           </MainButton>
         </ContainerRow>
         <ContainerColumn width={'100%'} padding={'0'} margin={'0'}>
-          <ContainerRow
-            flexWrap={'wrap'}
-            justifyContent={'space-between'}
-            alignItems={'flex-start'}
-            padding={'30px 0 0 0px'}
-            gap={'20px'}
-          >
+          <ContainerRow flexWrap={'wrap'} justifyContent={'space-between'} alignItems={'flex-start'} padding={'30px 0 0 0px'} gap={'20px'}>
             {currentPackList.map((item, index) => {
               return <PacksItem key={index} width={'32%'} />
             })}

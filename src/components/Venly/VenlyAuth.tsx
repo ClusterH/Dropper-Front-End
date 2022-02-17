@@ -1,18 +1,18 @@
 import React from 'react'
-import { useVenlyAccount, useVenlyConnect } from '../../hooks/useVenly'
+import { useIsVenly, useVenlyAccount, useVenlyConnect, useVenlyConnection } from '../../hooks/useVenly'
 import { shortenAddress } from '../../utils'
-import { MainButton } from '../Buttons/MainButton'
+import MainButton from '../Buttons/MainButton'
 
 const VenlyAuth: React.FC = () => {
-  const { authStatus, handleAuthentication, handleLogOut } = useVenlyConnect()
+  useVenlyConnection()
+  const isVenly = useIsVenly()
+  const { handleAuthentication, handleLogOut } = useVenlyConnect()
   const venlyAccount = useVenlyAccount()
 
   return (
     <>
-      {authStatus ? (
-        <MainButton onClick={handleLogOut}>
-          {venlyAccount.address ? shortenAddress(venlyAccount.address) : ''}
-        </MainButton>
+      {isVenly ? (
+        <MainButton onClick={handleLogOut}>{venlyAccount.address ? shortenAddress(venlyAccount.address) : ''}</MainButton>
       ) : (
         <MainButton onClick={handleAuthentication}>{'SignIn'}</MainButton>
       )}

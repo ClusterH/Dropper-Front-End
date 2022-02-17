@@ -1,10 +1,12 @@
 import React from 'react'
 import { isMobile } from 'react-device-detect'
 import BANNER_SECOND from '../../assets/images/banner-second.svg'
+import { TransparentBtn } from '../../components/Buttons/MainButton'
 import {
   BigBoxWithoutShadow,
   BoxCardWithoutBorder,
   ComponentWrapper,
+  ContainerRow,
   ImageContainer,
   TextCustom,
 } from '../../styles/globalStyles'
@@ -23,36 +25,37 @@ export const RememberBox: React.FC = () => {
         <BoxCardWithoutBorder flexDirection={'column'} boxWidth={isMobile ? '100%' : '50%'} alignItems={'flex-start'}>
           <TextCustom
             color={'var(--primary-text)'}
-            fontSize={isMobile ? '1.2rem' : '1.8rem'}
-            fontWeight={700}
-            fontFamily={'RubikBold'}
-            lineHeight={1.2}
-            textAlign={'left'}
-            margin={'-5% 0 0 0'}
-          >
-            Each NFT collection on Dropper is unique
-          </TextCustom>
-          <TextCustom
-            color={'var(--primary-text)'}
             fontSize={isMobile ? '1rem' : '1.4rem'}
-            fontWeight={700}
+            fontWeight={400}
             fontFamily={'RubikBold'}
-            lineHeight={1.1}
+            lineHeight={1.4}
             textAlign={'left'}
-            margin={isMobile ? '40px 0 0 0' : '40px 90px 0 70px'}
           >
-            We enable celebrities to create web3 experiences that give fans unparalleled access and influence into their
-            world.
+            Launch your NFT project with audited smart contracts, whitelist controls, and collection tools to create a flawless launch
+            experience for your community.
           </TextCustom>
-          <TextCustom
-            color={'var(--primary-text)'}
-            fontSize={isMobile ? '1.2rem' : '1.5rem'}
-            fontWeight={100}
-            fontFamily={'Rubik'}
-            lineHeight={1}
-            textAlign={'left'}
-            margin={isMobile ? '0' : '30px 0 0 0'}
-          ></TextCustom>
+          <ContainerRow justifyContent="center" margin="24px 0">
+            <TransparentBtn
+              width={isMobile ? '100%' : '45%'}
+              height={'50px'}
+              borderRadius={'24px'}
+              padding={'0'}
+              margin={'12px'}
+              onClick={() => (window.location.href = '/howitwork')}
+            >
+              <TextCustom
+                color={'var(--secondary)'}
+                fontSize={isMobile ? '1.5rem' : '1.2rem'}
+                fontWeight={600}
+                fontFamily={'RubikBold'}
+                lineHeight={1.1}
+                textAlign={'center'}
+                margin={'1% 0 2% 0'}
+              >
+                Go to Launchpad
+              </TextCustom>
+            </TransparentBtn>
+          </ContainerRow>
         </BoxCardWithoutBorder>
       </BigBoxWithoutShadow>
     </ComponentWrapper>

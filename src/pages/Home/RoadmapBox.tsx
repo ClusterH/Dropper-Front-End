@@ -2,15 +2,7 @@ import React, { useLayoutEffect, useRef } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import {
-  ColorDot,
-  ComponentWrapper,
-  ContainerColumn,
-  ContainerRow,
-  ImageContainer,
-  SubText,
-  TextCustom,
-} from '../../styles/globalStyles'
+import { ColorDot, ComponentWrapper, ContainerColumn, ContainerRow, ImageContainer, SubText, TextCustom } from '../../styles/globalStyles'
 import ELLIPSE_BACKGROUND_WITH_NUMBER from '../../assets/images/ellipse-background-with-number.svg'
 import ELLIPSE_BACKGROUND from '../../assets/images/ellipse-background.svg'
 import BORDER_EFFECT_IMG from '../../assets/images/text-border-bottom-effect.svg'
@@ -62,13 +54,7 @@ export const RoadmapContentBox: React.FC<IRoadmapContentBox> = ({
       <ContainerColumn>
         {contentList?.map((item, index) => {
           return (
-            <ContainerRow
-              key={index}
-              justifyContent={'flex-start'}
-              alignItems={'flex-start'}
-              padding={'0 5% 0 5%'}
-              margin={'1% 0 1% 0'}
-            >
+            <ContainerRow key={index} justifyContent={'flex-start'} alignItems={'flex-start'} padding={'0 5% 0 5%'} margin={'1% 0 1% 0'}>
               <ColorDot backColor={textColor} />
               <TextCustom
                 fontSize={isMobile ? '0.8rem' : '1rem'}
@@ -93,20 +79,13 @@ export const RoadmapBox: React.FC = () => {
   const { id } = useParams<{ id?: string }>()
 
   useLayoutEffect(() => {
-    if ((!!!id || id === 'roadmap') && roadmapRef.current !== null) {
+    if ((!id || id === 'roadmap') && roadmapRef.current !== null) {
       roadmapRef.current.scrollIntoView({ behavior: 'smooth' })
     }
   }, [id])
 
   return (
-    <ContainerRow
-      ref={roadmapRef}
-      width={'100%'}
-      backgroundColor={'var(--dark-navy)'}
-      padding={'0'}
-      margin={'0'}
-      justifyContent={'center'}
-    >
+    <ContainerRow ref={roadmapRef} width={'100%'} backgroundColor={'var(--dark-navy)'} padding={'0'} margin={'0'} justifyContent={'center'}>
       <ComponentWrapper margin={isMobile ? '10px 0 0' : '50px 0 0'} padding={'24px'}>
         <ContainerColumn>
           <TextCustom

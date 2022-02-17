@@ -1,16 +1,25 @@
 import React from 'react'
 import { isMobile } from 'react-device-detect'
 import ClipLoader from 'react-spinners/ClipLoader'
-import { MainButton } from '../../components/Buttons/MainButton'
+import MainButton from '../../components/Buttons/MainButton'
 import USDCIcon from '../../components/Icons/usdcIcon'
 import { usePackListBox } from '../../hooks/useCollection'
 import { ResponsiveContainer } from '../../styles/globalStyles'
 import { PackItem } from './PackItem'
 import { ProcessingLoader } from './Processing'
 
-export const PackListBox: React.FC = () => {
-  const { account, cartList, pendingTx, isLoading, currentTotalPrice, isUSDCApproved, BuyPackProcess, ApprovingUSDC } =
-    usePackListBox()
+export const PackListBox = () => {
+  const {
+    walletAddress,
+    cartList,
+    pendingTx,
+    isLoading,
+    currentTotalPrice,
+    isUSDCApproved,
+    BuyPackProcess,
+    ApprovingUSDC,
+    handleMoonPayNFTBtnClick,
+  } = usePackListBox()
 
   return (
     <>
@@ -19,56 +28,40 @@ export const PackListBox: React.FC = () => {
           return <PackItem key={pack.id} pack={pack} currentTotalPrice={currentTotalPrice} />
         })}
         {isUSDCApproved ? (
-          <>
-            {/* <MainButton
-              width={isMobile ? '80%' : 'fit-content'}
-              borderRadius={'24px'}
-              padding={'24px 24px'}
-              margin={'20px 0'}
-              disabled={pendingTx || !account}
-              onClick={() => BuyPackProcess(false)}
-            >
-              {'Buy Now!'}
-              <USDCIcon />
-            </MainButton> */}
-            <MainButton
-              width={isMobile ? '80%' : 'fit-content'}
-              borderRadius={'24px'}
-              padding={'24px 24px'}
-              margin={'20px 0'}
-              disabled={pendingTx || !account}
-              onClick={() => BuyPackProcess(true)}
-            >
-              {'Buy Now!'}
-              <USDCIcon />
-            </MainButton>
-          </>
+          <MainButton
+            width={isMobile ? '80%' : 'fit-content'}
+            borderRadius={'24px'}
+            padding={'24px 24px'}
+            margin={'20px 0'}
+            disabled={pendingTx || !walletAddress}
+            onClick={() => BuyPackProcess()}
+          >
+            {'Buy Now!'}
+            <USDCIcon />
+          </MainButton>
         ) : (
-          <>
-            {/* <MainButton
-              width={isMobile ? '80%' : 'fit-content'}
-              borderRadius={'24px'}
-              padding={'24px 24px'}
-              margin={'20px 0'}
-              disabled={isLoading || pendingTx || !account}
-              onClick={() => ApprovingUSDC(false)}
-            >
-              {'Approve'}
-              {isLoading ? <ClipLoader color={'var(--light-navy-blue)'} size={'24px'} /> : <USDCIcon />}
-            </MainButton> */}
-            <MainButton
-              width={isMobile ? '80%' : 'fit-content'}
-              borderRadius={'24px'}
-              padding={'24px 24px'}
-              margin={'20px 0'}
-              disabled={isLoading || pendingTx || !account}
-              onClick={() => ApprovingUSDC(true)}
-            >
-              {'Approve'}
-              {isLoading ? <ClipLoader color={'var(--light-navy-blue)'} size={'24px'} /> : <USDCIcon />}
-            </MainButton>
-          </>
+          <MainButton
+            width={isMobile ? '80%' : 'fit-content'}
+            borderRadius={'24px'}
+            padding={'24px 24px'}
+            margin={'20px 0'}
+            disabled={isLoading || pendingTx || !walletAddress}
+            onClick={() => ApprovingUSDC()}
+          >
+            {'Approve'}
+            {isLoading ? <ClipLoader color={'var(--light-navy-blue)'} size={'24px'} /> : <USDCIcon />}
+          </MainButton>
         )}
+        <MainButton
+          width={isMobile ? '80%' : 'fit-content'}
+          borderRadius={'24px'}
+          padding={'24px 24px'}
+          margin={'20px 0'}
+          disabled={pendingTx || !walletAddress}
+          onClick={() => handleMoonPayNFTBtnClick()}
+        >
+          {'Buy with MoonPay'}
+        </MainButton>
       </ResponsiveContainer>
       {pendingTx && <ProcessingLoader />}
     </>

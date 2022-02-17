@@ -93,18 +93,9 @@ export const SpacerLarge = styled.div`
 export const ComponentWrapper = styled.div<{ padding?: string; margin?: string }>`
   position: relative;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1640px;
   padding: ${({ padding }) => (padding ? padding : '0')};
   margin: ${({ margin }) => (margin ? margin : '0')};
-  // @media ${device.laptopL} {
-  //   max-width: 80% !important;
-  // }
-  // @media ${device.desktop} {
-  //   max-width: 80% !important;
-  // }
-  // @media ${device.desktopL} {
-  //   max-width: 80% !important;
-  // }
 `
 // Used for providing a wrapper around a component
 export const ContainerRow = styled.div<{
@@ -320,8 +311,7 @@ export const ImageIconContainer = styled.div<{
   margin: ${({ margin }) => (margin ? margin : '0')};
   border-radius: ${({ borderRadius }) => (borderRadius ? borderRadius : '50%')};
   &:hover {
-    border: ${({ borderHover, border }) =>
-      borderHover ? borderHover : border ? border : '2px solid var(--secondary)'};
+    border: ${({ borderHover, border }) => (borderHover ? borderHover : border ? border : '2px solid var(--secondary)')};
     background-color: ${({ backgroundHover, backgroundColor }) =>
       backgroundHover ? backgroundHover : backgroundColor ? backgroundColor : 'none'};
     box-shadow: ${({ shadowColor }) => (shadowColor ? `3px 3px 12px 2px ${shadowColor}` : 'none')};
@@ -448,6 +438,7 @@ export const ImageContainer = styled.img<{
   width?: string
   height?: string
   maxWidth?: string
+  maxHeight?: string
   margin?: string
   objectFit?: string
   borderRadius?: string
@@ -457,6 +448,7 @@ export const ImageContainer = styled.img<{
   width: ${({ width }) => (width ? width : '100%')};
   height: ${({ height }) => (height ? height : 'auto')};
   max-width: ${({ maxWidth }) => (maxWidth ? maxWidth : '100%')};
+  max-height: ${({ maxHeight }) => (maxHeight ? maxHeight : 'auto')};
   margin: ${({ margin }) => (margin ? margin : '0')};
   object-fit: ${({ objectFit }) => (objectFit ? objectFit : 'cover')};
   cursor: pointer;

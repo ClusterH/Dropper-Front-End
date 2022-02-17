@@ -2,20 +2,13 @@ import React from 'react'
 import styled from 'styled-components/macro'
 import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { useForm } from '../../hooks/useForm'
-import { useActiveWeb3React } from '../../hooks/useWeb3'
+import { useEthers } from '@usedapp/core'
 import { useWyreDebitCard } from '../../hooks/useWyre'
 import { useModalOpen, useWyreReservationModalToggle } from '../../state/application/hook'
 import { ApplicationModal } from '../../state/application/reducer'
-import {
-  ComponentWrapper,
-  ContainerColumn,
-  ContainerRow,
-  InputWrapper,
-  TextDescription,
-  TextMain,
-} from '../../styles/globalStyles'
+import { ComponentWrapper, ContainerColumn, ContainerRow, InputWrapper, TextDescription, TextMain } from '../../styles/globalStyles'
 import { TWyreForm } from '../../types'
-import { MainButton } from '../Buttons/MainButton'
+import MainButton from '../Buttons/MainButton'
 import Modal from '../Modals/Modal'
 
 const CloseIcon = styled.div`
@@ -34,7 +27,7 @@ const CloseColor = styled(Close)`
 `
 
 const WyreReservationModal = () => {
-  const { account } = useActiveWeb3React()
+  const { account } = useEthers()
   const wyreModalOpen = useModalOpen(ApplicationModal.WYRE_RESERVATION_FORM)
   const toggleWyreModal = useWyreReservationModalToggle()
   const { onWyreDebitCard } = useWyreDebitCard()
@@ -87,12 +80,7 @@ const WyreReservationModal = () => {
           <ContainerColumn>
             <ContainerColumn alignItems={'start'} margin={'12px 0 0'}>
               <TextDescription>{'Amount*'}</TextDescription>
-              <InputWrapper
-                placeholder="$0.0"
-                value={formInfo.amount || ''}
-                onChange={handleChange('amount')}
-                required
-              />
+              <InputWrapper placeholder="$0.0" value={formInfo.amount || ''} onChange={handleChange('amount')} required />
             </ContainerColumn>
             <ContainerColumn alignItems={'start'} margin={'12px 0 0'}>
               <TextDescription>{'Account*'}</TextDescription>
@@ -101,31 +89,16 @@ const WyreReservationModal = () => {
             <ContainerRow margin={'12px 0 0'}>
               <ContainerColumn alignItems={'start'}>
                 <TextDescription>{'First Name*'}</TextDescription>
-                <InputWrapper
-                  placeholder="First Name"
-                  value={formInfo.firstName || ''}
-                  onChange={handleChange('firstName')}
-                  required
-                />
+                <InputWrapper placeholder="First Name" value={formInfo.firstName || ''} onChange={handleChange('firstName')} required />
               </ContainerColumn>
               <ContainerColumn alignItems={'start'}>
                 <TextDescription>{'Last Name*'}</TextDescription>
-                <InputWrapper
-                  placeholder="Last Name"
-                  value={formInfo.lastName || ''}
-                  onChange={handleChange('lastName')}
-                  required
-                />
+                <InputWrapper placeholder="Last Name" value={formInfo.lastName || ''} onChange={handleChange('lastName')} required />
               </ContainerColumn>
             </ContainerRow>
             <ContainerColumn alignItems={'start'} margin={'12px 0 0'}>
               <TextDescription>{'Email*'}</TextDescription>
-              <InputWrapper
-                placeholder="xxx@xxx.com"
-                value={formInfo.email || ''}
-                onChange={handleChange('email')}
-                required
-              />
+              <InputWrapper placeholder="xxx@xxx.com" value={formInfo.email || ''} onChange={handleChange('email')} required />
             </ContainerColumn>
             <MainButton type="submit" margin={'24px 0 0'} borderRadius={'4px'} disabled={!account}>
               Complete on Wyre

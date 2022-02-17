@@ -1,11 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import axios from 'axios'
-import { Contract } from 'ethcall'
-import { ethers, utils } from 'ethers'
+import { Contract, ethers, utils } from 'ethers'
 import DROPPER_ABI from '../abis/dropper.json'
 import { TRANSFER_BATCH_FILTER } from '../constants/blockNumber'
-import { SupportedChainId } from '../constants/chains'
-import { AWS_BASE_URI, AXIOS_BASE_URL, IPFS_BASE_URI } from '../constants/momentsURIs'
+import { AWS_BASE_URI, IPFS_BASE_URI } from '../constants/momentsURIs'
 import { AppDispatch } from '../state'
 import { setIsLoading, setLatestBlockNumber, setMomentList } from '../state/dropper/reducer'
 import { getDropperAddress } from './addressHelpers'
@@ -63,7 +61,7 @@ export const momentGenerator = (momentList: any, momentIDs: BigNumber[]) => {
 export const fetchMomentList = async (
   account: string,
   contract: Contract,
-  chainId: SupportedChainId,
+  chainId: number,
   dispatch: AppDispatch,
   fromBlock: number | undefined
 ) => {
@@ -82,12 +80,7 @@ export const fetchMomentList = async (
   const startBlockNumber = fromBlock ?? filter.fromBlock
 
   for (let i = latestBlockNumber; i > startBlockNumber; i -= limit) {
-    const eventLogs = await fetchEventLogs(
-      ens,
-      filter.eventFilter,
-      i - limit > startBlockNumber ? i - limit + 1 : startBlockNumber + 1,
-      i
-    )
+    const eventLogs = await fetchEventLogs(ens, filter.eventFilter, i - limit > startBlockNumber ? i - limit + 1 : startBlockNumber + 1, i)
     if (eventLogs && eventLogs.length > 0) {
       const momentIDs: Array<BigNumber> = []
 
@@ -107,16 +100,12 @@ export const fetchMomentList = async (
   dispatch(setIsLoading(false))
 }
 
-export const getAllMomentList = async (
-  account: string,
-  contract: Contract,
-  chainId: SupportedChainId,
-  dispatch: AppDispatch,
-  txHash?: string
-) => {
+export const getAllMomentList = async (account: string, contract: Contract, chainId: number, dispatch: AppDispatch, txHash?: string) => {
   const specificAxios = setupInterceptorsTo(axios.create())
+  const AXIOS_BASE_URL = process.env.REACT_APP_AXIOS_BASE_URL
+  // const AXIOS_BASE_URL = 'http://127.0.0.1:5000'
   specificAxios
-    .get(`${AXIOS_BASE_URL}`, {
+    .get(`${AXIOS_BASE_URL}/dropper/transferBatch`, {
       params: {
         userAddress: account,
         chainId,
@@ -124,7 +113,6 @@ export const getAllMomentList = async (
       },
     })
     .then(async (res: any) => {
-      console.log(res)
       if (res.data && res.data.length > 0) {
         const momentIDs: Array<BigNumber> = []
 
@@ -134,7 +122,9 @@ export const getAllMomentList = async (
           const { momentId } = getMomentId(id)
           return contract.getMoment(momentId)
         })
-        const response = await getMultiCall(_calls, chainId!)
+        const response = await Promise.all(_calls).then((value) => {
+          return value
+        })
 
         const moments = await Promise.all(momentGenerator(response, momentIDs))
         dispatch(setMomentList({ moments, txHash }))

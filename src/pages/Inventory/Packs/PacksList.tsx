@@ -20,13 +20,7 @@ export const PacksList: React.FC<{ setSelectedTab: (tab: TSelectedTab) => void }
 
   return (
     <ContainerColumn width={'100%'} padding={'0'} margin={'0'}>
-      <ContainerRow
-        flexWrap={'wrap'}
-        justifyContent={'space-between'}
-        alignItems={'flex-start'}
-        padding={'10px'}
-        gap={'20px'}
-      >
+      <ContainerRow flexWrap={'wrap'} justifyContent={'space-between'} alignItems={'flex-start'} padding={'10px'} gap={'20px'}>
         {packList && packList.length > 0 ? (
           currentPackList.map((pack) => {
             return <PacksItem key={pack.id} pack={pack} setSelectedTab={setSelectedTab} />
