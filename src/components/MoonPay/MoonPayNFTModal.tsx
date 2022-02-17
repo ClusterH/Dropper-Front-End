@@ -15,8 +15,6 @@ const MoonPayNFTModal: React.FC = () => {
   const { moonPayNFTModalOpen, toggleMoonPayNFTModal } = useMoonPayNFT()
   const moonPayNFTURL = useMoonPayNFTURL()
 
-  console.log(moonPayNFTURL)
-
   return (
     <Modal
       isOpen={moonPayNFTModalOpen}
