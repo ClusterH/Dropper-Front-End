@@ -5,6 +5,7 @@ import HAMBURGER_IMG from '../../assets/images/menu.png'
 import { ContainerColumn, ContainerRow, device } from '../../styles/globalStyles'
 import { MenuItem } from '../Menu/MenuItem'
 import { MoonPayContainer, MoonPayModal } from '../MoonPay'
+import MoonPayNFTModal from '../MoonPay/MoonPayNFTModal'
 import { WyreDebitCard } from '../Wyre/DebitCard'
 import WyreReservationModal from '../WyreModal'
 
@@ -54,6 +55,7 @@ const HamburgerMenu: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({ set
       <WyreReservationModal /> */}
       {/* <MoonPayContainer /> */}
       <MoonPayModal />
+      <MoonPayNFTModal />
     </HamburgerMenuWrapper>
   )
 }

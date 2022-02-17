@@ -5,6 +5,7 @@ export enum ApplicationModal {
   WALLET,
   WYRE_RESERVATION_FORM,
   MOONPAY,
+  MOONPAY_NFT,
 }
 
 export interface ContractInterfaces {

@@ -20,6 +20,7 @@ import {
 import { getBalanceNumber } from '../utils/bigNumber'
 import { allowance } from '../utils/callHelpers'
 import { useGetContracts } from './useContract'
+import { useMoonPayNFT } from './useMoonPay'
 import { useGetVenlyConnect, useVenlyAccount } from './useVenly'
 import { useChainId, useIsWalletConnected, useUSDCBalance, useWalletAddress } from './useWallet'
 
@@ -205,6 +206,7 @@ export const usePackListBox = () => {
   const { onApprove } = useApproveUSDCMeta()
   const history = useHistory()
   const walletAddress = useWalletAddress()
+  const { handleMoonPayNFTClick } = useMoonPayNFT()
 
   useEffect(() => {
     const total = cartList.map((pack) => pack.price * pack.cartQuantity).reduce((a, b) => a + b, 0)
@@ -240,5 +242,17 @@ export const usePackListBox = () => {
     }
   }
 
-  return { walletAddress, cartList, pendingTx, isLoading, currentTotalPrice, isUSDCApproved, BuyPackProcess, ApprovingUSDC }
+  const handleMoonPayNFTBtnClick = useCallback(() => handleMoonPayNFTClick(cartList[0].id), [cartList, handleMoonPayNFTClick])
+
+  return {
+    walletAddress,
+    cartList,
+    pendingTx,
+    isLoading,
+    currentTotalPrice,
+    isUSDCApproved,
+    BuyPackProcess,
+    ApprovingUSDC,
+    handleMoonPayNFTBtnClick,
+  }
 }

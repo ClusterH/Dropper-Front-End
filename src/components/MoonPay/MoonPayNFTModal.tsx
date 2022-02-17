@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/macro'
-import { useMoonPay } from '../../hooks/useMoonPay'
-import { useUSDCBalance } from '../../hooks/useWallet'
+import { useMoonPayNFT, useMoonPayNFTURL } from '../../hooks/useMoonPay'
 import { ContainerColumn, TextCustom } from '../../styles/globalStyles'
 import Modal from '../Modals/Modal'
 
@@ -12,12 +11,16 @@ const IFrameContainer = styled.iframe`
   }
 `
 
-const MoonPayModal: React.FC = () => {
-  const { moonPayModalOpen, toggleMoonPayModal, moonPayUSDCURL } = useMoonPay()
+const MoonPayNFTModal: React.FC = () => {
+  const { moonPayNFTModalOpen, toggleMoonPayNFTModal } = useMoonPayNFT()
+  const moonPayNFTURL = useMoonPayNFTURL()
+
+  console.log(moonPayNFTURL)
+
   return (
     <Modal
-      isOpen={moonPayModalOpen}
-      onDismiss={toggleMoonPayModal}
+      isOpen={moonPayNFTModalOpen}
+      onDismiss={toggleMoonPayNFTModal}
       width={'65vh'}
       minHeight={65}
       maxHeight={90}
@@ -29,7 +32,7 @@ const MoonPayModal: React.FC = () => {
             {'MoonPay'}
           </TextCustom>
           <TextCustom color="var(--secondary-text)" fontSize="14px" fontWeight={500}>
-            {'Insufficient Amount USDC in your wallet. You can add funds with MoonPay Solution easily'}
+            {'You can Buy NFTs with MoonPay directly.'}
           </TextCustom>
         </ContainerColumn>
 
@@ -37,7 +40,7 @@ const MoonPayModal: React.FC = () => {
           allow="accelerometer; autoplay; camera; gyroscope; payment"
           frameBorder="0"
           height="100%"
-          src={`${moonPayUSDCURL}`}
+          src={`${moonPayNFTURL}`}
           width="100%"
         >
           <p>Your browser does not support iframes.</p>
@@ -47,4 +50,4 @@ const MoonPayModal: React.FC = () => {
   )
 }
 
-export default MoonPayModal
+export default MoonPayNFTModal

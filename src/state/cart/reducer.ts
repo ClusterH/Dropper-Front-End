@@ -4,9 +4,11 @@ import { TPackItem } from '../../types'
 
 interface ICartState {
   userCartList: TPackItem[]
+  moonPayNFTURL: string
 }
 const initialState: ICartState = {
   userCartList: packList,
+  moonPayNFTURL: '',
 }
 
 const cartSlice = createSlice({
@@ -21,8 +23,11 @@ const cartSlice = createSlice({
         state.userCartList[packId - 1] = { ...state.userCartList[packId - 1], cartQuantity: cartQuantity }
       }
     },
+    setMoonPayNFTURL(state, action) {
+      state.moonPayNFTURL = action.payload
+    },
   },
 })
 
-export const { setUserCartList } = cartSlice.actions
+export const { setUserCartList, setMoonPayNFTURL } = cartSlice.actions
 export default cartSlice.reducer

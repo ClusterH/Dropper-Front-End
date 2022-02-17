@@ -3,13 +3,13 @@ import { SupportedChainId } from './chains'
 type AddressMap = { [chainId: number]: string }
 
 export const DROPPER_CONTRACT_ADDRESSES: AddressMap = {
-  [SupportedChainId.MATIC]: '0x532EEB9166f673102d0751165A2A79d91e587cb5',
+  [SupportedChainId.MATIC]: '0x6e2Ad9f6dCf6F85b6cC1A5c7238fBE327640FB31',
   [SupportedChainId.MATIC_TESTNET]: '0x36737300d17090de9c3A431bC5fe4b7C47ACB401',
   [SupportedChainId.RINKEBY_TESTNET]: '0x1CECdB185e26bE53ae0Da331cb53E6fBeCc2e2b7',
 }
 
 export const COLLECTION_CONTRACT_ADDRESSES: AddressMap = {
-  [SupportedChainId.MATIC]: '0x94790d59a877724b1c29E311324D6e77B5be22d3',
+  [SupportedChainId.MATIC]: '0xA02f0FA7eb52fba2e6aD47A4F0B759E0E34F4b61',
   [SupportedChainId.MATIC_TESTNET]: '0xEeB78956A61542e9eD8ec90D9912453dAfB41cCD',
   [SupportedChainId.RINKEBY_TESTNET]: '0x05B51E2749d68e8a31df327c5ca51Df061227523',
 }

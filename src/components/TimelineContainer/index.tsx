@@ -14,20 +14,29 @@ const TimelineWrapper = styled.div<{ width?: string }>`
 `
 const VerticalLine = styled.div<{ backColor?: string }>`
   width: 5px;
-  height: 180px;
+  height: 220px;
   background-color: ${({ backColor }) => (backColor ? backColor : 'var(--secondary)')};
 `
 
 interface ITimelineItem {
   width?: string
   cardTitle?: string
+  cardSecondTitle?: string
   cardContent?: string
   cardSelected?: boolean
   onMouseMove?: () => void
   onScroll?: () => void
 }
 
-export const TimelineContainer: React.FC<ITimelineItem> = ({ width, cardTitle, cardContent, cardSelected, onMouseMove, onScroll }) => {
+export const TimelineContainer: React.FC<ITimelineItem> = ({
+  width,
+  cardTitle,
+  cardSecondTitle,
+  cardContent,
+  cardSelected,
+  onMouseMove,
+  onScroll,
+}) => {
   return (
     <TimelineWrapper width={width}>
       <ContainerColumn
@@ -64,10 +73,22 @@ export const TimelineContainer: React.FC<ITimelineItem> = ({ width, cardTitle, c
           fontFamily={'RubikBold'}
           lineHeight={1.1}
           textAlign={'left'}
-          margin={'2% 0 2% 0'}
+          margin={'2% 0 1% 0'}
         >
           {cardTitle}
         </TextCustom>
+        {cardSecondTitle && (
+          <TextCustom
+            fontSize={isMobile ? '1rem' : '1.5rem'}
+            fontWeight={600}
+            fontFamily={'RubikBold'}
+            lineHeight={1.1}
+            textAlign={'left'}
+            margin={'0 0 2% 0'}
+          >
+            {cardSecondTitle}
+          </TextCustom>
+        )}
         <TextCustom
           fontSize={isMobile ? '0.8rem' : '1rem'}
           fontWeight={300}

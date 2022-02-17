@@ -14,13 +14,13 @@ export type EventFilterMap = { [chainId: number]: TEventFilter }
 
 export const TRANSFER_BATCH_FILTER: any = {
   [SupportedChainId.MATIC]: {
-    fromBlock: 23717478,
+    fromBlock: 25043480,
     toBlock: 'latest',
     eventFilter: {
       address: getDropperAddress(SupportedChainId.MATIC),
       topics: [
         '0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb',
-        '0x00000000000000000000000094790d59a877724b1c29e311324d6e77b5be22d3',
+        '0x000000000000000000000000a02f0fa7eb52fba2e6ad47a4f0b759e0e34f4b61',
         '0x0000000000000000000000000000000000000000000000000000000000000000',
       ],
     },

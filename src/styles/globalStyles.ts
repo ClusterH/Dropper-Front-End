@@ -313,7 +313,7 @@ export const ImageIconContainer = styled.div<{
   &:hover {
     border: ${({ borderHover, border }) => (borderHover ? borderHover : border ? border : '2px solid var(--secondary)')};
     background-color: ${({ backgroundHover, backgroundColor }) =>
-    backgroundHover ? backgroundHover : backgroundColor ? backgroundColor : 'none'};
+      backgroundHover ? backgroundHover : backgroundColor ? backgroundColor : 'none'};
     box-shadow: ${({ shadowColor }) => (shadowColor ? `3px 3px 12px 2px ${shadowColor}` : 'none')};
   }
 `

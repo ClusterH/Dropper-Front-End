@@ -9,8 +9,17 @@ import { PackItem } from './PackItem'
 import { ProcessingLoader } from './Processing'
 
 export const PackListBox = () => {
-  const { walletAddress, cartList, pendingTx, isLoading, currentTotalPrice, isUSDCApproved, BuyPackProcess, ApprovingUSDC } =
-    usePackListBox()
+  const {
+    walletAddress,
+    cartList,
+    pendingTx,
+    isLoading,
+    currentTotalPrice,
+    isUSDCApproved,
+    BuyPackProcess,
+    ApprovingUSDC,
+    handleMoonPayNFTBtnClick,
+  } = usePackListBox()
 
   return (
     <>
@@ -43,6 +52,16 @@ export const PackListBox = () => {
             {isLoading ? <ClipLoader color={'var(--light-navy-blue)'} size={'24px'} /> : <USDCIcon />}
           </MainButton>
         )}
+        <MainButton
+          width={isMobile ? '80%' : 'fit-content'}
+          borderRadius={'24px'}
+          padding={'24px 24px'}
+          margin={'20px 0'}
+          disabled={pendingTx || !walletAddress}
+          onClick={() => handleMoonPayNFTBtnClick()}
+        >
+          {'Buy with MoonPay'}
+        </MainButton>
       </ResponsiveContainer>
       {pendingTx && <ProcessingLoader />}
     </>
