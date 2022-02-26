@@ -1,0 +1,117 @@
+.launch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 53px;
+
+  background: #0c092e;
+}
+
+.launch-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 883px;
+  width: 100%;
+  align-content: center;
+}
+
+.launch-title {
+  font-family: Rubik, sans-serif;
+  font-weight: bold;
+  line-height: 77px;
+  color: white;
+  align-self: center;
+  text-align: center;
+
+  margin-bottom: 59px;
+}
+
+.launch-subtitle {
+  font-family: Rubik, sans-serif;
+  font-weight: 500;
+  line-height: 36px;
+  color: white;
+
+  margin-bottom: 49px;
+}
+
+.launch-inputs-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.launch-inputs-row > {
+  width: 50%;
+}
+
+.launch-inputs-row-wrapper > * {
+  width: 48%;
+}
+
+.launch-inputs-row-wrapper :first-child .input {
+  padding: 23.5px 26px;
+}
+
+.launch-radio-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.launch-submit-button {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+input[type='submit'] {
+  background-color: #ff0069;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 658px;
+  border: none;
+  color: white;
+  padding: 28px 32px;
+  text-decoration: none;
+  font-family: Rubik, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 26px;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+@media only screen and (max-device-width: 845px) {
+  .launch-radio-wrapper .launch-inputs-row > :not(:last-child) {
+    margin-bottom: 32px;
+  }
+
+  .launch-radio-wrapper .launch-inputs-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .launch-radio-wrapper .launch-inputs-row .radio {
+    width: 100%;
+  }
+
+  .launch-radio-wrapper .launch-inputs-row .radio-wrapper {
+    max-width: 100%;
+  }
+
+  .launch-wrapper {
+    width: calc(100% - 64px);
+    padding: 0 32px;
+  }
+
+  .launch-inputs-row-wrapper {
+    flex-direction: column;
+  }
+
+  .launch-inputs-row-wrapper .input-wrapper {
+    width: 100%;
+  }
+}

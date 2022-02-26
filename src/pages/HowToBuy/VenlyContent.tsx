@@ -26,6 +26,7 @@ const VenlyContent: React.FC = () => {
           src={VENLY_STEP_IMG1}
           borderRadius={isMobile || isTablet ? '8px' : '30px'}
           width="60%"
+          objectFit={'contain'}
           maxHeight="500px"
           margin="60px 0"
         />
@@ -45,6 +46,7 @@ const VenlyContent: React.FC = () => {
           src={VENLY_STEP_IMG2}
           borderRadius={isMobile || isTablet ? '8px' : '30px'}
           width="60%"
+          objectFit={'contain'}
           maxHeight="500px"
           margin="60px 0"
         />
@@ -62,6 +64,7 @@ const VenlyContent: React.FC = () => {
           src={VENLY_STEP_IMG3}
           borderRadius={isMobile || isTablet ? '8px' : '30px'}
           width="60%"
+          objectFit={'contain'}
           maxHeight="500px"
           margin="60px 0"
         />
@@ -79,6 +82,7 @@ const VenlyContent: React.FC = () => {
           src={VENLY_STEP_IMG3}
           borderRadius={isMobile || isTablet ? '8px' : '30px'}
           width="60%"
+          objectFit={'contain'}
           maxHeight="500px"
           margin="60px 0"
         />
@@ -98,6 +102,7 @@ const VenlyContent: React.FC = () => {
           src={VENLY_STEP_IMG3}
           borderRadius={isMobile || isTablet ? '8px' : '30px'}
           width="60%"
+          objectFit={'contain'}
           maxHeight="500px"
           margin="60px 0"
         />

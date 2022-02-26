@@ -2,12 +2,13 @@ import React from 'react'
 import { isMobile } from 'react-device-detect'
 import Counter from '../../components/Counter'
 import { RoundedCheckIcon } from '../../components/Icons'
-import { usePackItem } from '../../hooks/useCollection'
+import { useCartList, usePackItem } from '../../hooks/useCollection'
 import { BoxCard, ContainerRow, ImageContainer, ImageIconContainer, TextCustom, TextMain } from '../../styles/globalStyles'
 import { TPackItem } from '../../types'
 
 export const PackItem: React.FC<{ pack: TPackItem; currentTotalPrice: number }> = ({ pack, currentTotalPrice }) => {
   const { count, setCount, isCardOver, setIsCardOver } = usePackItem(pack.id, pack.cartQuantity)
+  const cartList = useCartList()
 
   return (
     <BoxCard
@@ -66,7 +67,15 @@ export const PackItem: React.FC<{ pack: TPackItem; currentTotalPrice: number }> 
           </ContainerRow>
         )
       })}
-      <Counter count={count} setCount={setCount} isDisablePlusIcon={currentTotalPrice + pack.price > 300} isOver={isCardOver} />
+      {/* 
+        Temporarily disable mutliple items, 1 @ a time for now, old logic checked price > 300 
+      */}
+      <Counter
+        count={count}
+        setCount={setCount}
+        isDisablePlusIcon={cartList.filter((item) => item.cartQuantity >= 1).length >= 1}
+        isOver={isCardOver}
+      />
     </BoxCard>
   )
 }

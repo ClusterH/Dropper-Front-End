@@ -36,6 +36,7 @@ const MetamaskContent: React.FC = () => {
           src={METAMASK_STEP_IMG1}
           borderRadius={isMobile || isTablet ? '8px' : '30px'}
           width="42%"
+          objectFit={'contain'}
           maxHeight="500px"
           margin="60px 0"
         />
@@ -66,6 +67,7 @@ const MetamaskContent: React.FC = () => {
           src={METAMASK_STEP_IMG2}
           borderRadius={isMobile || isTablet ? '8px' : '30px'}
           width="42%"
+          objectFit={'contain'}
           maxHeight="500px"
           margin="60px 0"
         />
@@ -96,6 +98,7 @@ const MetamaskContent: React.FC = () => {
           src={METAMASK_STEP_IMG3}
           borderRadius={isMobile || isTablet ? '8px' : '30px'}
           width="42%"
+          objectFit={'contain'}
           maxHeight="500px"
           margin="60px 0"
         />

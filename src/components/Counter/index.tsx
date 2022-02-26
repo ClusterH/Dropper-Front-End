@@ -30,7 +30,7 @@ interface ICounter {
 const Counter: React.FC<ICounter> = ({ count, setCount, isDisablePlusIcon, isOver }) => {
   const handleChange = () => (e: ChangeEvent<HTMLInputElement & HTMLSelectElement>) => {
     const val = Number(e.target.value)
-    if (val < 0) return
+    if (val < 0 || val > 1) return
     setCount(val)
   }
 

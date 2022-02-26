@@ -34,7 +34,7 @@ const MoonPayModal: React.FC = () => {
         </ContainerColumn>
 
         <IFrameContainer
-          allow="accelerometer; autoplay; camera; gyroscope; payment"
+          allow="accelerometer; autoplay; camera; gyroscope; payment 'src';"
           frameBorder="0"
           height="100%"
           src={`${moonPayUSDCURL}`}

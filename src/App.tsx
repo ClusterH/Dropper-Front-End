@@ -19,7 +19,8 @@ const Ranks = lazy(() => import('./pages/Ranks'))
 const MarketPlace = lazy(() => import('./pages/Marketplace'))
 const UpcomingDropers = lazy(() => import('./pages/UpcomingDrops'))
 const HowToBuy = lazy(() => import('./pages/HowToBuy'))
-const HowItWork = lazy(() => import('./pages/HowItWork'))
+const LaunchPad = lazy(() => import('./pages/LaunchPad'))
+const LaunchForm = lazy(() => import('./pages/LaunchPad/LaunchForm'))
 const Footer = lazy(() => import('./components/Footer'))
 
 const App: React.FC = () => {
@@ -54,7 +55,8 @@ const App: React.FC = () => {
             <Route exact path="/marketplace" component={MarketPlace} />
             <Route exact path="/upcoming" component={UpcomingDropers} />
             <Route exact path="/howtobuy" component={HowToBuy} />
-            <Route exact path="/howitwork" component={HowItWork} />
+            <Route exact path="/launchpad" component={LaunchPad} />
+            <Route exact path="/launch_form" component={LaunchForm} />
             <Route exact path="/:id" component={Home} />
           </Switch>
           <Footer />

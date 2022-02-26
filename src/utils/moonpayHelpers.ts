@@ -20,14 +20,15 @@ export const getMoonPayUSDCWidgetURL = (chainId: number, walletAddress: string) 
   return moonPayUSDCURL
 }
 
-export const getMoonPayNFTWidgetURL = (chainId: number, tokenId: number, walletAddress: string) => {
+export const getMoonPayNFTWidgetURL = (chainId: number, tokenId: number, walletAddress: string, cartQuantity?: number) => {
   const { apiKey, secretKey, baseUrl } = getMoonPayConfig(chainId)
   const collectionAddress = getCollectionAddress(chainId)
 
+  // TODO: Need to be able to handle a quantity somehow.
   const urlTemp = `${baseUrl}/nft?contractAddress=${collectionAddress}&tokenId=${tokenId}&apiKey=${apiKey}&walletAddress=${walletAddress}&colorCode=%23ff0069`
-
   const signature = crypto.createHmac('sha256', secretKey!).update(new URL(urlTemp).search).digest('base64')
   const moonPayNFTURL = `${urlTemp}&signature=${encodeURIComponent(signature)}`
+  console.log(moonPayNFTURL)
 
   return moonPayNFTURL
 }

@@ -20,7 +20,7 @@ const Menu: React.FC = () => {
     <MenuContainer justifyContent={'flex-start'} width={'fit-content'}>
       <MenuItem to="/upcoming">Drops</MenuItem>
       <MenuItem to="/aboutus">About Us</MenuItem>
-      <MenuItem to="/howitwork">Launchpad</MenuItem>
+      <MenuItem to="/launchpad">Launchpad</MenuItem>
       {/* <MenuItem color={'var(--disabled)'} to="/ranks" onClick={(e) => e.preventDefault()}>
         Rankings
       </MenuItem>

@@ -241,8 +241,9 @@ export const usePackListBox = () => {
       setPendingTx(false)
     }
   }
-
-  const handleMoonPayNFTBtnClick = useCallback(() => handleMoonPayNFTClick(cartList[0].id), [cartList, handleMoonPayNFTClick])
+  const handleMoonPayNFTBtnClick = useCallback(() => {
+    handleMoonPayNFTClick(cartList.filter((x) => x.cartQuantity > 0)[0].id, cartList.filter((x) => x.cartQuantity > 0)[0].cartQuantity)
+  }, [cartList, handleMoonPayNFTClick])
 
   return {
     walletAddress,

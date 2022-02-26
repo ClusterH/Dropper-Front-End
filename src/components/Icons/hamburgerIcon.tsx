@@ -49,7 +49,7 @@ const HamburgerMenu: React.FC<{ setIsOpen: (isOpen: boolean) => void }> = ({ set
     <HamburgerMenuWrapper justifyContent={'flex-start'} onClick={() => setIsOpen(false)}>
       <HamburgerMenuItem label={'Drops'} navLink={'upcoming'} />
       <HamburgerMenuItem label={'About Us'} navLink={'aboutus'} />
-      <HamburgerMenuItem label={'Launchpad'} navLink={'howitwork'} />
+      <HamburgerMenuItem label={'Launchpad'} navLink={'launchpad'} />
       <HamburgerMenuItem label={'Profile'} navLink={'inventory'} />
       {/* <WyreDebitCard />
       <WyreReservationModal /> */}
