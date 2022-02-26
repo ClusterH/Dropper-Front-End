@@ -41,12 +41,12 @@ export const useMoonPayNFT = () => {
   const dispatch = useAppDispatch()
 
   const handleMoonPayNFTClick = useCallback(
-    (tokenId: number) => {
+    (tokenId: number, cartQuantity?: number) => {
       if (!isWalletConnected || walletAddress.length === 0) {
         toast.error('Please check your Wallet Connection First!', { toastId: 'Not Connected-3' })
         return
       }
-      const moonPayNFTURL = getMoonPayNFTWidgetURL(chainId!, tokenId, walletAddress)
+      const moonPayNFTURL = getMoonPayNFTWidgetURL(chainId!, tokenId, walletAddress, cartQuantity || 0)
       dispatch(setMoonPayNFTURL(moonPayNFTURL))
 
       toggleMoonPayNFTModal()

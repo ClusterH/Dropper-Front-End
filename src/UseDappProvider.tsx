@@ -1,4 +1,4 @@
-import { DAppProvider, Polygon, useEthers } from '@usedapp/core'
+import { DAppProvider, Polygon, Mumbai, useEthers } from '@usedapp/core'
 import React, { useMemo } from 'react'
 import { NETWORK_URLS } from './connectors'
 import { VENLY_CHAIN_ID } from './constants/chains'
@@ -13,7 +13,8 @@ export const DAppProviders: React.FC = ({ children }) => {
     return {
       readOnlyChainId: chainId,
       readOnlyUrls: {
-        [Polygon.chainId]: NETWORK_URLS[chainId!],
+        [Polygon.chainId]: NETWORK_URLS[137],
+        [Mumbai.chainId]: NETWORK_URLS[80001],
       },
     }
   }, [chainId, isWalletConnected])

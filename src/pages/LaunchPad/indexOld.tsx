@@ -6,7 +6,7 @@ import SOLANA_LOGO from '../../assets/images/solana_logo.svg'
 import Banner from '../../components/Banners'
 import { ComponentWrapper, ContainerColumn, ContainerRow, ImageContainer, PageWrapper, TextCustom } from '../../styles/globalStyles'
 
-const HowItWork: React.FC = () => {
+const HowItWorkOld: React.FC = () => {
   return (
     <PageWrapper>
       <Banner
@@ -83,4 +83,4 @@ const HowItWork: React.FC = () => {
   )
 }
 
-export default HowItWork
+export default HowItWorkOld

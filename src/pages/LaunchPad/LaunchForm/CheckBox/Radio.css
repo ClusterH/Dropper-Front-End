@@ -1,0 +1,102 @@
+/*CUSTOM RADIO BUTTON*/
+
+.radio-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radio-button input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  border: 1px solid #9b96d2;
+}
+
+.radio-button:hover input ~ .checkmark {
+  border: 1px solid #ff0069;
+}
+
+.radio-button input:checked ~ .checkmark {
+  border: 1px solid #ff0069;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.radio-button input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.radio-button .checkmark:after {
+  top: calc(50% - calc(16px / 2));
+  left: calc(50% - calc(16px / 2));
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ff0069;
+}
+
+/*RADIO CONTAINER STYLES*/
+
+.radio {
+  border: 1px solid #9b96d2;
+  border-radius: 5px;
+  height: 75px;
+  width: 48%;
+  display: flex;
+  align-items: center;
+}
+
+.radio-wrapper {
+  display: flex;
+  padding: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.radio-title-group {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.radio-gradient {
+  width: 46px;
+  height: 20px;
+
+  background: linear-gradient(112.48deg, #ff0069 11.39%, rgba(255, 0, 105, 0) 124.25%);
+  border-radius: 10px;
+}
+
+.radio-title {
+  font-family: Rubik, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  color: white;
+  margin-left: 1rem;
+  align-self: center;
+}

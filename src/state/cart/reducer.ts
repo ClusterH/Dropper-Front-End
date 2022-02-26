@@ -19,8 +19,11 @@ const cartSlice = createSlice({
       if (action.payload === undefined) {
         state.userCartList = [...packList]
       } else {
+        // Sanity check on 1 quantity.
         const { packId, cartQuantity }: { packId: number; cartQuantity: number } = action.payload
-        state.userCartList[packId - 1] = { ...state.userCartList[packId - 1], cartQuantity: cartQuantity }
+        const tempCart = [...state.userCartList.map((item) => ({ ...item, cartQuantity: 0 }))]
+        tempCart[packId - 1] = { ...tempCart[packId - 1], cartQuantity }
+        state.userCartList = tempCart
       }
     },
     setMoonPayNFTURL(state, action) {

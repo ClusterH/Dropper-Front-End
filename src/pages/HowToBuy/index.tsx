@@ -22,7 +22,7 @@ const HowToBuy: React.FC = () => {
   const handleSwitchWallet = useCallback((wallet: 'Metamask' | 'Venly') => setSelectedWallet(wallet), [])
   return (
     <PageWrapper>
-      <Banner mainTitle={'How to Buy'} subTitle={'Droppers'} />
+      <Banner mainTitle={'How to Buy'} />
       <ComponentWrapper margin={isMobile ? '0' : '50px 0 0'} padding={'24px'}>
         <ContainerRow justifyContent="space-evenly" margin="50px 0">
           <ButtonWrapper onClick={() => handleSwitchWallet('Metamask')} borderRadius="100px" isActive={selectedWallet === 'Metamask'}>

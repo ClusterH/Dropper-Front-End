@@ -102,8 +102,8 @@ export const fetchMomentList = async (
 
 export const getAllMomentList = async (account: string, contract: Contract, chainId: number, dispatch: AppDispatch, txHash?: string) => {
   const specificAxios = setupInterceptorsTo(axios.create())
-  const AXIOS_BASE_URL = process.env.REACT_APP_AXIOS_BASE_URL
-  // const AXIOS_BASE_URL = 'http://127.0.0.1:5000'
+  // const AXIOS_BASE_URL = process.env.REACT_APP_AXIOS_BASE_URL
+  const AXIOS_BASE_URL = 'http://127.0.0.1:5000'
   specificAxios
     .get(`${AXIOS_BASE_URL}/dropper/transferBatch`, {
       params: {
